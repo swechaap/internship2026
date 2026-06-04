@@ -2,6 +2,10 @@
 
 > A comprehensive educational resource for understanding how blood circulates through the heart and body
 
+## 🖼️ Storyboard Reference Image
+
+![Blood Circulation Process Storyboard](https://github.com/user-attachments/assets/59ef55ed-ab41-485d-a007-15e3fe431a2f)
+
 ## 📚 Overview
 
 This directory contains complete educational materials explaining the blood circulation process, with a focus on oxygen-rich and oxygen-poor blood flow through the heart, lungs, and body tissues.
