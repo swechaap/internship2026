@@ -336,6 +336,23 @@ Students should also understand:
 
 ---
 
+## Blood Vessels: Arteries, Veins, and Capillaries
+
+### Arteries
+Arteries carry blood away from the heart. Most arteries carry oxygen-rich blood. The aorta is the largest artery in the body.
+
+### Veins
+Veins carry blood back to the heart. Most veins carry oxygen-poor blood and contain valves that prevent backflow.
+
+### Capillaries
+Capillaries are the smallest blood vessels. They connect arteries and veins and allow the exchange of oxygen, nutrients, and waste materials between blood and body tissues.
+
+### Functions of Blood Vessels
+- Transport oxygen to body cells.
+- Deliver nutrients throughout the body.
+- Remove carbon dioxide and other wastes.
+- Help maintain continuous blood circulation.
+
 ## ✨ Summary
 
 This comprehensive resource provides everything needed to teach and understand blood circulation, with emphasis on:
