@@ -1,0 +1,22 @@
+Project: Metal vs Non-Metal Challenge
+
+Functional Requirements:
+- User can learn metals and non-metals through Let's Learn module.
+- User can play 3 levels of classification challenges.
+- User can earn badges and achievements.
+- User can view leaderboard.
+- User can generate certificate.
+- User progress is stored using local storage.
+
+Non-Functional Requirements:
+- Mobile responsive.
+- Easy to use.
+- Interactive UI.
+- Fast loading.
+- Accessible for students.
+
+Learning Requirements:
+- Understand metals and non-metals.
+- Identify properties of metals.
+- Identify properties of non-metals.
+- Classify real-life objects correctly.

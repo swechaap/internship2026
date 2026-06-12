@@ -1,0 +1,29 @@
+Team Name: Metal Minds
+
+Member 1: Kodali Pavani
+Role: Frontend Developer, UI Design, Deployment
+- Developed the complete React-based user interface.
+- Implemented game screens, navigation, and responsive design.
+- Deployed the project using Vercel.
+
+Member 2: Jyothika
+Role: Research Lead
+- Collected information about metals, non-metals, properties, and examples.
+- Prepared educational content for the Let's Learn module.
+
+Member 3: Sourav
+Role: Documentation Lead
+- Created README.md, requirements documentation, user persona, and storyboard files.
+- Maintained project documentation and GitHub repository.
+
+Member 4: Lalitha
+Role: Testing Lead
+- Tested game functionality, drag-and-drop interactions, scoring system, and responsiveness.
+- Fixed bugs and verified deployment.
+
+Member 5: Bunny
+Role: Project Maintenance
+- Managed GitHub repository and pull requests.
+
+Project Link:
+https://metals-vs-nonmetals.vercel.app
