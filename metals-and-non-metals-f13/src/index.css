@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-blue: #2563EB;
+  --color-green-success: #22C55E;
+  --color-purple-theme: #7C3AED;
+  --color-orange-theme: #F59E0B;
+  --color-cyan-theme: #06B6D4;
+  --color-dark-bg-start: #0B0F19;
+  --color-dark-bg-mid: #1A0B2E;
+  --color-dark-bg-end: #091C24;
+
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-float-slow: float 8s ease-in-out infinite;
+  --animate-float-medium: float 6s ease-in-out infinite;
+  --animate-float-fast: float 4s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-glow-border: glow-border 4s linear infinite;
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+    20%, 40%, 60%, 80% { transform: translateX(6px); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.4)); }
+    50% { transform: scale(1.03); filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.7)); }
+  }
+  @keyframes glow-border {
+    0%, 100% { border-color: rgba(124, 58, 237, 0.3); }
+    50% { border-color: rgba(6, 182, 212, 0.8); }
+  }
+}
+
+/* Custom Base Styles */
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #0B0F19;
+  color: #F8FAFC;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-panel-neon {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  box-shadow: 0 0 25px rgba(124, 58, 237, 0.15), inset 0 0 15px rgba(124, 58, 237, 0.08);
+}
+
+.glass-panel-neon-cyan {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.15), inset 0 0 15px rgba(6, 182, 212, 0.08);
+}
+
+.glass-panel-neon-green {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.15), inset 0 0 15px rgba(34, 197, 94, 0.08);
+}
+
+/* Custom Neon Glow Text and Borders */
+.glow-text-purple {
+  text-shadow: 0 0 8px rgba(124, 58, 237, 0.6);
+}
+
+.glow-text-cyan {
+  text-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+}
+
+.glow-text-green {
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.glow-shadow-blue {
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+}
+
+.glow-shadow-purple {
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+}
+
+.glow-shadow-green {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+}
+
+.glow-shadow-orange {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+.glow-shadow-cyan {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+/* Scrollbar customizations */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B0F19;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Hide focus rings but maintain accessibility */
+*:focus-visible {
+  outline: 2px solid #7C3AED;
+  outline-offset: 2px;
+}
