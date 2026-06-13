@@ -1,29 +1,86 @@
-Team Name: Metal Minds
+# Team Name: Metal Minds
 
-Member 1: Kodali Pavani
-Role: Frontend Developer, UI Design, Deployment
-- Developed the complete React-based user interface.
-- Implemented game screens, navigation, and responsive design.
-- Deployed the project using Vercel.
+## Member 1: Kodali Pavani
 
-Member 2: Jyothika
-Role: Research Lead
-- Collected information about metals, non-metals, properties, and examples.
-- Prepared educational content for the Let's Learn module.
+**Role:** Frontend Developer, UI/UX Designer, Deployment Lead
 
-Member 3: Sourav
-Role: Documentation Lead
-- Created README.md, requirements documentation, user persona, and storyboard files.
-- Maintained project documentation and GitHub repository.
+**Contributions:**
 
-Member 4: Lalitha
-Role: Testing Lead
-- Tested game functionality, drag-and-drop interactions, scoring system, and responsiveness.
-- Fixed bugs and verified deployment.
+* Developed the complete React + Vite application.
+* Designed and implemented the user interface and responsive layouts.
+* Built the Learning Module, Quiz Module, and Game Levels.
+* Integrated achievements, leaderboard, and certificate generation features.
+* Managed project deployment using Vercel.
+* Performed project integration and final application optimization.
 
-Member 5: Bunny
-Role: Project Maintenance
-- Managed GitHub repository and pull requests.
+---
 
-Project Link:
+## Member 2: Jyothika
+
+**Role:** Research Lead
+
+**Contributions:**
+
+* Conducted research on metals and non-metals.
+* Collected information on properties, classifications, and real-world examples.
+* Prepared educational content for the Learning Module.
+* Supported requirement gathering and learning outcome definition.
+
+---
+
+## Member 3: Sourav
+
+**Role:** Documentation Lead
+
+**Contributions:**
+
+* Created and maintained project documentation.
+* Prepared README.md, requirements.txt, User Persona, and Storyboard documents.
+* Documented project workflow, features, and educational objectives.
+* Maintained project records and repository documentation.
+
+---
+
+## Member 4: Lalitha
+
+**Role:** Testing Lead
+
+**Contributions:**
+
+* Conducted usability and functionality testing.
+* Tested game mechanics, scoring system, and interactive activities.
+* Verified responsiveness across different screen sizes.
+* Identified issues and validated bug fixes before deployment.
+
+---
+
+## Member 5: Bunny
+
+**Role:** Project Maintenance & Repository Management
+
+**Contributions:**
+
+* Managed GitHub repository structure and version control.
+* Coordinated pull requests and repository updates.
+* Assisted in project maintenance and collaboration workflows.
+* Ensured project files and documentation were properly organized.
+
+---
+
+# Project Deliverables
+
+* User Persona
+* Requirements Documentation
+* Storyboard
+* Interactive Learning Module
+* Quiz and Assessment Activities
+* Classification Games
+* Achievement System
+* Leaderboard System
+* Certificate Generation
+* Usability Testing Report
+* Deployment and Documentation
+
+# Project Link
+
 https://metals-vs-nonmetals.vercel.app

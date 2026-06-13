@@ -25,6 +25,18 @@ The application aims to make science learning engaging, enjoyable, and easy to u
 * Challenge: Difficulty remembering properties of metals and non-metals
 * Preference: Visual learning, games, and interactive activities
 
+The Persona for this project is available in:
+
+- UserPersona.pdf
+
+----
+
+## Storyboard
+
+The storyboard for this project is available in:
+
+- StoryBoard.pdf
+
 ---
 
 # 📋 Requirements
@@ -240,13 +252,13 @@ src/
 
 # 👥 Team Members
 
-| Name     | Role               |
-| -------- | ------------------ |
-| Member 1 | Research Lead      |
-| Member 2 | UX Designer        |
-| Member 3 | Frontend Developer |
-| Member 4 | Documentation Lead |
-| Member 5 | Testing Lead       |
+| Name           | Primary Role |
+|----------------|--------------|
+| Kodali Pavani  | Frontend Development, UI/UX Design & Deployment |
+| Jyothika       | Research & Content Preparation |
+| Sourav         | Documentation & Project Records |
+| Lalitha        | Testing & Quality Assurance |
+| Bunny          | Repository Management & Project Maintenance |
 
 ---
 
