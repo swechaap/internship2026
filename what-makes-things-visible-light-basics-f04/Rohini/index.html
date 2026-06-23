@@ -1,0 +1,33 @@
+<body>
+  <h1>Mirror Reflection Puzzle</h1>
+  <p>Rotate mirrors to direct light toward the hidden flower.</p>
+
+  <div id="game">
+    <div id="light">🔦</div>
+
+    <button id="mirror1">Mirror /</button>
+
+    <div id="flower">🌸</div>
+  </div>
+
+  <button onclick="rotateMirror()">Rotate Mirror</button>
+
+  <p id="result"></p>
+
+  <script>
+    let state = 0;
+
+    function rotateMirror() {
+      state++;
+
+      if (state % 2 === 1) {
+        document.getElementById("mirror1").innerText = "Mirror \\";
+        document.getElementById("result").innerText =
+          "🌸 Flower reached by light! Puzzle Solved!";
+      } else {
+        document.getElementById("mirror1").innerText = "Mirror /";
+        document.getElementById("result").innerText = "";
+      }
+    }
+  </script>
+</body>

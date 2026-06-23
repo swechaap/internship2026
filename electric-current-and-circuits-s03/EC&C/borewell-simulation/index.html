@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electric Shock Explorer - See the Invisible Current</title>
+  <!-- Google Fonts for premium modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=5">
+</head>
+
+<body>
+  <!-- Floating Back to Hub Button -->
+  <a href="../index.html" class="floating-back-btn" title="Return to Shock Squad Hub">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    <span>Back to Hub</span>
+  </a>
+
+  <div class="dashboard-container">
+    <!-- HEADER -->
+    <header class="dashboard-header">
+      <div class="header-left">
+        <button class="hamburger-btn" aria-label="Menu">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div class="logo-box">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="#FFC72C">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <h1 class="main-title">ELECTRIC SHOCK EXPLORER</h1>
+        <span class="subtitle">See the Invisible Current</span>
+      </div>
+
+      <div class="header-right">
+        <button id="btn-header-pause" class="header-action-btn pause-btn">
+          <!-- Pause Icon -->
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+            <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+          </svg>
+          <span>Pause</span>
+        </button>
+        <button id="btn-header-slow" class="header-action-btn slow-btn">
+          <!-- Snail/Slow Icon -->
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12a10 10 0 0 1 10-10z" />
+            <path d="M12 6a6 6 0 0 1 6 6c0 3.314-2.686 6-6 6s-6-2.686-6-6" />
+            <path d="M12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />
+          </svg>
+          <span>Slow</span>
+        </button>
+        <button id="btn-header-reset" class="header-action-btn reset-btn">
+          <!-- Reset/Reload Icon -->
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+          </svg>
+          <span>Reset</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT THREE COLUMNS -->
+    <main class="dashboard-main">
+
+      <!-- LEFT CONTROL PANEL -->
+      <section class="control-panel panel">
+
+        <!-- CARD 1: EARTHING -->
+        <div class="control-card">
+          <h2>1. EARTHING</h2>
+          <div class="btn-group">
+            <button id="btn-earthing-on" class="toggle-btn green-btn active">
+              <!-- Earthing icon -->
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round">
+                <line x1="12" y1="3" x2="12" y2="17"></line>
+                <line x1="4" y1="11" x2="20" y2="11"></line>
+                <line x1="7" y1="14" x2="17" y2="14"></line>
+                <line x1="10" y1="17" x2="14" y2="17"></line>
+              </svg>
+              ON
+            </button>
+            <button id="btn-earthing-off" class="toggle-btn dark-btn">
+              <!-- Earthing disabled icon -->
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round">
+                <line x1="12" y1="3" x2="12" y2="17"></line>
+                <line x1="4" y1="11" x2="20" y2="11"></line>
+                <line x1="7" y1="14" x2="17" y2="14"></line>
+                <line x1="10" y1="17" x2="14" y2="17"></line>
+                <line x1="3" y1="3" x2="21" y2="21" stroke="#EF4444"></line>
+              </svg>
+              OFF
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD 2: HAND CONDITION -->
+        <div class="control-card">
+          <h2>2. HAND CONDITION</h2>
+          <div class="btn-group">
+            <button id="btn-hand-dry" class="toggle-btn green-btn active">
+              <!-- Hand icon -->
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v5"></path>
+                <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v6"></path>
+                <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4.5"></path>
+                <path d="M6 10V8a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v9a7 7 0 0 0 7 7h3a6 6 0 0 0 6-6v-5"></path>
+              </svg>
+              Dry Hands
+            </button>
+            <button id="btn-hand-wet" class="toggle-btn blue-btn">
+              <!-- Wet Hand/Drop icon -->
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22a7 7 0 0 0 7-7c0-4.3-7-11-7-11S5 10.7 5 15a7 7 0 0 0 7 7z"></path>
+              </svg>
+              Wet Hands
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD 3: SOIL CONDITION -->
+        <div class="control-card">
+          <h2>3. SOIL CONDITION</h2>
+          <div class="btn-group">
+            <button id="btn-soil-dry" class="toggle-btn gold-btn active">
+              <!-- Cracked Soil / Dry Land Icon -->
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v18"></path>
+                <path d="M3 12h18"></path>
+                <path d="M4.5 4.5l15 15"></path>
+                <path d="M19.5 4.5l-15 15"></path>
+              </svg>
+              Dry Soil
+            </button>
+            <button id="btn-soil-wet" class="toggle-btn blue-btn">
+              <!-- Rain/Water Drops Icon -->
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M12 2v3M5 12h3M19 12h3M7 7l2 2M17 7l-2 2M12 14c2 0 3.5 1.5 3.5 3.5S14 21 12 21s-3.5-1.5-3.5-3.5S10 14 12 14z">
+                </path>
+              </svg>
+              Wet Soil
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD 4: LEAKAGE CURRENT -->
+        <div class="control-card">
+          <div class="card-header-flex">
+            <h2>4. LEAKAGE CURRENT</h2>
+            <span id="leakage-value" class="highlight-val green-text">60 %</span>
+          </div>
+          <div class="slider-wrapper">
+            <input id="leakage-slider" type="range" min="0" max="100" value="60" class="neon-slider">
+            <div class="slider-labels">
+              <span>0%</span>
+              <span>100%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5: TIME CONTROLS -->
+        <div class="control-card">
+          <h2>TIME CONTROLS</h2>
+          <div class="time-btn-grid">
+            <button id="time-play" class="square-time-btn play active" title="Play">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <polygon points="5,3 19,12 5,21"></polygon>
+              </svg>
+              <span>Play</span>
+            </button>
+            <button id="time-pause" class="square-time-btn pause" title="Pause">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <rect x="5" y="4" width="4" height="16" rx="1"></rect>
+                <rect x="15" y="4" width="4" height="16" rx="1"></rect>
+              </svg>
+              <span>Pause</span>
+            </button>
+            <button id="time-slow" class="square-time-btn slow" title="Slow Motion">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12a10 10 0 0 1 10-10z" />
+                <path d="M12 6a6 6 0 0 1 6 6c0 3.314-2.686 6-6 6s-6-2.686-6-6" />
+                <path d="M12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />
+              </svg>
+              <span>Slow</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CENTER SIMULATION CANVAS -->
+      <section class="simulation-canvas panel">
+        <!-- Legend Overlay -->
+        <div class="legend-box">
+          <h3>Current Path</h3>
+          <div class="legend-item">
+            <span class="legend-line red-line">
+              <span class="dot-node red-node"></span>
+            </span>
+            <span>Live Current</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-line green-line">
+              <span class="dot-node green-node"></span>
+            </span>
+            <span>To Ground (Safe)</span>
+          </div>
+        </div>
+
+        <!-- Farm SVG Simulation -->
+        <svg id="simulation-svg" viewBox="0 0 800 500" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <!-- Gradients -->
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4a90e2"></stop>
+              <stop offset="60%" stop-color="#87ceeb"></stop>
+              <stop offset="100%" stop-color="#e0f6ff"></stop>
+            </linearGradient>
+            <linearGradient id="mountainGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#436b95"></stop>
+              <stop offset="100%" stop-color="#6b9bc3"></stop>
+            </linearGradient>
+            <linearGradient id="mountainGradBack" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#325272"></stop>
+              <stop offset="100%" stop-color="#5581a8"></stop>
+            </linearGradient>
+            <linearGradient id="soilGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4d2f14"></stop>
+              <stop offset="100%" stop-color="#2a1607"></stop>
+            </linearGradient>
+            <linearGradient id="concreteGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#7a7a7a"></stop>
+              <stop offset="50%" stop-color="#a3a3a3"></stop>
+              <stop offset="100%" stop-color="#616161"></stop>
+            </linearGradient>
+            <linearGradient id="pumpGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#144d2d"></stop>
+              <stop offset="40%" stop-color="#228b4c"></stop>
+              <stop offset="100%" stop-color="#0e3a20"></stop>
+            </linearGradient>
+            <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#76c0f0" stop-opacity="0.9"></stop>
+              <stop offset="100%" stop-color="#2b82c9" stop-opacity="0.9"></stop>
+            </linearGradient>
+            <linearGradient id="copperGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#b87333"></stop>
+              <stop offset="50%" stop-color="#e39e65"></stop>
+              <stop offset="100%" stop-color="#8c4f1c"></stop>
+            </linearGradient>
+
+            <!-- Glow filters removed (migrated to pixel-perfect CSS drop-shadow filters) -->
+          </defs>
+
+          <!-- Sky Background -->
+          <rect width="800" height="320" fill="url(#skyGrad)"></rect>
+
+          <!-- Clouds -->
+          <g class="clouds-group" fill="#ffffff" opacity="0.85">
+            <path
+              d="M50 80 A20 20 0 0 1 80 70 A30 30 0 0 1 130 80 A20 20 0 0 1 150 90 A15 15 0 0 1 140 110 L60 110 A15 15 0 0 1 50 80 Z">
+            </path>
+            <path
+              d="M320 60 A15 15 0 0 1 340 50 A25 25 0 0 1 380 55 A15 15 0 0 1 395 65 A10 10 0 0 1 390 80 L330 80 A10 10 0 0 1 320 60 Z"
+              opacity="0.7"></path>
+            <path
+              d="M600 70 A25 25 0 0 1 635 60 A35 35 0 0 1 690 75 A20 20 0 0 1 710 90 A15 15 0 0 1 700 110 L610 110 A15 15 0 0 1 600 70 Z">
+            </path>
+          </g>
+
+          <!-- Distant Mountains -->
+          <polygon points="50,320 180,180 320,320" fill="url(#mountainGradBack)"></polygon>
+          <polygon points="200,320 380,150 550,320" fill="url(#mountainGrad)"></polygon>
+          <polygon points="450,320 580,190 700,320" fill="url(#mountainGradBack)"></polygon>
+
+          <!-- Green fields -->
+          <rect y="280" width="800" height="40" fill="#4d994d"></rect>
+          <!-- Farmhouse far left -->
+          <g transform="translate(195, 255) scale(0.65)">
+            <polygon points="20,40 50,15 80,40" fill="#a04040"></polygon>
+            <rect x="25" y="40" width="50" height="35" fill="#eae6df"></rect>
+            <rect x="45" y="55" width="12" height="20" fill="#5c4033"></rect>
+            <rect x="30" y="45" width="10" height="10" fill="#add8e6"></rect>
+          </g>
+
+          <!-- Large Tree on Right -->
+          <g transform="translate(680, 200)">
+            <rect x="-8" y="50" width="16" height="70" fill="#5c4033"></rect>
+            <!-- Canopy -->
+            <circle cx="0" cy="40" r="35" fill="#2d5a27"></circle>
+            <circle cx="-25" cy="20" r="28" fill="#24491f"></circle>
+            <circle cx="25" cy="25" r="28" fill="#366b2f"></circle>
+            <circle cx="-15" cy="-5" r="25" fill="#2d5a27"></circle>
+            <circle cx="15" cy="-5" r="25" fill="#366b2f"></circle>
+            <circle cx="0" cy="-20" r="20" fill="#3e7a35"></circle>
+          </g>
+
+          <!-- Concrete base of the water pump -->
+          <polygon points="360,280 500,280 490,320 370,320" fill="url(#concreteGrad)"></polygon>
+
+          <!-- Water Pump (Green Motor + pipes) -->
+          <g id="water-pump" transform="translate(415, 215)">
+            <!-- Main Cylindrical Motor Frame -->
+            <rect x="10" y="20" width="45" height="45" rx="5" fill="url(#pumpGrad)"></rect>
+            <rect x="15" y="10" width="35" height="10" rx="3" fill="#1b5e34"></rect>
+            <path d="M 32.5,5 L 32.5,10" stroke="#000" stroke-width="2"></path>
+            <circle cx="32.5" cy="4" r="2" fill="#000"></circle>
+
+            <!-- Details on motor -->
+            <line x1="20" y1="23" x2="20" y2="62" stroke="#0d301b" stroke-width="2"></line>
+            <line x1="28" y1="23" x2="28" y2="62" stroke="#0d301b" stroke-width="2"></line>
+            <line x1="36" y1="23" x2="36" y2="62" stroke="#0d301b" stroke-width="2"></line>
+            <line x1="44" y1="23" x2="44" y2="62" stroke="#0d301b" stroke-width="2"></line>
+
+            <!-- Pump Handle/Nozzle connector -->
+            <path d="M -5,40 L 10,40" stroke="#1c2c22" stroke-width="8"></path>
+            <!-- Left connector/terminal where farmer touches -->
+            <circle cx="-7" cy="40" r="5" fill="#222"></circle>
+
+            <!-- Outlet pipe going right -->
+            <rect x="55" y="32" width="25" height="14" fill="#666"></rect>
+            <path d="M 80,30 L 105,30 L 105,48 L 80,48 Z" fill="#555"></path>
+
+            <!-- Inlet Pipe going down into base -->
+            <rect x="23" y="65" width="20" height="10" fill="#444"></rect>
+          </g>
+
+          <!-- Water Canal in background -->
+          <path d="M 490,300 L 780,300 L 780,320 L 485,320 Z" fill="#326c99" opacity="0.6"></path>
+
+          <!-- Animated Water Stream flowing from outlet pipe -->
+          <path id="water-stream" d="M 520,250 C 560,250 565,310 590,310" fill="none" stroke="url(#waterGrad)"
+            stroke-width="16" stroke-linecap="round"></path>
+          <path id="water-stream-inner" d="M 520,250 C 560,250 565,310 590,310" fill="none" stroke="#e0f6ff"
+            stroke-width="4" stroke-dasharray="8, 12" stroke-linecap="round"></path>
+
+          <!-- Under Ground Soil Cross-Section -->
+          <rect y="320" width="800" height="180" fill="url(#soilGrad)"></rect>
+
+          <!-- Soil texture (pebbles and rocks) -->
+          <g fill="#211105">
+            <circle cx="50" cy="350" r="6"></circle>
+            <circle cx="120" cy="420" r="8"></circle>
+            <circle cx="220" cy="380" r="5"></circle>
+            <circle cx="280" cy="460" r="9"></circle>
+            <circle cx="340" cy="350" r="7"></circle>
+            <circle cx="430" cy="410" r="4"></circle>
+            <circle cx="580" cy="440" r="10"></circle>
+            <circle cx="650" cy="360" r="6"></circle>
+            <circle cx="730" cy="430" r="8"></circle>
+            <polygon points="80,450 90,460 75,465"></polygon>
+            <polygon points="490,450 505,462 485,465"></polygon>
+            <polygon points="320,400 330,408 315,415"></polygon>
+          </g>
+
+          <!-- Earth rod (Grounding pole) -->
+          <g transform="translate(620, 275)">
+            <!-- Earth Rod entering soil -->
+            <rect x="-4" y="45" width="8" height="110" rx="3" fill="url(#copperGrad)"></rect>
+            <circle cx="0" cy="45" r="6" fill="#8c4f1c"></circle>
+            <!-- Earth clamp -->
+            <rect x="-6" y="55" width="12" height="6" fill="#ffcc00"></rect>
+          </g>
+
+          <!-- Earthing wire path (Pump to Grounding Pole) -->
+          <path id="earthing-wire" d="M 465,278 Q 530,290 620,320" fill="none" stroke="#228b4c" stroke-width="4.5"
+            stroke-linecap="round"></path>
+
+          <!-- Safe Grounding Current Flow Path (drawn over the wire and rod) -->
+          <g id="safe-current-group">
+            <!-- Outer Glow Envelope (Using opacity and width overlay to prevent browser layer-shifting bugs) -->
+            <path id="safe-path-glow" d="M 465,278 Q 530,290 620,320 L 620,430" fill="none" stroke="#00FF00"
+              stroke-width="10" opacity="0.4" stroke-linecap="round"></path>
+            <!-- Inner Bright Core -->
+            <path id="safe-path-core" d="M 465,278 Q 530,290 620,320 L 620,430" fill="none" stroke="#E6FFE6"
+              stroke-width="3" opacity="1.0" stroke-linecap="round"></path>
+            <!-- Safe current particles container -->
+            <g id="safe-particles-container"></g>
+
+
+          </g>
+
+          <!-- Farmer Representation (Dynamic SVG Group) -->
+          <g id="farmer" transform="translate(210, 160)">
+            <!-- Dhoti (legs/bottom) -->
+            <path d="M 35,160 C 35,120 42,120 48,160 L 68,160 C 70,110 75,110 82,160 Z" fill="#ffffff" stroke="#ccc"
+              stroke-width="1"></path>
+            <path d="M 35,160 C 25,200 15,220 28,245 L 42,245 C 45,210 50,185 58,160" fill="#f0eae1" stroke="#d5cebf"
+              stroke-width="1.5"></path>
+            <path d="M 82,160 C 92,200 102,220 89,245 L 75,245 C 72,210 67,185 58,160" fill="#ffffff" stroke="#e0e0e0"
+              stroke-width="1.5"></path>
+
+            <!-- Sandals -->
+            <path d="M 23,243 C 20,243 20,249 32,249 Z" fill="#5c4033"></path>
+            <path d="M 85,243 C 88,243 88,249 76,249 Z" fill="#5c4033"></path>
+
+            <!-- Feet (Brown skin) -->
+            <rect x="25" y="240" width="8" height="5" rx="2" fill="#c68a4c"></rect>
+            <rect x="80" y="240" width="8" height="5" rx="2" fill="#c68a4c"></rect>
+
+            <!-- Torso (Beige shirt) -->
+            <path d="M 32,100 L 85,100 C 92,120 90,165 85,175 L 32,175 C 27,165 25,120 32,100 Z" fill="#eae1cb"
+              stroke="#cfc1a0" stroke-width="1.5"></path>
+
+            <!-- Left Arm extending to touch pump casing -->
+            <!-- Normal static Arm -->
+            <path id="farmer-left-arm" d="M 82,110 C 115,105 150,95 198,95" fill="none" stroke="#eae1cb"
+              stroke-width="18" stroke-linecap="round"></path>
+            <path id="farmer-left-arm-skin" d="M 180,97 L 198,95" fill="none" stroke="#c68a4c" stroke-width="12"
+              stroke-linecap="round"></path>
+
+            <!-- Right Arm (reacting or resting) -->
+            <path id="farmer-right-arm" d="M 35,110 C 18,125 10,135 15,160" fill="none" stroke="#eae1cb"
+              stroke-width="18" stroke-linecap="round"></path>
+            <path id="farmer-right-hand" d="M 15,160 C 12,168 8,172 15,178" fill="none" stroke="#c68a4c"
+              stroke-width="12" stroke-linecap="round"></path>
+
+            <!-- Head and Neck -->
+            <rect x="52" y="80" width="14" height="22" rx="3" fill="#c68a4c"></rect>
+            <circle cx="59" cy="72" r="18" fill="#c68a4c"></circle>
+
+            <!-- Turban (white head wrap) -->
+            <ellipse cx="59" cy="55" rx="20" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"></ellipse>
+            <path d="M 40,55 C 50,47 68,47 78,55 C 80,60 75,65 59,62 C 43,65 38,60 40,55 Z" fill="#f8f9fa"></path>
+
+            <!-- Face Features -->
+            <!-- Normal Face Group -->
+            <g id="face-normal">
+              <!-- Eyes -->
+              <circle cx="53" cy="70" r="2.5" fill="#333"></circle>
+              <circle cx="65" cy="70" r="2.5" fill="#333"></circle>
+              <!-- Eyebrows -->
+              <path d="M 49,65 C 52,63 56,65 57,66" stroke="#333" stroke-width="1.5" fill="none"></path>
+              <path d="M 69,65 C 66,63 62,65 61,66" stroke="#333" stroke-width="1.5" fill="none"></path>
+              <!-- Mouth -->
+              <path d="M 56,83 C 58,84 60,84 62,83" stroke="#333" stroke-width="1.5" fill="none"></path>
+            </g>
+
+            <!-- Shocked Face Group (hidden by default) -->
+            <g id="face-shocked" display="none">
+              <!-- Scared big eyes -->
+              <ellipse cx="51" cy="69" rx="4" ry="5" fill="#fff" stroke="#ff0000" stroke-width="1"></ellipse>
+              <circle cx="51" cy="69" r="2" fill="#000"></circle>
+              <ellipse cx="67" cy="69" rx="4" ry="5" fill="#fff" stroke="#ff0000" stroke-width="1"></ellipse>
+              <circle cx="67" cy="69" r="2" fill="#000"></circle>
+
+              <!-- Open screaming mouth -->
+              <ellipse cx="59" cy="85" rx="5" ry="7" fill="#500"></ellipse>
+              <path d="M 56,87 C 58,89 60,89 62,87" stroke="#ff8888" stroke-width="1.5" fill="none"></path>
+
+              <!-- Jittery high eyebrows -->
+              <path d="M 47,61 C 51,59 55,61 57,63" stroke="#000" stroke-width="2" fill="none"></path>
+              <path d="M 71,61 C 67,59 63,61 61,63" stroke="#000" stroke-width="2" fill="none"></path>
+            </g>
+
+            <!-- Dangerous current flow path (from pump through farmer into ground) -->
+            <g id="danger-current-group">
+              <!-- Outer Glow Envelope (Using opacity and width overlay to prevent browser layer-shifting bugs) -->
+              <path id="danger-path-glow" d="M 198,95 C 150,95 115,105 82,110 C 70,125 58,180 58,180 L 82,245 L 82,300"
+                fill="none" stroke="#FF0000" stroke-width="10" opacity="0.4" stroke-linecap="round"></path>
+              <!-- Inner Bright Core -->
+              <path id="danger-path-core" d="M 198,95 C 150,95 115,105 82,110 C 70,125 58,180 58,180 L 82,245 L 82,300"
+                fill="none" stroke="#FFE6E6" stroke-width="3" opacity="1.0" stroke-linecap="round"></path>
+              <!-- Danger current particles container -->
+              <g id="danger-particles-container"></g>
+
+
+            </g>
+
+            <!-- Interactive Sparks overlay (hidden by default) -->
+            <g id="sparks-group" display="none" fill="none" stroke="#ff0000" stroke-width="2.5">
+              <!-- Sparks around farmer's hand contact -->
+              <path d="M 195,90 L 185,85 L 190,95 L 180,90"></path>
+              <path d="M 200,100 L 205,110 L 195,105 L 202,115" stroke="#ffcc00"></path>
+
+              <!-- Sparks around farmer's heart/chest -->
+              <path d="M 60,130 L 50,120 L 65,123 L 55,115" stroke="#ffcc00"></path>
+              <path d="M 75,150 L 85,145 L 78,155 L 88,160"></path>
+
+              <!-- Sparks at feet contact with soil -->
+              <path d="M 50,245 L 40,252 L 52,250 L 45,260" stroke="#ffcc00"></path>
+              <path d="M 65,245 L 75,252 L 63,250 L 70,260"></path>
+            </g>
+          </g> <!-- End Farmer -->
+        </svg>
+      </section>
+
+      <!-- RIGHT ANALYTICS PANEL -->
+      <section class="analytics-panel panel">
+
+        <!-- CARD 1: SHOCK RISK -->
+        <div class="analytics-card">
+          <h2>SHOCK RISK</h2>
+          <div class="gauge-container">
+            <!-- Gauge SVG Dial -->
+            <svg class="gauge-svg" viewBox="0 0 200 120">
+              <!-- Background arch -->
+              <path d="M 20,100 A 80,80 0 0,1 180,100" fill="none" stroke="#253560" stroke-width="16"
+                stroke-linecap="round"></path>
+              <!-- Colored gauge segments (drawn as paths with gradients/colors) -->
+              <!-- Green (Safe) segment -->
+              <path d="M 20,100 A 80,80 0 0,1 43.4,43.4" fill="none" stroke="#10B981" stroke-width="16"></path>
+              <!-- Yellow (Medium) segment -->
+              <path d="M 43.4,43.4 A 80,80 0 0,1 100,20" fill="none" stroke="#F59E0B" stroke-width="16"></path>
+              <!-- Orange (High) segment -->
+              <path d="M 100,20 A 80,80 0 0,1 156.6,43.4" fill="none" stroke="#F97316" stroke-width="16"></path>
+              <!-- Red (Danger) segment -->
+              <path d="M 156.6,43.4 A 80,80 0 0,1 180,100" fill="none" stroke="#EF4444" stroke-width="16"></path>
+
+              <!-- Labels -->
+              <text x="20" y="115" class="gauge-lbl-text" fill="#888" text-anchor="start">SAFE</text>
+              <text x="65" y="32" class="gauge-lbl-text" fill="#888" text-anchor="middle">MEDIUM</text>
+              <text x="135" y="32" class="gauge-lbl-text" fill="#888" text-anchor="middle">HIGH</text>
+              <text x="180" y="115" class="gauge-lbl-text" fill="#888" text-anchor="end">DANGER</text>
+
+              <!-- Needle -->
+              <g id="risk-needle" transform="translate(100, 100) rotate(135)">
+                <line x1="0" y1="0" x2="-75" y2="0" stroke="#ffffff" stroke-width="4" stroke-linecap="round"></line>
+                <polygon points="-70,-4 -82,0 -70,4" fill="#ffffff"></polygon>
+                <circle cx="0" cy="0" r="8" fill="#ffffff"></circle>
+              </g>
+            </svg>
+          </div>
+          <div class="badge-container">
+            <span id="risk-badge" class="danger-badge">DANGER</span>
+          </div>
+        </div>
+
+        <!-- CARD 2: RESISTANCE -->
+        <div class="analytics-card">
+          <h2>RESISTANCE</h2>
+          <div class="gauge-container">
+            <svg class="gauge-svg" viewBox="0 0 200 120">
+              <!-- Background arch -->
+              <path d="M 20,100 A 80,80 0 0,1 180,100" fill="none" stroke="#253560" stroke-width="16"
+                stroke-linecap="round"></path>
+              <!-- Colored segments -->
+              <!-- Green (High Resistance) -->
+              <path d="M 20,100 A 80,80 0 0,1 60,30.7" fill="none" stroke="#10B981" stroke-width="16"></path>
+              <!-- Yellow (Medium Resistance) -->
+              <path d="M 60,30.7 A 80,80 0 0,1 140,30.7" fill="none" stroke="#F59E0B" stroke-width="16"></path>
+              <!-- Red (Low Resistance) -->
+              <path d="M 140,30.7 A 80,80 0 0,1 180,100" fill="none" stroke="#EF4444" stroke-width="16"></path>
+
+              <!-- Labels -->
+              <text x="20" y="115" class="gauge-lbl-text" fill="#888" text-anchor="start">HIGH</text>
+              <text x="100" y="25" class="gauge-lbl-text" fill="#888" text-anchor="middle">MEDIUM</text>
+              <text x="180" y="115" class="gauge-lbl-text" fill="#888" text-anchor="end">LOW</text>
+
+              <!-- Needle -->
+              <g id="resistance-needle" transform="translate(100, 100) rotate(135)">
+                <line x1="0" y1="0" x2="-75" y2="0" stroke="#ffffff" stroke-width="4" stroke-linecap="round"></line>
+                <polygon points="-70,-4 -82,0 -70,4" fill="#ffffff"></polygon>
+                <circle cx="0" cy="0" r="8" fill="#ffffff"></circle>
+              </g>
+            </svg>
+          </div>
+          <div class="badge-container">
+            <span id="resistance-badge" class="danger-badge">LOW RESISTANCE</span>
+          </div>
+        </div>
+
+        <!-- CARD 3: SAFETY STATUS -->
+        <div class="analytics-card status-card">
+          <h2>SAFETY STATUS</h2>
+          <div class="status-content">
+            <div id="safety-status-icon" class="status-icon-box danger-icon-glow">
+              <!-- Warning Warning Icon -->
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                </path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <span id="safety-status-text" class="status-alert-text">SHOCK RISK</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- BOTTOM PANEL (CHALLENGES & PROGRESS) -->
+    <footer class="dashboard-footer">
+      <!-- Title/Goal Card -->
+      <div class="footer-card challenge-mode-card">
+        <div class="challenge-title-row">
+          <!-- Gold Trophy Icon -->
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="#F59E0B" stroke="#F59E0B">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+            <path d="M4 22h16"></path>
+            <path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"></path>
+            <path d="M12 2a4 4 0 0 1 4 4v7c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1V6a4 4 0 0 1 4-4Z"></path>
+          </svg>
+          <h3>CHALLENGE MODE</h3>
+        </div>
+        <p>Make the system safe and protect the farmer.</p>
+      </div>
+
+      <!-- Challenge 1 Card -->
+      <div id="card-challenge-1" class="footer-card challenge-card active">
+        <div class="challenge-card-header">
+          <h4>CHALLENGE 1</h4>
+        </div>
+        <p class="challenge-desc">Starting: Earthing OFF, Wet Hands, High Leakage</p>
+        <div class="challenge-stars" id="stars-challenge-1">
+          <span class="star-icon star-outline">★</span>
+        </div>
+      </div>
+
+      <!-- Challenge 2 Card -->
+      <div id="card-challenge-2" class="footer-card challenge-card">
+        <div class="challenge-card-header">
+          <h4>CHALLENGE 2</h4>
+        </div>
+        <p class="challenge-desc">Reduce shock risk below 20%.</p>
+        <div class="challenge-stars" id="stars-challenge-2">
+          <span class="star-icon star-outline">★</span>
+          <span class="star-icon star-outline">★</span>
+        </div>
+      </div>
+
+      <!-- Challenge 3 Card -->
+      <div id="card-challenge-3" class="footer-card challenge-card">
+        <div class="challenge-card-header">
+          <h4>CHALLENGE 3</h4>
+        </div>
+        <p class="challenge-desc">Find the safest combination of all settings.</p>
+        <div class="challenge-stars" id="stars-challenge-3">
+          <span class="star-icon star-outline">★</span>
+          <span class="star-icon star-outline">★</span>
+          <span class="star-icon star-outline">★</span>
+        </div>
+      </div>
+
+      <!-- Progress Tracker Card -->
+      <div class="footer-card progress-card">
+        <h3>PROGRESS</h3>
+        <div class="progress-info">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="#F59E0B" class="pulse-animation">
+            <polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"></polygon>
+          </svg>
+          <span id="progress-text" class="progress-val">1 / 9</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Script File -->
+  <script src="app.js?v=5"></script>
+</body>
+
+</html>

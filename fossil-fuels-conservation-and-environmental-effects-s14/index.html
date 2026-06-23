@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Fossil Fuel Simulation</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#e8f5e9;
+}
+
+.container{
+    width:90%;
+    max-width:700px;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+h1{
+    color:darkgreen;
+    margin-bottom:15px;
+}
+
+.earth{
+    font-size:90px;
+}
+
+.info{
+    display:flex;
+    justify-content:space-around;
+    margin:20px 0;
+    font-size:22px;
+    font-weight:bold;
+}
+
+button{
+    padding:10px 18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin:5px;
+    font-size:16px;
+}
+
+.burn{
+    background:#d32f2f;
+    color:white;
+}
+
+.green{
+    background:#388e3c;
+    color:white;
+}
+
+#status{
+    margin-top:20px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Fossil Fuel Conservation Simulation</h1>
+
+    <div class="earth">🌍</div>
+
+    <div class="info">
+        <div>
+            Pollution<br>
+            <span id="pollution">20%</span>
+        </div>
+
+        <div>
+            Environment<br>
+            <span id="health">80%</span>
+        </div>
+    </div>
+
+    <button class="burn" onclick="burnFuel()">
+        Burn Fossil Fuel
+    </button>
+
+    <h3 style="margin-top:20px;">
+        Conservation Methods
+    </h3>
+
+    <button class="green" onclick="improve()">
+        ☀ Solar
+    </button>
+
+    <button class="green" onclick="improve()">
+        🌳 Trees
+    </button>
+
+    <button class="green" onclick="improve()">
+        🚌 Transport
+    </button>
+
+    <div id="status">
+        Earth is Healthy 🌱
+    </div>
+
+</div>
+
+<script>
+
+let pollution = 20;
+
+function burnFuel(){
+
+    pollution += 10;
+
+    if(pollution > 100){
+        pollution = 100;
+    }
+
+    update();
+}
+
+function improve(){
+
+    pollution -= 10;
+
+    if(pollution < 0){
+        pollution = 0;
+    }
+
+    update();
+}
+
+function update(){
+
+    let health = 100 - pollution;
+
+    document.getElementById("pollution").innerHTML =
+    pollution + "%";
+
+    document.getElementById("health").innerHTML =
+    health + "%";
+
+    if(pollution > 60){
+
+        document.getElementById("status").innerHTML =
+        "Earth is in Danger ⚠️";
+
+    }else{
+
+        document.getElementById("status").innerHTML =
+        "Earth is Healthy 🌱";
+    }
+}
+
+</script>
+
+</body>
+</html>

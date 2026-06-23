@@ -1,0 +1,544 @@
+/* ==========================================================================
+   STYLE SHEET FOR "WHAT IS INSIDE OUR EYES?"
+   This file handles the visual design, modern card layouts, and CSS shapes.
+   Designed to fit exactly on a single screen (100vh) with NO scrolling.
+   ========================================================================== */
+
+/* Reset default margins and paddings for clean spacing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base page setup with dark blue gradient and flex column layout */
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background: linear-gradient(135deg, #0d1b2a, #1b263b);
+  color: #e0e1dd;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent vertical and horizontal scrollbars */
+}
+
+/* Header style at the top of the screen */
+header {
+  text-align: center;
+  padding: 12px 10px;
+  background-color: rgba(13, 27, 42, 0.7);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+header h1 {
+  font-size: 1.8rem;
+  color: #38bdf8; /* Soft blue color */
+  margin-bottom: 4px;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+header p {
+  font-size: 0.95rem;
+  color: #8d99ae;
+}
+
+/* Main Grid Layout containing the 3 panels */
+main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 240px 1fr 340px; /* Left panel fixed, center grows, right panel fixed */
+  gap: 15px;
+  padding: 15px;
+  height: calc(100vh - 75px); /* Ensure layout fits the remaining viewport height */
+  overflow: hidden;
+}
+
+/* Base styling for all 3 panels (Rounded Card design) */
+.panel {
+  background-color: rgba(27, 38, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px); /* Modern frosted-glass effect */
+}
+
+/* Headers inside panels */
+.panel-title {
+  font-size: 1.15rem;
+  color: #38bdf8;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   LEFT PANEL - EYE PARTS SELECTION
+   ========================================================================== */
+.parts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  justify-content: center; /* Center the buttons vertically */
+}
+
+/* Interactive part buttons styling */
+.btn-part {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.btn-part:hover {
+  background-color: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.5);
+  color: #ffffff;
+}
+
+/* Styling applied to the selected eye part button */
+.btn-part.active {
+  background-color: #38bdf8;
+  border-color: #38bdf8;
+  color: #0d1b2a;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+/* ==========================================================================
+   CENTER PANEL - EYE DIAGRAM & INTERACTIVE CONTROLS
+   ========================================================================== */
+.center-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space out diagram and object flows */
+  align-items: center;
+  gap: 15px;
+}
+
+/* Box housing the eye diagram and bright/dim buttons */
+.simulation-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Eye Diagram Shape Builder */
+.eye-diagram-container {
+  position: relative;
+  width: 280px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+/* The Sclera (White shape of eyeball) */
+.eyeball {
+  width: 240px;
+  height: 150px;
+  background-color: #ffffff;
+  /* Double radius creates horizontal almond eye shape */
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  border: 4px solid #415a77;
+  position: relative;
+  overflow: hidden; /* Ensures iris/retina are masked inside the eyeball shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.25s ease;
+  z-index: 2;
+}
+
+/* Retina - Red layer lining inside back wall */
+.retina {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  border: 0px solid transparent;
+  pointer-events: none; /* Mouse clicks go through it */
+  transition: all 0.25s ease;
+}
+
+/* Iris - Blue colored circle */
+.iris {
+  width: 110px;
+  height: 110px;
+  background: radial-gradient(circle, #38bdf8 35%, #0284c7 95%);
+  border-radius: 50%;
+  border: 2px solid #0d1b2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  z-index: 3;
+}
+
+/* Pupil - Black hole opening in the center of iris */
+.pupil {
+  width: 44px; /* default middle size */
+  height: 44px;
+  background-color: #0d1b2a;
+  border-radius: 50%;
+  /* SMOOTH TRANSITIONS when brightLight() and dimLight() run */
+  transition: width 0.35s ease, height 0.35s ease;
+}
+
+/* Pupil state in Bright Light (Constricted/Small) */
+.pupil.bright {
+  width: 20px;
+  height: 20px;
+}
+
+/* Pupil state in Dim Light (Dilated/Large) */
+.pupil.dim {
+  width: 66px;
+  height: 66px;
+}
+
+/* Cornea - Clear overlay shape in front of Iris */
+.cornea {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  background-color: rgba(56, 189, 248, 0.04);
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 4;
+}
+
+/* Lens - Oval behind the pupil */
+.lens {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px dashed rgba(245, 158, 11, 0.2);
+  background-color: rgba(245, 158, 11, 0.02);
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 1; /* Sits behind iris layer */
+}
+
+/* Optic Nerve - Yellow/Grey connection tube exiting right side */
+.optic-nerve {
+  position: absolute;
+  right: 10px;
+  width: 50px;
+  height: 30px;
+  background-color: #415a77;
+  border: 3px solid #334155;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  z-index: 1; /* Lies behind eyeball */
+  transition: all 0.25s ease;
+}
+
+/* Diagram Highlights triggered by JS showPart() */
+.cornea.highlight {
+  border-color: #00f0ff;
+  border-style: solid;
+  background-color: rgba(0, 240, 255, 0.15);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+}
+
+.iris.highlight {
+  border-color: #38bdf8;
+  background: radial-gradient(circle, #7dd3fc 30%, #0284c7 95%);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+}
+
+.pupil.highlight {
+  background-color: #000000;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.lens.highlight {
+  border-color: #f59e0b;
+  border-style: solid;
+  background-color: rgba(245, 158, 11, 0.25);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+}
+
+.retina.highlight {
+  border: 8px solid #ef4444; /* thick red wall */
+  box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.6);
+}
+
+.optic-nerve.highlight {
+  background-color: #f59e0b;
+  border-color: #ffc300;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+}
+
+/* Light simulation control buttons layout */
+.light-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-control {
+  background-color: #1e293b;
+  border: 1.5px solid #475569;
+  color: #cbd5e1;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-control:hover {
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.btn-control.active {
+  background-color: #38bdf8;
+  border-color: #38bdf8;
+  color: #0d1b2a;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+/* Object Simulation pathway container styling */
+.object-section {
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.object-section h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.object-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-object {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-object:hover {
+  background-color: rgba(56, 189, 248, 0.1);
+  border-color: #38bdf8;
+}
+
+.btn-object.active {
+  background-color: #0ea5e9;
+  border-color: #0ea5e9;
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.3);
+}
+
+/* Visual path flow container styles */
+.path-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px;
+  background-color: rgba(13, 27, 42, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Box for each node in the optical path */
+.path-step {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #8d99ae;
+  font-weight: 600;
+  text-align: center;
+  min-width: 60px;
+  transition: all 0.25s ease;
+}
+
+/* Dynamic highlighting applied sequentially via script */
+.path-step.active {
+  background-color: #38bdf8;
+  border-color: #38bdf8;
+  color: #0d1b2a;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+  transform: scale(1.06);
+}
+
+.path-arrow {
+  color: #475569;
+  font-weight: bold;
+  font-size: 0.8rem;
+  transition: color 0.25s;
+}
+
+.path-arrow.active {
+  color: #38bdf8;
+}
+
+/* ==========================================================================
+   RIGHT PANEL - INFORMATION DESCRIPTIONS, FACTS, & QUIZ
+   ========================================================================== */
+.right-panel {
+  justify-content: space-between; /* Evenly space information elements */
+  gap: 12px;
+}
+
+/* Description display section */
+.info-section {
+  background-color: rgba(13, 27, 42, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 12px;
+  flex: 1;
+}
+
+#info-part-title {
+  font-size: 1.1rem;
+  color: #38bdf8;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+#info-part-desc {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+}
+
+/* Rotating fun facts container */
+.fun-fact-section {
+  background-color: rgba(245, 158, 11, 0.05); /* Orange hue fact card */
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-height: 68px; /* Restrict height layout shifts */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fact-title {
+  font-size: 0.8rem;
+  color: #f59e0b;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+#fun-fact-text {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #e2e8f0;
+  transition: opacity 0.3s;
+}
+
+/* Quick interactive quiz container */
+.quiz-section {
+  background-color: rgba(13, 27, 42, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.quiz-title {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.quiz-question {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.quiz-options {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-quiz {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-quiz:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Answer feedback message layout */
+.quiz-feedback {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  min-height: 18px; /* Hold layout spacing */
+}
+
+/* Quiz styling helpers dynamically set in JS */
+.quiz-correct {
+  background-color: #22c55e !important; /* Force green colors */
+  border-color: #22c55e !important;
+  color: #ffffff !important;
+}
+
+.quiz-incorrect {
+  background-color: #ef4444 !important; /* Force red colors */
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+}

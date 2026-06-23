@@ -1,0 +1,150 @@
+CONDUCTOVerse - Conductors and Insulators Learning Website
+
+
+PROJECT REQUIREMENTS
+
+
+Project Name:
+ConductoVerse - Interactive Learning Website for Conductors and Insulators
+
+Project Objective:
+To help school students learn about conductors and insulators through interactive content, experiments, quizzes, and virtual activities.
+
+Target Users:
+
+* School Students
+* Teachers
+* Science Learners
+
+Technology Stack:
+
+* HTML5
+* CSS3
+* JavaScript
+* VS Code
+* GitHub
+
+FEATURES / MODULES
+
+1. Home Page (index.html)
+
+   * Introduction to ConductoVerse
+   * Navigation cards
+   * Start Learning button
+
+2. Learning Module (learn.html)
+
+   * Conductors explanation
+   * Insulators explanation
+   * Comparison table
+   * Real-life examples
+   * Fun facts section
+
+3. Virtual Bulb Experiment (bulb.html)
+
+   * Select material
+   * Bulb glows for correct answer
+   * Error message for incorrect answer
+
+4. Quiz Module (quiz.html)
+
+   * Multiple-choice questions
+   * Score calculation
+   * Performance badge
+
+5. Real-Life Applications (uses.html)
+
+   * House wiring
+   * Power lines
+   * Chargers
+   * Safety gloves
+   * Switch boards
+
+6. Virtual Sorting Lab (lab.html)
+
+   * Drag and drop activity
+   * Conductors and Insulators classification
+   * Score tracking
+
+7. Certificate Module (certificate.html)
+
+   * Student name input
+   * Achievement certificate generation
+
+
+
+TEAM TASK DIVISION
+
+
+## Member 1 - Project Lead & Storyboard
+
+* Project Idea Selection
+* Storyboard Creation
+* Feature Planning
+* Workflow Design
+* Team Coordination
+
+## Member 2 - Documentation Manager
+
+* README.md Creation
+* requirements.txt Preparation
+* Project Documentation
+* GitHub Repository Maintenance
+
+## Member 3 - Frontend Developer
+
+* Home Page (index.html)
+* Learn Page (learn.html)
+* Navigation Design
+* User Interface Improvements
+
+## Member 4 - UI/UX & Styling Developer
+
+* CSS Styling (style.css)
+* Responsive Design
+* Card Animations
+* Theme and Layout Design
+
+## Member 5 - JavaScript Developer
+
+* Virtual Bulb Experiment (bulb.html)
+* Quiz Module (quiz.html)
+* JavaScript Logic
+* Interactive Features
+
+## Member 6 - Testing & Integration Engineer
+
+* Real-Life Uses Page (uses.html)
+* Virtual Lab (lab.html)
+* Certificate Module (certificate.html)
+* Testing and Bug Fixing
+* Final Integration of All Modules
+
+
+TASK ASSIGNMENT STATUS
+
+✓ Storyboard Assigned - Member 1
+✓ README Assigned - Member 2
+✓ Requirements File Assigned - Member 2
+✓ Home Page Assigned - Member 3
+✓ Learn Page Assigned - Member 3
+✓ CSS Styling Assigned - Member 4
+✓ Bulb Experiment Assigned - Member 5
+✓ Quiz Module Assigned - Member 5
+✓ Uses Page Assigned - Member 6
+✓ Virtual Lab Assigned - Member 6
+✓ Certificate Module Assigned - Member 6
+✓ Testing and Integration Assigned - Member 6
+
+EXPECTED OUTCOME
+
+Students will be able to:
+
+* Understand conductors and insulators
+* Identify real-life applications
+* Perform virtual experiments
+* Test their knowledge through quizzes
+* Earn a completion certificate
+
+Project Status:
+IN PROGRESS

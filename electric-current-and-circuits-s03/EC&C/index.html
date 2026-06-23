@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shock Squad: Circuit Explorer Hub</title>
+  
+  <!-- Preconnecting Google Fonts for loading diagnostics -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <!-- CSS Layout stylesheet link -->
+  <link rel="stylesheet" href="css/hub.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+     1. ENTRANCE SCREEN (Traces lines & loads dashboard elements)
+     ========================================================================== -->
+  <div id="entrance-overlay">
+    <svg class="circuit-trace-svg" viewBox="0 0 300 120">
+      <path class="trace-line" d="M 10,60 L 90,60 L 130,20 L 170,100 L 210,60 L 290,60" />
+      <path class="trace-line trace-line-secondary" d="M 50,60 L 90,90 L 210,30 L 250,60" />
+    </svg>
+    <div class="entrance-logo-text">SHOCK SQUAD</div>
+  </div>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    
+    <!-- HEADER & GAMIFICATION -->
+    <header>
+      <div class="header-logo">
+        <span class="header-logo-icon">⚡</span>
+        <h1 class="header-logo-text">Shock Squad</h1>
+        <span class="squad-badge">Explorer Hub</span>
+      </div>
+
+      <div class="gamification-container">
+        <!-- Streak Card -->
+        <div class="stats-card">
+          <div class="stat-item" title="Keep learning daily to grow your streak!">
+            <span>🔥 Streak:</span>
+            <span class="stat-val">3 Days</span>
+          </div>
+          <div class="stat-item" title="Completed activities earn points!">
+            <span>⚡ Points:</span>
+            <span class="stat-val">150 SP</span>
+          </div>
+        </div>
+
+        <!-- Level Bar -->
+        <div class="level-progress-wrapper">
+          <div class="level-label">
+            <span>Level 2: Apprentice</span>
+            <span>75%</span>
+          </div>
+          <div class="level-progress-bar">
+            <div class="level-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY -->
+    <main>
+      
+      <!-- Component grid header -->
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Learn About Components</h2>
+          <p class="section-subtitle">Click on any card to view detailed specifications, diagrams, and real-world uses.</p>
+        </div>
+        <span class="squad-badge" style="border-color: var(--accent-cyan); color: var(--accent-cyan);">Class 6-10 Syllabus</span>
+      </div>
+
+      <!-- Syllabus Learning Grid -->
+      <div class="syllabus-grid" id="learning-grid">
+        <!-- Populate dynamically with cards in js/hub.js -->
+      </div>
+
+      <!-- Lab launchers header -->
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Enter the Simulation Labs</h2>
+          <p class="section-subtitle">Deploy learning into virtual tests and safety hazard scenarios.</p>
+        </div>
+      </div>
+
+      <!-- Simulator Portals links -->
+      <div class="portal-grid">
+        <a href="educational-sandbox/index.html" class="portal-card portal-card-sandbox">
+          <div class="portal-text-wrap">
+            <h3 class="portal-title">
+              <span class="portal-title-icon">🛠️</span>
+              Educational Sandbox
+            </h3>
+            <p class="portal-desc">Build basic circuits using custom wire slots. Test circuits to verify electron particle flow and check for dangerous short circuits.</p>
+          </div>
+          <div class="portal-action-row">
+            Launch Sandbox
+            <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+
+        <a href="borewell-simulation/index.html" class="portal-card portal-card-borewell">
+          <div class="portal-text-wrap">
+            <h3 class="portal-title">
+              <span class="portal-title-icon">⚠️</span>
+              Borewell Safety Scene
+            </h3>
+            <p class="portal-desc">Explore real-world industrial electrical safety systems. Diagnose alert indicators and prevent hazards under physical grid conditions.</p>
+          </div>
+          <div class="portal-action-row">
+            Explore Safety Scene
+            <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </a>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ==========================================================================
+     6. IN-DEPTH DETAIL MODAL POPUP
+     ========================================================================== -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal-card" id="modal-card">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close details dialog">&times;</button>
+      
+      <!-- Top header layout -->
+      <div class="modal-header">
+        <div class="modal-icon" id="modal-component-icon">🔋</div>
+        <div class="modal-header-text">
+          <h3 class="modal-title" id="modal-component-name">Component Name</h3>
+          <div class="modal-subtitle-row">
+            <span class="card-class-badge" id="modal-component-grade">Class 6</span>
+            <span class="card-class-badge" id="modal-component-type-badge" style="color: var(--accent-cyan);">Power</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core descriptions sections -->
+      <div class="modal-section">
+        <h4 class="modal-section-title">How It Works</h4>
+        <p class="modal-section-body" id="modal-component-how">This explains the core physics operations of the device, providing highly detailed classroom definitions.</p>
+      </div>
+
+      <div class="modal-section">
+        <h4 class="modal-section-title">Real-World Use</h4>
+        <p class="modal-section-body" id="modal-component-use">Describes where this device is used in real engineering structures.</p>
+      </div>
+
+      <!-- Schematic graphic placeholder -->
+      <div class="modal-section">
+        <h4 class="modal-section-title">Electrical Symbol (Schematic)</h4>
+        <div class="circuit-diagram-box">
+          <div class="diagram-content-wrap">
+            <div id="modal-schematic-svg-wrap">
+              <!-- Dynamically populated in js/hub.js -->
+            </div>
+            <div class="diagram-label" id="modal-schematic-label">[Schematic Symbol]</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="modal-action-btn" id="modal-action-close-btn">Acknowledge & Close</button>
+    </div>
+  </div>
+
+  <!-- JS Controller link -->
+  <script src="js/hub.js"></script>
+</body>
+</html>

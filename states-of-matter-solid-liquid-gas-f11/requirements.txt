@@ -1,0 +1,44 @@
+# =============================================
+# Project: Interactive States of Matter Explorer
+# =============================================
+
+# --- Core Technologies ---
+HTML5
+CSS3
+JavaScript (ES6+)
+
+# --- Simulation & Animation ---
+Canvas API (HTML5 built-in)        # Particle simulation rendering
+RequestAnimationFrame (built-in)   # Smooth animation loop
+
+# --- UI & Interactivity ---
+CSS Flexbox & Grid                 # Layout system
+CSS Media Queries                  # Responsive design (mobile + desktop)
+CSS Transitions & Animations       # State change visual effects
+Range Input (HTML built-in)        # Temperature and pressure sliders
+
+# --- Educational Content ---
+DOM Manipulation (Vanilla JS)      # Dynamic properties panel updates
+Event Listeners (Vanilla JS)       # Slider and card interaction handling
+
+# --- Real-Life Examples ---
+# Elements/Substances covered:
+# Ice, Water, Steam, Oxygen, Nitrogen, Iron, Sulfur, Bromine
+
+# --- Version Control & Collaboration ---
+Git
+GitHub
+GitHub Issues                      # Task tracking per member
+GitHub Pages                       # Final deployment
+
+# --- Development Tools ---
+Visual Studio Code
+Live Server (VS Code Extension)    # Local development server
+
+# --- Testing ---
+Chrome DevTools                    # Debugging and performance
+Cross-browser testing              # Chrome, Firefox, Edge
+Mobile responsiveness testing      # Various screen sizes
+
+# --- No external frameworks or paid libraries required ---
+# All features built with native web technologies only

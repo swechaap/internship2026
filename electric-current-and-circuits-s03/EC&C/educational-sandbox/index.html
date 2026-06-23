@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shock Squad: Circuit Explorer Sandbox</title>
+  
+  <!-- Preconnecting Google Fonts for loading diagnostics -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Local Sandbox Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- CORE DASHBOARD LAYOUT -->
+  <div class="dashboard-container">
+    
+    <!-- 1. HEADER SECTION -->
+    <header>
+      <div class="brand-section">
+        <!-- Back navigation button to return to the Hub dashboard -->
+        <a href="../index.html" class="back-link" title="Back to Dashboard Hub">
+          <svg style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </a>
+        <div>
+          <h1 class="brand-title">SHOCK SQUAD</h1>
+          <span class="brand-subtitle">CIRCUIT EXPLORER LAB</span>
+        </div>
+      </div>
+
+      <!-- Header actions bar, including dynamic slot adjustment and terminal output logs -->
+      <div class="top-action-bar">
+        <!-- Tutorial Trigger -->
+        <button id="btn-start-tutorial" class="btn btn-tutorial" title="Launch the guided sandbox tutorial">
+          📖 Tutorial
+        </button>
+
+        <!-- Slot Count modifiers -->
+        <button id="btn-add-slot" class="btn btn-add" title="Expand circuit loop to hold more slots">
+          ➕ Add Slot
+        </button>
+        <button id="btn-remove-slot" class="btn btn-remove" title="Shrink circuit loop, deleting extra slots">
+          ➖ Remove Slot
+        </button>
+
+        <!-- Digital System Terminal -->
+        <div class="terminal-container" title="System logs, diagnostics, and loop warnings">
+          <span class="terminal-prefix">SYS:</span>
+          <span class="terminal-output" id="terminal-text">System initializing...</span>
+        </div>
+
+        <!-- Simulation Triggers -->
+        <button id="btn-test" class="btn btn-test" title="Simulate voltage and test loop conductivity">
+          ⚡ Test Circuit
+        </button>
+        <button id="btn-reset" class="btn btn-reset" title="Remove all components from the loop slots">
+          🔄 Reset
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. SIDEBAR SECTION (Grade Selection & Component Inventory) -->
+    <aside class="sidebar">
+      <!-- Syllabus Filter -->
+      <div class="grade-selector-container">
+        <label for="grade-select" class="sidebar-section-title">Select Grade Level</label>
+        <select id="grade-select" class="custom-select">
+          <option value="Class 6" selected>Class 6 (Basics)</option>
+          <option value="Class 7">Class 7 (Heating & Safety)</option>
+          <option value="Class 8">Class 8 (Liquids & LEDs)</option>
+          <option value="Class 10">Class 10 (Meters & Resistance)</option>
+        </select>
+      </div>
+
+      <!-- Inventory Grid (Populated dynamically via app.js) -->
+      <div class="inventory-container">
+        <h3 class="sidebar-section-title">Component Inventory</h3>
+        <div id="inventory-grid" class="inventory-grid">
+          <!-- Inventory cards are generated dynamically by app.js based on selected grade -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- 3. CENTRAL WORKSPACE AREA (Circuit loop board + slots positions) -->
+    <main class="workspace-area" id="workspace-area">
+      
+      <!-- Guided Tutorial Overlay banner (shown absolutely relative to workspace) -->
+      <div id="tutorial-overlay" class="tutorial-overlay" style="display: none;">
+        <div class="tutorial-card">
+          <div class="tutorial-card-header">
+            <span class="tutorial-badge">TUTORIAL</span>
+            <span class="tutorial-steps">Step <span id="tutorial-step-num">1</span> of 5</span>
+          </div>
+          <p id="tutorial-step-text" class="tutorial-text">Loading tutorial directives...</p>
+          <div class="tutorial-footer">
+            <div class="tutorial-progress-bg">
+              <div id="tutorial-progress-bar" class="tutorial-progress-fill" style="width: 20%;"></div>
+            </div>
+            <button id="btn-skip-tutorial" class="tutorial-skip-btn">Skip Tutorial</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- The physical circuit board coordinates -->
+      <div class="circuit-board">
+        <!-- SVG Wire traces -->
+        <svg class="wire-loop-svg" viewBox="0 0 480 480">
+          <!-- Backdrop glow pathway shadow -->
+          <path class="base-wire-path" d="M 70,70 L 410,70 L 410,410 L 70,410 Z" />
+          <!-- Active wire path (changes color when flowing) -->
+          <path class="core-wire-path" d="M 70,70 L 410,70 L 410,410 L 70,410 Z" />
+          <!-- Neon running current particles -->
+          <path class="flow-particles" d="M 70,70 L 410,70 L 410,410 L 70,410 Z" />
+        </svg>
+
+        <!-- Container for dynamically placed slot cards (absolute positions overlaying SVG wires) -->
+        <div id="slots-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+          <!-- Dynamically populated inside updateWorkspace() in app.js. Contains elements like .circuit-slot. 
+               NOTE: pointer-events: none is not applied to children so slot cards can still be clicked! -->
+        </div>
+      </div>
+      
+    </main>
+
+    <!-- 4. BOTTOM INFO BRIEF PANEL (Academic specs and description panel) -->
+    <footer class="brief-panel">
+      <!-- Default state: empty workspace notice -->
+      <div id="brief-empty" class="brief-empty">
+        <span class="brief-empty-icon">💡</span>
+        <span>Click on any component in the inventory or workspace slots to view detailed specifications, behavior, and resistance values.</span>
+      </div>
+
+      <!-- Populated state: detailed parameters for clicked component -->
+      <div id="brief-content" class="brief-content" style="display: none;">
+        <div class="brief-icon-wrap">
+          <!-- Dynamically populated inline component SVG -->
+          <div id="brief-icon" style="width: 100%; height: 100%;"></div>
+        </div>
+        <div class="brief-details">
+          <div class="brief-header-row">
+            <h4 id="brief-title" class="brief-title">Component Name</h4>
+            <span id="brief-grade" class="brief-grade">Class 6</span>
+            <span id="brief-badge" class="component-card-badge">Type</span>
+          </div>
+          <p id="brief-desc" class="brief-desc">Scientific definition and structural description...</p>
+          
+          <div class="brief-properties">
+            <div class="property-item">
+              <span class="property-label">Behavior:</span>
+              <span id="brief-prop-behavior" class="property-value">Normal state behavior...</span>
+            </div>
+            <div class="property-item">
+              <span class="property-label">Resistance:</span>
+              <span id="brief-prop-resistance" class="property-value">0.1 Ω</span>
+            </div>
+            <!-- Custom power voltage or fuse rating parameter container -->
+            <div id="brief-prop-extra-container" class="property-item" style="display: none;">
+              <span id="brief-prop-extra-label" class="property-label">Extra Label:</span>
+              <span id="brief-prop-extra-value" class="property-value">Extra Value</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- GAME LOOPS CONTROLLER SCRIPT -->
+  <script src="app.js" defer></script>
+</body>
+</html>

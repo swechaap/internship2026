@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Bulb Test</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        ⚡ ConductoVerse
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="learn.html">Learn</a></li>
+        <li><a href="bulb.html">Bulb Test</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="uses.html">Uses</a></li>
+        <li><a href="lab.html">Virtual Lab</a></li>
+        <li><a href="certificate.html">Certificate</a></li>
+    </ul>
+
+</nav>
+
+
+<body>
+
+<div class="container">
+
+<h1>💡 Virtual Bulb Test</h1>
+
+<p>
+Select the material that can connect the battery
+and allow electricity to light the bulb.
+</p>
+
+<div class="circuit">
+
+<div id="bulb" class="bulb">
+💡
+</div>
+
+</div>
+
+<div class="options">
+
+<button onclick="checkAnswer('Copper')">
+Copper Wire
+</button>
+
+<button onclick="checkAnswer('Rubber')">
+Rubber
+</button>
+
+<button onclick="checkAnswer('Plastic')">
+Plastic
+</button>
+
+<button onclick="checkAnswer('Glass')">
+Glass
+</button>
+
+</div>
+
+<div id="message" class="message"></div>
+
+<div id="next" class="next">
+<a href="quiz.html">
+🎯 Go To Quiz
+</a>
+</div>
+
+</div>
+
+<script src="js/bulb.js"></script>
+
+</body>
+</html>

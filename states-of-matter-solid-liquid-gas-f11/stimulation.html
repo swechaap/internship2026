@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>States of Matter Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #020810;
+  --bg-panel: #080f1e;
+  --bg-card: #0d1829;
+  --bg-card2: #111f35;
+  --border: #1a2d4a;
+  --border-glow: #1e3a5f;
+  --solid-color: #3b82f6;
+  --solid-glow: #60a5fa;
+  --solid-dark: #1d4ed8;
+  --liquid-color: #06b6d4;
+  --liquid-glow: #22d3ee;
+  --liquid-dark: #0891b2;
+  --gas-color: #a855f7;
+  --gas-glow: #c084fc;
+  --gas-dark: #7c3aed;
+  --plasma-color: #f97316;
+  --plasma-glow: #fb923c;
+  --accent: #f59e0b;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-dim: #4a5568;
+  --success: #10b981;
+  --danger: #ef4444;
+  --temp-cold: #3b82f6;
+  --temp-hot: #ef4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(59,130,246,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(168,85,247,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 50% 50%, rgba(6,182,212,0.02) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ───── HEADER ───── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(2,8,16,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--solid-glow);
+}
+.logo-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--solid-color), var(--gas-color));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 0 20px rgba(59,130,246,0.4);
+}
+
+nav { display: flex; gap: 0; }
+.nav-btn {
+  background: none; border: none; color: var(--text-secondary);
+  padding: 8px 20px; cursor: pointer; font-family: inherit;
+  font-size: 0.9rem; font-weight: 500; border-radius: 6px;
+  transition: all 0.2s;
+}
+.nav-btn:hover { color: var(--text-primary); background: var(--bg-card); }
+.nav-btn.active { color: var(--solid-glow); background: rgba(59,130,246,0.1); }
+
+/* ───── MAIN LAYOUT ───── */
+.app {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 300px 1fr 340px;
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+  min-height: calc(100vh - 64px);
+}
+
+/* ───── PANELS ───── */
+.panel {
+  border-right: 1px solid var(--border);
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+.panel:last-child { border-right: none; border-left: 1px solid var(--border); }
+
+.section-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title span { 
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+/* ───── STATE SELECTOR ───── */
+.state-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
+.state-btn {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 8px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.state-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  opacity: 0; transition: opacity 0.25s;
+}
+.state-btn:hover { transform: translateY(-2px); }
+.state-btn .state-icon { font-size: 1.4rem; }
+
+.state-btn.solid { border-color: var(--solid-color); }
+.state-btn.solid.active { 
+  background: rgba(59,130,246,0.15);
+  color: var(--solid-glow);
+  box-shadow: 0 0 20px rgba(59,130,246,0.2), inset 0 0 20px rgba(59,130,246,0.05);
+}
+.state-btn.liquid { border-color: var(--liquid-color); }
+.state-btn.liquid.active {
+  background: rgba(6,182,212,0.15);
+  color: var(--liquid-glow);
+  box-shadow: 0 0 20px rgba(6,182,212,0.2), inset 0 0 20px rgba(6,182,212,0.05);
+}
+.state-btn.gas { border-color: var(--gas-color); }
+.state-btn.gas.active {
+  background: rgba(168,85,247,0.15);
+  color: var(--gas-glow);
+  box-shadow: 0 0 20px rgba(168,85,247,0.2), inset 0 0 20px rgba(168,85,247,0.05);
+}
+.state-btn.plasma { border-color: var(--plasma-color); }
+.state-btn.plasma.active {
+  background: rgba(249,115,22,0.15);
+  color: var(--plasma-glow);
+  box-shadow: 0 0 20px rgba(249,115,22,0.2), inset 0 0 20px rgba(249,115,22,0.05);
+}
+
+/* ───── SLIDERS ───── */
+.control-group { margin-bottom: 1.5rem; }
+.control-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.control-label {
+  font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 6px;
+}
+.control-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem; font-weight: 600;
+}
+.control-value.temp { color: var(--solid-glow); }
+.control-value.pressure { color: var(--gas-glow); }
+
+input[type="range"] {
+  width: 100%; height: 6px;
+  -webkit-appearance: none; appearance: none;
+  border-radius: 3px; outline: none; cursor: pointer;
+}
+.temp-slider { background: linear-gradient(90deg, var(--temp-cold), var(--danger)); }
+.pressure-slider { background: linear-gradient(90deg, #1e3a5f, var(--gas-color)); }
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+  border: 2px solid var(--border-glow);
+}
+
+.slider-marks {
+  display: flex; justify-content: space-between;
+  font-size: 0.68rem; color: var(--text-dim);
+  margin-top: 4px; font-family: 'JetBrains Mono', monospace;
+}
+
+/* Phase zones */
+.phase-zones { display: flex; gap: 4px; margin-top: 8px; }
+.phase-zone {
+  flex: 1; text-align: center; padding: 4px;
+  border-radius: 4px; font-size: 0.65rem; font-weight: 600;
+}
+.zone-solid { background: rgba(59,130,246,0.15); color: var(--solid-glow); }
+.zone-liquid { background: rgba(6,182,212,0.15); color: var(--liquid-glow); }
+.zone-gas { background: rgba(168,85,247,0.15); color: var(--gas-glow); }
+
+/* ───── CANVAS CENTER ───── */
+.center-panel {
+  display: flex; flex-direction: column;
+  background: var(--bg-panel);
+  min-height: 0;
+}
+
+.sim-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.sim-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+}
+
+.state-badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+  transition: all 0.4s;
+}
+.badge-solid { background: rgba(59,130,246,0.2); color: var(--solid-glow); border: 1px solid var(--solid-color); }
+.badge-liquid { background: rgba(6,182,212,0.2); color: var(--liquid-glow); border: 1px solid var(--liquid-color); }
+.badge-gas { background: rgba(168,85,247,0.2); color: var(--gas-glow); border: 1px solid var(--gas-color); }
+.badge-plasma { background: rgba(249,115,22,0.2); color: var(--plasma-glow); border: 1px solid var(--plasma-color); }
+
+.canvas-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+}
+
+#simCanvas {
+  width: 100%; height: 100%;
+  display: block;
+  background: radial-gradient(ellipse at center, #0a1525 0%, #020810 100%);
+}
+
+.canvas-overlay {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.state-watermark {
+  position: absolute; bottom: 16px; right: 16px;
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  opacity: 0.04;
+  text-transform: uppercase;
+  transition: all 0.5s;
+}
+
+/* Controls bar */
+.sim-controls {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+
+.ctrl-btn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-family: inherit; font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border);
+  display: flex; align-items: center; gap: 6px;
+  transition: all 0.2s;
+}
+.ctrl-btn.primary {
+  background: linear-gradient(135deg, var(--solid-dark), var(--solid-color));
+  color: white; border-color: var(--solid-color);
+}
+.ctrl-btn.primary:hover { box-shadow: 0 0 20px rgba(59,130,246,0.4); transform: translateY(-1px); }
+.ctrl-btn.secondary { background: var(--bg-card); color: var(--text-secondary); }
+.ctrl-btn.secondary:hover { background: var(--bg-card2); color: var(--text-primary); }
+.ctrl-btn.danger {
+  background: rgba(239,68,68,0.1); color: var(--danger); border-color: var(--danger);
+}
+.ctrl-btn.danger:hover { background: rgba(239,68,68,0.2); }
+
+.particle-count-display {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  display: flex; align-items: center; gap: 6px;
+}
+.particle-count-display strong { color: var(--accent); }
+
+/* Stats bar */
+.stats-bar {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.stat-item {
+  background: var(--bg-panel);
+  padding: 10px 16px;
+  text-align: center;
+}
+.stat-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'Orbitron', monospace; }
+.stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700; margin-top: 4px; }
+
+/* ───── RIGHT PANEL ───── */
+.search-group { position: relative; margin-bottom: 1.5rem; }
+.search-input {
+  width: 100%; padding: 11px 14px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: inherit; font-size: 0.9rem;
+  outline: none; transition: all 0.2s;
+}
+.search-input:focus {
+  border-color: var(--solid-color);
+  box-shadow: 0 0 15px rgba(59,130,246,0.15);
+}
+.search-btn {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  padding: 6px 16px;
+  background: linear-gradient(135deg, var(--solid-dark), var(--gas-dark));
+  color: white; border: none; border-radius: 6px;
+  font-family: inherit; font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.search-btn:hover { box-shadow: 0 0 15px rgba(59,130,246,0.3); }
+
+/* Autocomplete */
+.autocomplete {
+  position: absolute; left: 0; right: 0; top: calc(100% + 4px);
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  z-index: 50;
+  max-height: 180px;
+  overflow-y: auto;
+  display: none;
+}
+.autocomplete.show { display: block; }
+.ac-item {
+  padding: 8px 14px;
+  cursor: pointer; font-size: 0.82rem;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.15s;
+}
+.ac-item:hover { background: var(--bg-card); }
+.ac-state-tag {
+  font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.ac-s { background: rgba(59,130,246,0.15); color: var(--solid-glow); }
+.ac-l { background: rgba(6,182,212,0.15); color: var(--liquid-glow); }
+.ac-g { background: rgba(168,85,247,0.15); color: var(--gas-glow); }
+
+/* Result card */
+.result-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s;
+}
+.result-header {
+  padding: 12px 16px;
+  background: var(--bg-card2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.result-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.95rem; font-weight: 700;
+  flex: 1;
+}
+.result-body { padding: 12px 16px; }
+
+.prop-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(26,45,74,0.5);
+  font-size: 0.8rem;
+  gap: 8px;
+}
+.prop-row:last-child { border-bottom: none; }
+.prop-key { color: var(--text-dim); white-space: nowrap; }
+.prop-val { color: var(--text-primary); font-weight: 500; text-align: right; flex: 1; }
+.prop-val.state-val { font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+/* Explanation box */
+.explanation-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 1.5rem;
+}
+.explanation-box h4 {
+  font-size: 0.75rem;
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.explanation-text {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Examples */
+.examples-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.example-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.example-chip:hover { transform: translateY(-2px); }
+.example-chip .ex-icon { font-size: 1.2rem; }
+.example-chip .ex-name { color: var(--text-primary); }
+.example-chip .ex-state { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; }
+.example-chip.s { border-color: rgba(59,130,246,0.4); }
+.example-chip.s:hover { background: rgba(59,130,246,0.1); box-shadow: 0 0 12px rgba(59,130,246,0.15); }
+.example-chip.l { border-color: rgba(6,182,212,0.4); }
+.example-chip.l:hover { background: rgba(6,182,212,0.1); box-shadow: 0 0 12px rgba(6,182,212,0.15); }
+.example-chip.g { border-color: rgba(168,85,247,0.4); }
+.example-chip.g:hover { background: rgba(168,85,247,0.1); box-shadow: 0 0 12px rgba(168,85,247,0.15); }
+
+/* Properties grid */
+.properties-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }
+.prop-card {
+  background: var(--bg-card2);
+  border-radius: 8px;
+  padding: 10px;
+}
+.prop-card-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.prop-card-val { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+
+/* Loading spinner */
+.spinner {
+  width: 20px; height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--solid-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Transition animation */
+.state-transition {
+  animation: stateFlash 0.5s ease-out;
+}
+@keyframes stateFlash {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .app { grid-template-columns: 260px 1fr 300px; }
+}
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .panel { border-right: none; border-top: 1px solid var(--border); }
+  .panel:last-child { border-left: none; }
+}
+
+/* Glow animations */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.glow-pulse { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* Phase change notification */
+.phase-toast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--bg-card2);
+  border: 1px solid var(--solid-color);
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 0.85rem; font-weight: 600;
+  z-index: 200;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.phase-toast.show { transform: translateX(-50%) translateY(0); }
+
+/* How it works section */
+.how-it-works {
+  background: rgba(59,130,246,0.05);
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.how-it-works .hw-title {
+  font-weight: 700; color: var(--solid-glow); margin-bottom: 6px;
+  font-size: 0.78rem;
+}
+.how-it-works li { list-style: none; padding-left: 12px; position: relative; }
+.how-it-works li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚗️</div>
+    States of Matter Explorer
+  </div>
+  <nav>
+    <button class="nav-btn active">Simulation</button>
+    <button class="nav-btn" onclick="scrollToExamples()">Examples</button>
+    <button class="nav-btn" onclick="scrollToLearn()">Learn</button>
+  </nav>
+  <div style="width:80px"></div>
+</header>
+
+<div class="app">
+
+  <!-- LEFT PANEL -->
+  <div class="panel" style="background:var(--bg-panel)">
+    <div class="section-title"><span>1</span> Choose State (Manual)</div>
+
+    <div class="state-selector">
+      <button class="state-btn solid active" onclick="selectState('solid',this)">
+        <span class="state-icon">🧊</span> Solid
+      </button>
+      <button class="state-btn liquid" onclick="selectState('liquid',this)">
+        <span class="state-icon">💧</span> Liquid
+      </button>
+      <button class="state-btn gas" onclick="selectState('gas',this)">
+        <span class="state-icon">☁️</span> Gas
+      </button>
+      <button class="state-btn plasma" onclick="selectState('plasma',this)">
+        <span class="state-icon">⚡</span> Plasma
+      </button>
+    </div>
+
+    <div class="section-title"><span>2</span> Temperature</div>
+    <div class="control-group">
+      <div class="control-header">
+        <div class="control-label">🌡️ Temperature</div>
+        <div class="control-value temp" id="tempDisplay">25 °C</div>
+      </div>
+      <input type="range" class="temp-slider" id="tempSlider" min="-200" max="6000" value="25" oninput="updateTemp(this.value)">
+      <div class="slider-marks"><span>-200°C</span><span>3000°C</span><span>6000°C</span></div>
+      <div class="phase-zones" id="phaseZones">
+        <div class="phase-zone zone-solid">Solid</div>
+        <div class="phase-zone zone-liquid">Liquid</div>
+        <div class="phase-zone zone-gas">Gas</div>
+      </div>
+    </div>
+
+    <div class="section-title"><span>3</span> Pressure</div>
+    <div class="control-group">
+      <div class="control-header">
+        <div class="control-label">🌀 Pressure</div>
+        <div class="control-value pressure" id="pressureDisplay">1 atm (Normal)</div>
+      </div>
+      <input type="range" class="pressure-slider" id="pressureSlider" min="0" max="100" value="50" oninput="updatePressure(this.value)">
+      <div class="slider-marks"><span>Vacuum</span><span>Normal</span><span>Extreme</span></div>
+    </div>
+
+    <div class="how-it-works">
+      <div class="hw-title">💡 How it works</div>
+      <ul>
+        <li>Increase temp → particles move faster</li>
+        <li>Increase pressure → particles come closer</li>
+        <li>State changes based on conditions</li>
+        <li>Search any substance to see real data</li>
+      </ul>
+    </div>
+
+    <div class="section-title"><span>+</span> Particle Count</div>
+    <div class="control-group">
+      <div class="control-header">
+        <div class="control-label">⚫ Particles</div>
+        <div class="control-value" id="particleCountDisplay" style="color:var(--accent)">50</div>
+      </div>
+      <input type="range" class="pressure-slider" id="particleSlider" min="10" max="120" value="50" oninput="updateParticleCount(this.value)">
+      <div class="slider-marks"><span>10</span><span>60</span><span>120</span></div>
+    </div>
+  </div>
+
+  <!-- CENTER PANEL -->
+  <div class="center-panel">
+    <div class="sim-header">
+      <div class="sim-title">PARTICLE SIMULATION</div>
+      <div class="state-badge badge-solid" id="stateBadge">Current State: Solid</div>
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="simCanvas"></canvas>
+      <div class="canvas-overlay">
+        <div class="state-watermark" id="stateWatermark">SOLID</div>
+      </div>
+    </div>
+
+    <div class="sim-controls">
+      <button class="ctrl-btn primary" id="playPauseBtn" onclick="togglePlay()">⏸ Pause</button>
+      <button class="ctrl-btn secondary" onclick="resetSim()">↺ Reset</button>
+      <button class="ctrl-btn secondary" onclick="randomize()">⚡ Random</button>
+      <button class="ctrl-btn danger" onclick="clearSearch()">✕ Clear</button>
+      <div class="particle-count-display">
+        Particles: <strong id="liveCount">50</strong>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-label">State</div>
+        <div class="stat-val" id="statSt" style="color:var(--solid-glow)">Solid</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Temperature</div>
+        <div class="stat-val" id="statT" style="color:var(--temp-hot)">25°C</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Pressure</div>
+        <div class="stat-val" id="statP" style="color:var(--gas-glow)">50 atm</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Kinetic Energy</div>
+        <div class="stat-val" id="statKE" style="color:var(--accent)">Low</div>
+      </div>
+    </div>
+
+    <!-- Examples section -->
+    <div style="padding:1.5rem; border-top:1px solid var(--border)" id="examplesSection">
+      <div class="section-title"><span>★</span> Try These Examples</div>
+      <div id="examplesGrid" class="examples-grid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel" style="background:var(--bg-panel)">
+    <div class="section-title"><span>4</span> Substance Explorer</div>
+
+    <div class="search-group">
+      <input type="text" class="search-input" id="searchInput" 
+        placeholder="Enter any substance…" 
+        oninput="onSearchInput(this.value)"
+        onkeydown="if(event.key==='Enter')analyzeSubstance()">
+      <button class="search-btn" onclick="analyzeSubstance()">Analyze</button>
+      <div class="autocomplete" id="autocomplete"></div>
+    </div>
+
+    <div id="resultArea">
+      <!-- Default state info -->
+      <div class="result-card" id="defaultInfo">
+        <div class="result-header">
+          <div class="result-name">📊 Current Simulation</div>
+        </div>
+        <div class="result-body">
+          <div id="defaultProps"></div>
+        </div>
+      </div>
+      
+      <div class="explanation-box">
+        <h4>🔬 Why This State?</h4>
+        <div class="explanation-text" id="explanationText">
+          In a <strong>solid</strong>, particles are tightly packed in a regular lattice structure. 
+          The intermolecular forces are strong enough to keep particles in fixed positions — they only 
+          vibrate in place. This is why solids have definite shape and volume.
+        </div>
+      </div>
+
+      <div id="substanceResult" style="display:none"></div>
+    </div>
+
+    <div class="section-title" id="learnSection"><span>5</span> Properties at a Glance</div>
+    <div class="properties-grid" id="propsGrid">
+      <!-- filled dynamically -->
+    </div>
+  </div>
+
+</div>
+
+<!-- Phase change toast -->
+<div class="phase-toast" id="phaseToast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  SUBSTANCE DATABASE (100+ substances)
+// ═══════════════════════════════════════════════════
+const SUBSTANCES = {
+  // METALS
+  "iron": { name:"Iron", symbol:"Fe", type:"Metal", melt:1538, boil:2862, color:"#6B7280", stateIcon:"🔩", desc:"A strong ferromagnetic metal used in construction, tools, and machinery. The backbone of modern infrastructure.", category:"metal" },
+  "gold": { name:"Gold", symbol:"Au", type:"Metal", melt:1064, boil:2970, color:"#F59E0B", stateIcon:"🥇", desc:"A precious, highly malleable metal with excellent electrical conductivity, used in jewelry and electronics.", category:"metal" },
+  "silver": { name:"Silver", symbol:"Ag", type:"Metal", melt:961, boil:2162, color:"#9CA3AF", stateIcon:"🪙", desc:"A lustrous precious metal with the highest electrical and thermal conductivity of any element.", category:"metal" },
+  "copper": { name:"Copper", symbol:"Cu", type:"Metal", melt:1085, boil:2562, color:"#B45309", stateIcon:"🔌", desc:"An excellent conductor of electricity, widely used in wiring, plumbing, and electronics.", category:"metal" },
+  "aluminum": { name:"Aluminum", symbol:"Al", type:"Metal", melt:660, boil:2470, color:"#D1D5DB", stateIcon:"🥫", desc:"A lightweight, corrosion-resistant metal used extensively in aerospace, packaging, and construction.", category:"metal" },
+  "lead": { name:"Lead", symbol:"Pb", type:"Metal", melt:327, boil:1749, color:"#374151", stateIcon:"🔋", desc:"A dense, soft, corrosion-resistant metal with a low melting point, used in batteries and radiation shielding.", category:"metal" },
+  "tin": { name:"Tin", symbol:"Sn", type:"Metal", melt:232, boil:2602, color:"#9CA3AF", stateIcon:"🥡", desc:"A silvery metal resistant to corrosion, commonly used in soldering alloys and food can coatings.", category:"metal" },
+  "zinc": { name:"Zinc", symbol:"Zn", type:"Metal", melt:420, boil:907, color:"#6B7280", stateIcon:"⚙️", desc:"A bluish-white metal used in galvanizing steel and as a dietary mineral essential to all life.", category:"metal" },
+  "tungsten": { name:"Tungsten", symbol:"W", type:"Metal", melt:3422, boil:5555, color:"#E5E7EB", stateIcon:"💡", desc:"The metal with the highest melting point, used in light bulb filaments and cutting tools.", category:"metal" },
+  "titanium": { name:"Titanium", symbol:"Ti", type:"Metal", melt:1668, boil:3287, color:"#9CA3AF", stateIcon:"✈️", desc:"A strong, lightweight metal with exceptional corrosion resistance, used in aerospace and biomedical implants.", category:"metal" },
+  "nickel": { name:"Nickel", symbol:"Ni", type:"Metal", melt:1455, boil:2913, color:"#D1D5DB", stateIcon:"🪙", desc:"A hard, corrosion-resistant metal used in alloys, stainless steel, and rechargeable batteries.", category:"metal" },
+  "platinum": { name:"Platinum", symbol:"Pt", type:"Metal", melt:1768, boil:3825, color:"#E5E7EB", stateIcon:"💎", desc:"A precious, dense metal with excellent catalytic properties, used in catalytic converters and jewelry.", category:"metal" },
+  "mercury": { name:"Mercury", symbol:"Hg", type:"Metal", melt:-39, boil:357, color:"#9CA3AF", stateIcon:"🌡️", desc:"The only metal that is liquid at room temperature, used historically in thermometers and barometers.", category:"metal" },
+  "sodium": { name:"Sodium", symbol:"Na", type:"Metal", melt:98, boil:883, color:"#FCD34D", stateIcon:"🧂", desc:"A highly reactive alkali metal that reacts violently with water, essential for biological nerve function.", category:"metal" },
+  "lithium": { name:"Lithium", symbol:"Li", type:"Metal", melt:181, boil:1342, color:"#A7F3D0", stateIcon:"🔋", desc:"The lightest solid element, used in rechargeable batteries, ceramics, and psychiatric medications.", category:"metal" },
+  "magnesium": { name:"Magnesium", symbol:"Mg", type:"Metal", melt:650, boil:1091, color:"#D1D5DB", stateIcon:"✨", desc:"A light, flammable metal used in alloys, flash photography, and as a dietary supplement.", category:"metal" },
+  "calcium": { name:"Calcium", symbol:"Ca", type:"Metal", melt:842, boil:1484, color:"#FBBF24", stateIcon:"🦴", desc:"An alkaline earth metal essential for bones and teeth, and important in biochemical signaling.", category:"metal" },
+  "uranium": { name:"Uranium", symbol:"U", type:"Metal", melt:1135, boil:4131, color:"#6EE7B7", stateIcon:"☢️", desc:"A radioactive heavy metal used as fuel in nuclear reactors and historically in nuclear weapons.", category:"metal" },
+  
+  // NON-METALS / LIQUIDS
+  "water": { name:"Water", symbol:"H₂O", type:"Liquid", melt:0, boil:100, color:"#60A5FA", stateIcon:"💧", desc:"The universal solvent essential to all known life. Its unique hydrogen bonding gives it extraordinary properties.", category:"liquid" },
+  "ethanol": { name:"Ethanol", symbol:"C₂H₅OH", type:"Organic Liquid", melt:-114, boil:78, color:"#FCA5A5", stateIcon:"🍺", desc:"A volatile flammable liquid formed by fermentation, used as an alcoholic beverage, solvent, and fuel.", category:"liquid" },
+  "acetone": { name:"Acetone", symbol:"C₃H₆O", type:"Organic Liquid", melt:-95, boil:56, color:"#FCD34D", stateIcon:"💅", desc:"A highly volatile organic solvent used in nail polish remover, paints, and chemical synthesis.", category:"liquid" },
+  "methanol": { name:"Methanol", symbol:"CH₃OH", type:"Organic Liquid", melt:-98, boil:65, color:"#FCA5A5", stateIcon:"⛽", desc:"The simplest alcohol, highly toxic, used as a fuel, solvent, and antifreeze.", category:"liquid" },
+  "benzene": { name:"Benzene", symbol:"C₆H₆", type:"Organic Liquid", melt:6, boil:80, color:"#C084FC", stateIcon:"🧪", desc:"A colorless, flammable liquid hydrocarbon, a key precursor in chemical manufacturing but a known carcinogen.", category:"liquid" },
+  "chloroform": { name:"Chloroform", symbol:"CHCl₃", type:"Organic Liquid", melt:-63, boil:61, color:"#6EE7B7", stateIcon:"🧪", desc:"A dense organic solvent historically used as an anesthetic, now mainly used in industrial chemistry.", category:"liquid" },
+  "glycerin": { name:"Glycerin", symbol:"C₃H₈O₃", type:"Organic Liquid", melt:18, boil:290, color:"#FEF3C7", stateIcon:"🧴", desc:"A thick, sweet liquid used in pharmaceuticals, cosmetics, and as a food additive.", category:"liquid" },
+  "gasoline": { name:"Gasoline", symbol:"C₈H₁₈", type:"Fuel Liquid", melt:-60, boil:150, color:"#FCD34D", stateIcon:"⛽", desc:"A liquid mixture of hydrocarbons derived from petroleum, used as fuel for internal combustion engines.", category:"liquid" },
+  "seawater": {
+    name:"Sea Water / Ocean Water", symbol:"H₂O + NaCl + salts", type:"Salt Solution — Multi-Stage",
+    melt:-2, boil:101, color:"#38BDF8", stateIcon:"🌊",
+    specialStages:[
+      { temp:-2,  state:"solid",  label:"Frozen Sea Ice",           note:"Below -2°C sea water freezes. The ice formed is almost pure H₂O — salt ions are expelled into the water below, making it saltier and denser." },
+      { temp:0,   state:"liquid", label:"Liquid Sea Water",         note:"Sea water is a liquid from -2°C to ~100°C. At room temperature it behaves exactly like salty water — a clear, flowing liquid." },
+      { temp:100, state:"solid",  label:"Water Evaporates → SALT CRYSTALS left behind", note:"⚠️ KEY SCIENCE: At 100°C the H₂O evaporates as steam (gas), but the dissolved NaCl CANNOT evaporate. It is left behind as solid white salt crystals on the container floor. This is how sea salt is harvested in salt pans worldwide — the sea is liquid, the sun evaporates the water, and solid salt remains." },
+      { temp:801, state:"liquid", label:"Salt Melts (Molten NaCl)", note:"If you keep heating the dry salt residue to 801°C it melts into a molten ionic liquid — a liquid metal salt, not water." },
+      { temp:1413,state:"gas",    label:"Salt Boils (NaCl Vapour)", note:"At 1413°C molten NaCl boils into sodium and chlorine gas. The simulation shows gas particles to represent this stage." },
+    ],
+    desc:"⚠️ SPECIAL MATERIAL: Sea water does NOT simply turn to gas when heated. At 100°C the water evaporates leaving SOLID SALT CRYSTALS. Only the dry salt residue melts (801°C) then boils (1413°C). Change the temperature slider to see each stage!",
+    category:"special"
+  },
+  "lava": { name:"Lava", symbol:"SiO₂(mix)", type:"Molten Rock", melt:700, boil:1200, color:"#EF4444", stateIcon:"🌋", desc:"Molten rock erupted from a volcano, primarily composed of silicate minerals at 700–1200°C.", category:"liquid" },
+  
+  // GASES
+  "oxygen": { name:"Oxygen", symbol:"O₂", type:"Gas", melt:-218, boil:-183, color:"#A78BFA", stateIcon:"💨", desc:"A highly reactive diatomic gas making up 21% of Earth's atmosphere, essential for combustion and respiration.", category:"gas" },
+  "nitrogen": { name:"Nitrogen", symbol:"N₂", type:"Gas", melt:-210, boil:-196, color:"#93C5FD", stateIcon:"🌬️", desc:"A colorless, odorless diatomic gas comprising 78% of Earth's atmosphere, largely inert at normal temperatures.", category:"gas" },
+  "hydrogen": { name:"Hydrogen", symbol:"H₂", type:"Gas", melt:-259, boil:-253, color:"#FCA5A5", stateIcon:"💫", desc:"The lightest and most abundant element in the universe, a colorless flammable gas and future fuel.", category:"gas" },
+  "carbon dioxide": { name:"Carbon Dioxide", symbol:"CO₂", type:"Gas", melt:-78.5, boil:-78.5, color:"#6EE7B7", stateIcon:"🌿", desc:"A colorless greenhouse gas produced by combustion and respiration, vital for photosynthesis.", category:"gas" },
+  "helium": { name:"Helium", symbol:"He", type:"Noble Gas", melt:-272, boil:-269, color:"#FDE68A", stateIcon:"🎈", desc:"The second most abundant element in the universe with the lowest boiling point of any substance.", category:"gas" },
+  "neon": { name:"Neon", symbol:"Ne", type:"Noble Gas", melt:-249, boil:-246, color:"#FCA5A5", stateIcon:"🔴", desc:"A noble gas that emits a characteristic reddish-orange glow when used in discharge tubes.", category:"gas" },
+  "argon": { name:"Argon", symbol:"Ar", type:"Noble Gas", melt:-189, boil:-186, color:"#A78BFA", stateIcon:"💡", desc:"The most abundant noble gas in Earth's atmosphere, used in welding and incandescent lighting.", category:"gas" },
+  "methane": { name:"Methane", symbol:"CH₄", type:"Gas", melt:-182, boil:-161, color:"#FCD34D", stateIcon:"🔥", desc:"The simplest hydrocarbon, the primary component of natural gas and a potent greenhouse gas.", category:"gas" },
+  "steam": { name:"Steam", symbol:"H₂O(g)", type:"Gas", melt:0, boil:100, color:"#F3F4F6", stateIcon:"♨️", desc:"Water in its gaseous state above 100°C at 1 atm. Steam power drove the Industrial Revolution.", category:"gas" },
+  "ozone": { name:"Ozone", symbol:"O₃", type:"Gas", melt:-193, boil:-112, color:"#6EE7B7", stateIcon:"🌍", desc:"A triatomic form of oxygen that forms the stratospheric ozone layer protecting Earth from UV radiation.", category:"gas" },
+  "chlorine": { name:"Chlorine", symbol:"Cl₂", type:"Gas", melt:-101, boil:-34, color:"#A3E635", stateIcon:"🟡", desc:"A pale green toxic diatomic gas used in water purification, PVC production, and chemical manufacturing.", category:"gas" },
+  "ammonia": { name:"Ammonia", symbol:"NH₃", type:"Gas", melt:-78, boil:-33, color:"#FCD34D", stateIcon:"🌾", desc:"A pungent colorless gas essential for fertilizer production via the Haber-Bosch process.", category:"gas" },
+  "propane": { name:"Propane", symbol:"C₃H₈", type:"Gas", melt:-188, boil:-42, color:"#FCA5A5", stateIcon:"🔥", desc:"A liquefied petroleum gas used as fuel for heating, cooking, and vehicles.", category:"gas" },
+  "butane": { name:"Butane", symbol:"C₄H₁₀", type:"Gas", melt:-138, boil:-1, color:"#FCA5A5", stateIcon:"🔥", desc:"A flammable gas used as a fuel in lighters and camping stoves, easily liquefied under mild pressure.", category:"gas" },
+  "xenon": { name:"Xenon", symbol:"Xe", type:"Noble Gas", melt:-112, boil:-108, color:"#C084FC", stateIcon:"💡", desc:"A heavy noble gas used in high-intensity lamps, anesthesia, and ion propulsion engines.", category:"gas" },
+  
+  // SOLIDS (Non-metals)
+  "diamond": { name:"Diamond", symbol:"C", type:"Allotrope", melt:3550, boil:4827, color:"#E0F2FE", stateIcon:"💎", desc:"The hardest natural material, a form of carbon with a tetrahedral lattice, used in cutting tools and jewelry.", category:"solid" },
+  "graphite": { name:"Graphite", symbol:"C", type:"Allotrope", melt:3650, boil:4200, color:"#374151", stateIcon:"✏️", desc:"A soft form of carbon with layered hexagonal sheets, used in pencils, lubricants, and electrodes.", category:"solid" },
+  "sulfur": { name:"Sulfur", symbol:"S", type:"Non-metal", melt:115, boil:445, color:"#FDE68A", stateIcon:"🟡", desc:"A yellow non-metallic solid used in fertilizers, rubber vulcanization, and sulfuric acid production.", category:"solid" },
+  "phosphorus": { name:"Phosphorus", symbol:"P", type:"Non-metal", melt:44, boil:280, color:"#FCD34D", stateIcon:"🔴", desc:"A reactive non-metal essential for DNA, ATP, and bones. White phosphorus ignites spontaneously in air.", category:"solid" },
+  "silicon": { name:"Silicon", symbol:"Si", type:"Metalloid", melt:1414, boil:3265, color:"#9CA3AF", stateIcon:"💻", desc:"A semiconductor metalloid that forms the basis of microchips and solar cells. Second most abundant element in Earth's crust.", category:"solid" },
+  "iodine": { name:"Iodine", symbol:"I₂", type:"Halogen", melt:114, boil:184, color:"#7C3AED", stateIcon:"🟣", desc:"A dark purple non-metal that sublimates directly from solid to gas, essential for thyroid hormones.", category:"solid" },
+  "ice": { name:"Ice", symbol:"H₂O(s)", type:"Solid", melt:0, boil:100, color:"#BFDBFE", stateIcon:"🧊", desc:"Solid water in its crystalline form. Ice is less dense than liquid water due to hydrogen bonding.", category:"solid" },
+  "salt": { name:"Salt (NaCl)", symbol:"NaCl", type:"Ionic Solid", melt:801, boil:1413, color:"#F9FAFB", stateIcon:"🧂", desc:"Sodium chloride, an ionic crystal essential for life, used universally as a food seasoning and preservative.", category:"solid" },
+  "sand": { name:"Sand (SiO₂)", symbol:"SiO₂", type:"Mineral", melt:1713, boil:2230, color:"#FCD34D", stateIcon:"🏖️", desc:"Primarily composed of quartz (silicon dioxide), the most common mineral on Earth's surface.", category:"solid" },
+  "glass": { name:"Glass", symbol:"SiO₂(amorphous)", type:"Amorphous Solid", melt:1200, boil:2230, color:"#BFDBFE", stateIcon:"🪟", desc:"An amorphous solid made by melting silica with other minerals. A supercooled liquid with no crystalline structure.", category:"solid" },
+  "wax": { name:"Candle Wax", symbol:"C₂₅H₅₂", type:"Organic Solid", melt:57, boil:370, color:"#FEF9C3", stateIcon:"🕯️", desc:"A mixture of hydrocarbons derived from petroleum with a low melting point, used in candles and coatings.", category:"solid" },
+  "chalk": { name:"Chalk (CaCO₃)", symbol:"CaCO₃", type:"Mineral", melt:825, boil:1200, color:"#F9FAFB", stateIcon:"📝", desc:"A soft, white limestone composed of calcium carbonate, formed from the shells of marine organisms.", category:"solid" },
+  "iron oxide": { name:"Iron Oxide (Rust)", symbol:"Fe₂O₃", type:"Oxide", melt:1565, boil:3414, color:"#B45309", stateIcon:"🦀", desc:"The reddish-brown compound formed when iron oxidizes in the presence of oxygen and water.", category:"solid" },
+  "dry ice": { name:"Dry Ice", symbol:"CO₂(s)", type:"Solid", melt:-78.5, boil:-78.5, color:"#BFDBFE", stateIcon:"❄️", desc:"Solid carbon dioxide that sublimates directly to gas at -78.5°C without passing through a liquid phase.", category:"solid" },
+  "liquid nitrogen": { name:"Liquid Nitrogen", symbol:"N₂(l)", type:"Cryogenic Liquid", melt:-210, boil:-196, color:"#93C5FD", stateIcon:"🥶", desc:"Nitrogen cooled below -196°C. Used for cryopreservation and rapid freezing of food and biological samples.", category:"liquid" },
+  "liquid oxygen": { name:"Liquid Oxygen", symbol:"O₂(l)", type:"Cryogenic Liquid", melt:-218, boil:-183, color:"#A78BFA", stateIcon:"🚀", desc:"Oxygen cooled below -183°C, used as an oxidizer in rocket propellants.", category:"liquid" },
+  "gallium": { name:"Gallium", symbol:"Ga", type:"Metal", melt:30, boil:2204, color:"#D1D5DB", stateIcon:"🤚", desc:"A soft metal that melts in your hand at 29.8°C, used in semiconductors and LEDs.", category:"metal" },
+  "bromine": { name:"Bromine", symbol:"Br₂", type:"Halogen", melt:-7, boil:59, color:"#B45309", stateIcon:"🟤", desc:"One of only two elements that are liquid at room temperature, a reddish-brown toxic liquid.", category:"liquid" },
+  "cesium": { name:"Cesium", symbol:"Cs", type:"Metal", melt:28, boil:671, color:"#FDE68A", stateIcon:"⚗️", desc:"The most electropositive element, melts near room temperature at 28.5°C, extremely reactive with water.", category:"metal" },
+
+  // ══ SPECIAL BEHAVIOUR MATERIALS ══════════════════════════════════════════
+  // SEA WATER → evaporation leaves SALT (solid) → salt melts → NaCl gas
+  "ocean_salt_pan": {
+    name:"Salt Pan (Evaporated Ocean)", symbol:"NaCl (residue)", type:"Evaporite Mineral — Special",
+    melt:801, boil:1413, color:"#F0F9FF", stateIcon:"🧂",
+    specialStages:[
+      { temp:-5,  state:"solid",  label:"Frozen brine",             note:"At very low temperatures the concentrated brine freezes into a slushy solid." },
+      { temp:0,   state:"liquid", label:"Liquid brine",             note:"The salty brine is liquid, ready for evaporation." },
+      { temp:100, state:"solid",  label:"Water gone → SOLID SALT",  note:"All the water has evaporated as steam. What remains is a dry crust of solid NaCl crystals — exactly what you see in salt farms across the world." },
+      { temp:801, state:"liquid", label:"Salt melts (Molten NaCl)", note:"The solid NaCl melts at 801°C into a hot ionic liquid." },
+      { temp:1413,state:"gas",    label:"Salt boils → Na + Cl₂ gas",note:"Boiling NaCl decomposes into sodium vapour and chlorine gas at 1413°C." },
+    ],
+    desc:"When sea water evaporates completely in a salt pan or desert, solid NaCl salt crystals are left behind. That solid salt only melts at 801°C and boils at 1413°C. This is how table salt has been harvested since ancient times.",
+    category:"special"
+  },
+
+  "ocean_water": {
+    name:"Ocean Water", symbol:"H₂O+NaCl+MgCl₂+CaSO₄", type:"Natural Salt Solution",
+    melt:-2, boil:101, color:"#0EA5E9", stateIcon:"🌊",
+    specialStages:[
+      { temp:-2,  state:"solid",  label:"Sea Ice",                    note:"Ocean water freezes at -2°C (not 0°C) because dissolved salts lower the freezing point. The ice formed is mostly pure water." },
+      { temp:0,   state:"liquid", label:"Liquid Ocean Water",         note:"Liquid saltwater — 3.5% dissolved minerals (NaCl, MgCl₂, CaSO₄, KCl)." },
+      { temp:100, state:"solid",  label:"H₂O evaporates → Mixed Salt Crust", note:"Ocean water heated to 100°C loses its water as steam. The residue is NOT just NaCl — it is a mixture of NaCl, MgCl₂, CaSO₄ and other salts. That mineral crust is solid at room temperature." },
+      { temp:801, state:"liquid", label:"Salt mixture starts melting", note:"The mixed salts begin melting (NaCl melts at 801°C, others at different temperatures)." },
+      { temp:1500,state:"gas",    label:"Salt gases released",         note:"Above 1500°C the various salt compounds fully vaporise into their component gases." },
+    ],
+    desc:"Ocean water evaporation leaves a complex mixed-salt solid residue, not pure NaCl. This is why sea salt tastes different from mined rock salt — it contains magnesium, calcium, and other minerals.",
+    category:"special"
+  },
+  "salt_water_heated": {
+    name:"Salt Water → Heated Step by Step", symbol:"NaCl(aq) → NaCl(s) → NaCl(l) → Na+Cl₂(g)",
+    melt:801, boil:1413, color:"#E0F2FE", stateIcon:"🧂",
+    specialStages:[
+      { temp:-10, state:"solid",  label:"Frozen Salt Water (Ice + salt)",       note:"Below -10°C: salt water freezes. The ice crystals are nearly pure water; the salt is excluded into the remaining liquid making it more salty — called brine rejection." },
+      { temp:0,   state:"liquid", label:"Liquid Salt Water",                    note:"Salt water is a liquid. The NaCl is fully dissolved as Na⁺ and Cl⁻ ions moving freely through the water." },
+      { temp:100, state:"solid",  label:"⚠️ Water Evaporates → SOLID SALT",    note:"The water boils away as steam (H₂O gas). The NaCl ions cannot evaporate — they are left behind as a dry white solid salt crust. This is the KEY transition: liquid saltwater → solid salt + water vapour (gas)." },
+      { temp:801, state:"liquid", label:"Solid Salt Melts → Liquid NaCl",       note:"Dry NaCl melts at exactly 801°C into a glowing molten ionic liquid. In this state Na⁺ and Cl⁻ ions move freely — molten salt conducts electricity." },
+      { temp:1413,state:"gas",    label:"Molten Salt Boils → Na vapour + Cl₂ gas", note:"At 1413°C liquid NaCl boils. The vapour partly dissociates into sodium gas (Na) and chlorine gas (Cl₂). The simulation shows gas particles for this stage." },
+    ],
+    desc:"Step-by-step: salt water (liquid) → heat to 100°C → water evaporates as steam leaving SOLID NaCl → heat to 801°C → solid salt melts → heat to 1413°C → salt boils to gas. Use the temperature slider to see every transition!",
+    category:"special"
+  },
+
+  // ══ LIVING THINGS ════════════════════════════════════════════════════════
+  "blood": { name:"Blood (Human)", symbol:"H₂O+Proteins+Cells", type:"Living Biological Fluid", melt:-0.5, boil:101, color:"#DC2626", stateIcon:"🩸",
+    desc:"Blood is a liquid tissue (~55% plasma = water+proteins, 45% cells). Freezes at ~-0.5°C due to dissolved salts. Boils above 100°C. At body temp (37°C) it remains a complex suspension — the body's transport system for O₂, nutrients, and immune cells.", category:"living" },
+
+  "human_body_water": { name:"Body Fluid (Cytoplasm)", symbol:"H₂O+electrolytes", type:"Intracellular Liquid", melt:0, boil:100, color:"#67E8F9", stateIcon:"🧬",
+    desc:"~70% of the human body is water. Inside cells, cytoplasm is a gel-like liquid containing water, salts, sugars, and proteins. It is liquid at body temperature (37°C). Below 0°C cells freeze and die; above ~42°C proteins denature.", category:"living" },
+
+  "wood": { name:"Wood (Timber)", symbol:"C₆H₁₀O₅+Lignin", type:"Natural Organic Solid", melt:270, boil:400, color:"#92400E", stateIcon:"🪵",
+    desc:"Wood is a solid composite of cellulose fibres and lignin polymer. It does not melt cleanly — it chars and decomposes (pyrolysis) starting ~270°C, releasing gases, tars, and char. There is no true liquid wood phase; it turns directly into carbon char and combustible gases.", category:"living" },
+
+  "bone": { name:"Bone (Human)", symbol:"Ca₅(PO₄)₃OH+Collagen", type:"Living Composite Solid", melt:1670, boil:2500, color:"#FEF3C7", stateIcon:"🦴",
+    desc:"Bone is a composite of hydroxyapatite mineral (calcium phosphate) and collagen protein. It is solid at all biological temperatures. The mineral component melts above 1670°C. Burning bone produces 'bone ash' (calcium phosphate), used historically in fine china.", category:"living" },
+
+  "leaf": { name:"Leaf (Plant)", symbol:"Cellulose+Chlorophyll+H₂O", type:"Living Organic Solid", melt:270, boil:400, color:"#16A34A", stateIcon:"🌿",
+    desc:"A leaf is mostly cellulose (solid), water (liquid inside cells), and chlorophyll (solid pigment). It does not have a melting point — it dries, wilts, then decomposes or burns. Leaves are ~80% water when fresh; dried leaves combust at ~230°C.", category:"living" },
+
+  "milk": { name:"Milk", symbol:"H₂O+Fat+Protein+Lactose", type:"Biological Emulsion", melt:-0.5, boil:100.5, color:"#F9FAFB", stateIcon:"🥛",
+    desc:"Milk is an emulsion of fat droplets in water, stabilised by protein. It is liquid at fridge temperature. Freezes near -0.5°C (like salt water). Heating above 72°C pasteurises it; above 100°C it boils and proteins denature. The fat separates as a solid cream when cooled.", category:"living" },
+
+  "honey": { name:"Honey", symbol:"C₆H₁₂O₆+H₂O (sugars)", type:"Supersaturated Sugar Solution", melt:14, boil:107, color:"#F59E0B", stateIcon:"🍯",
+    desc:"Honey is a supersaturated solution of fructose and glucose in ~17% water. Below 14°C it crystallises into a semi-solid. It flows as a viscous liquid at room temperature. Its extremely low water activity prevents microbial growth — sealed honey lasts thousands of years.", category:"living" },
+
+  "egg_white": { name:"Egg White (Albumin)", symbol:"H₂O+Ovalbumin", type:"Protein Solution → Solid", melt:-0.5, boil:100, color:"#F9FAFB", stateIcon:"🥚",
+    desc:"Raw egg white is a liquid protein solution. Above 60–65°C the albumin proteins irreversibly denature and cross-link, forming a white solid. This is a chemical change, not a physical phase transition — the solid cooked egg white cannot return to liquid.", category:"living" },
+
+  "fat_oil": { name:"Cooking Oil (Fat)", symbol:"C₅₇H₁₁₀O₆ (triglycerides)", type:"Organic Liquid / Solid", melt:5, boil:300, color:"#FCD34D", stateIcon:"🫙",
+    desc:"Vegetable oil is liquid at room temperature (unsaturated fats). Animal fats (lard, butter) are solid at room temperature (saturated fats). Fats do not boil cleanly — they decompose above 300°C (smoke point). Oils solidify in the refrigerator (below ~5°C).", category:"living" },
+
+  "spider_silk": { name:"Spider Silk", symbol:"Poly-alanine protein", type:"Biological Solid Protein", melt:300, boil:450, color:"#E0E7FF", stateIcon:"🕸️",
+    desc:"Spider silk is a solid protein fibre stronger than steel by weight. It does not melt — it decomposes above 300°C. Each strand is ~3 micrometres thick. The silk is spun from a liquid protein inside the spider's glands that solidifies on contact with air.", category:"living" },
+
+  // ══ NON-LIVING NATURAL MATERIALS ═════════════════════════════════════════
+  "granite": { name:"Granite (Rock)", symbol:"SiO₂+Al₂O₃+KAlSi₃O₈", type:"Igneous Rock", melt:1215, boil:2500, color:"#9CA3AF", stateIcon:"🪨",
+    desc:"Granite is a coarse-grained igneous rock made of quartz, feldspar, and mica. It is solid at all everyday temperatures. It melts at 1215–1260°C depending on composition, producing a viscous magma. Granite forms deep in Earth's crust under enormous pressure.", category:"natural" },
+
+  "marble": { name:"Marble (Rock)", symbol:"CaCO₃ (recrystallised)", type:"Metamorphic Rock", melt:825, boil:1200, color:"#F3F4F6", stateIcon:"🗿",
+    desc:"Marble is metamorphic limestone — calcium carbonate recrystallised under heat and pressure. It does not melt like a metal; it decomposes above 825°C releasing CO₂ (calcium carbonate → calcium oxide + CO₂). Used in sculpture and architecture for millennia.", category:"natural" },
+
+  "clay": { name:"Clay (Wet)", symbol:"Al₂Si₂O₅(OH)₄", type:"Hydrated Aluminosilicate", melt:1750, boil:2500, color:"#B45309", stateIcon:"🏺",
+    desc:"Wet clay is a plastic solid — it flows slowly under force. Drying removes water making it brittle. Firing above 600°C causes irreversible ceramic sintering. At ~1750°C it melts. Pottery kilns fire at 900–1300°C to harden clay into ceramic without melting it.", category:"natural" },
+
+  "basalt": { name:"Basalt (Rock)", symbol:"SiO₂+MgO+FeO", type:"Volcanic Rock", melt:1100, boil:2500, color:"#374151", stateIcon:"🌋",
+    desc:"Basalt is the most common volcanic rock on Earth's surface. It solidifies from lava at 1100–1200°C. The ocean floor is almost entirely basalt. When basalt melts it forms a very fluid, low-viscosity lava that can flow tens of kilometres from a volcano.", category:"natural" },
+
+  "coal": { name:"Coal", symbol:"C + hydrocarbons", type:"Fossil Fuel Solid", melt:3500, boil:4200, color:"#1F2937", stateIcon:"⛏️",
+    desc:"Coal is a solid sedimentary rock of compressed ancient plant material. It does not truly melt — it decomposes and combusts above 400°C releasing CO₂, CO, and heat. The carbon framework melts only at extremely high temperatures (like graphite). Used for electricity generation.", category:"natural" },
+
+  "snow": { name:"Snow", symbol:"H₂O(s) crystalline", type:"Natural Solid (Ice Crystals)", melt:0, boil:100, color:"#EFF6FF", stateIcon:"❄️",
+    desc:"Snow is solid water in hexagonal ice crystal form, each snowflake uniquely shaped due to varying temperature and humidity during crystal growth. Melts at 0°C to form liquid water. Its low density (air trapped between crystals) makes it an excellent insulator.", category:"natural" },
+
+  "pumice": { name:"Pumice Stone", symbol:"SiO₂(foam)", type:"Volcanic Glass Foam", melt:1200, boil:2500, color:"#E5E7EB", stateIcon:"🪨",
+    desc:"Pumice is solidified volcanic foam — lava that cooled so quickly the gas bubbles were trapped, making it the only rock that floats on water. Solid at all normal temperatures. Used as an abrasive in cosmetics and construction.", category:"natural" },
+
+  "amber": { name:"Amber", symbol:"C₁₀H₁₆O (polymerised terpene)", type:"Natural Fossil Resin", melt:200, boil:350, color:"#F59E0B", stateIcon:"🟡",
+    desc:"Amber is hardened fossil tree resin, millions of years old. It softens at ~150°C and melts at ~200°C. It is technically an amorphous solid (like glass) with no crystalline structure. Ancient insects are often preserved inside amber.", category:"natural" },
+
+  "obsidian": { name:"Obsidian", symbol:"SiO₂(volcanic glass)", type:"Volcanic Glass (Amorphous Solid)", melt:700, boil:2300, color:"#111827", stateIcon:"🖤",
+    desc:"Obsidian is natural volcanic glass formed when lava cools extremely rapidly. It is amorphous — no crystal structure. Breaks with extremely sharp conchoidal fractures; ancient peoples used it for knives and arrowheads. Melts at 700°C (same as lava).", category:"natural" },
+
+  "peat": { name:"Peat (Bog Soil)", symbol:"Organic matter + H₂O", type:"Partially Decomposed Organic Solid", melt:300, boil:500, color:"#4B5563", stateIcon:"🌾",
+    desc:"Peat is a solid accumulation of partially decayed plant matter in waterlogged bogs. It is ~90% water when freshly cut. Dried peat is a combustible solid used as fuel in Ireland and Scotland. It is a precursor to coal over millions of years of geological compression.", category:"natural" },
+
+  "volcanic_ash": { name:"Volcanic Ash", symbol:"SiO₂+Al₂O₃ fine particles", type:"Fine Solid Particulate", melt:1100, boil:2500, color:"#6B7280", stateIcon:"🌋",
+    desc:"Volcanic ash is not like fireplace ash — it is tiny solid glass and mineral fragments blasted from volcanic eruptions. It remains solid at normal temperatures but can be suspended in air like a gas. When hot ash falls it can weld into solid rock called tuff.", category:"natural" },
+
+  // ══ MAN-MADE MATERIALS ════════════════════════════════════════════════════
+  "steel": { name:"Steel", symbol:"Fe+C(0.3%)", type:"Metal Alloy", melt:1370, boil:2750, color:"#6B7280", stateIcon:"🏗️",
+    desc:"Steel is an alloy of iron with ~0.3% carbon. The carbon atoms sit in gaps between iron atoms, strengthening the lattice. Melts at ~1370°C. It is the world's most important engineering material — over 1.8 billion tonnes produced per year.", category:"manmade" },
+
+  "stainless_steel": { name:"Stainless Steel", symbol:"Fe+Cr(18%)+Ni(8%)", type:"Corrosion-Resistant Alloy", melt:1400, boil:2800, color:"#D1D5DB", stateIcon:"🍴",
+    desc:"Stainless steel contains ≥10.5% chromium which forms a self-repairing Cr₂O₃ oxide layer preventing rust. Solid at all everyday temperatures, melting at ~1400°C. Used in cutlery, surgical tools, and kitchen equipment.", category:"manmade" },
+
+  "concrete": { name:"Concrete", symbol:"CaO+SiO₂+H₂O(set)", type:"Man-Made Composite Solid", melt:1500, boil:3000, color:"#9CA3AF", stateIcon:"🏢",
+    desc:"Concrete is a man-made rock: cement (CaO+SiO₂) mixed with water undergoes a chemical hydration reaction to form a hard solid. It does not truly melt — it decomposes above 1000°C. The world's most-used construction material: ~10 billion tonnes/year.", category:"manmade" },
+
+  "plastic_pet": { name:"PET Plastic (Polyester)", symbol:"(C₁₀H₈O₄)ₙ", type:"Synthetic Polymer Solid", melt:250, boil:350, color:"#BFDBFE", stateIcon:"🧴",
+    desc:"PET (polyethylene terephthalate) is the clear plastic used in bottles. Solid at room temperature, it softens at ~75°C (glass transition) and melts at ~250°C. Above 350°C it decomposes. It is widely recycled but takes ~450 years to degrade in nature.", category:"manmade" },
+
+  "rubber": { name:"Vulcanised Rubber", symbol:"(C₅H₈)ₙ + S crosslinks", type:"Elastomeric Solid", melt:180, boil:300, color:"#1F2937", stateIcon:"🏎️",
+    desc:"Natural rubber (polyisoprene) is soft and sticky. Vulcanisation (adding sulfur) creates cross-links between polymer chains, making it strong and elastic. It does not melt — it decomposes above 180°C. Used in tyres, seals, and hoses.", category:"manmade" },
+
+  "nylon": { name:"Nylon (Polyamide)", symbol:"(C₁₂H₂₃N₂O₃)ₙ", type:"Synthetic Polymer", melt:220, boil:400, color:"#FDE68A", stateIcon:"🧵",
+    desc:"Nylon is a synthetic polyamide made from adipic acid and hexamethylenediamine. Solid at room temperature, melts at 220°C, decomposes above 400°C. First synthetic fabric ever made (1935). Used in clothing, gears, ropes, and toothbrush bristles.", category:"manmade" },
+
+  "glass_borosilicate": { name:"Borosilicate Glass (Pyrex)", symbol:"SiO₂+B₂O₃", type:"Man-Made Amorphous Solid", melt:820, boil:2200, color:"#BFDBFE", stateIcon:"🧪",
+    desc:"Borosilicate glass has very low thermal expansion — it won't crack under sudden temperature changes. Amorphous solid (no crystal structure). Softens at ~820°C. Used in lab glassware, telescope mirrors, and cooking dishes.", category:"manmade" },
+
+  "aluminium_foil": { name:"Aluminium Foil", symbol:"Al", type:"Metal Product", melt:660, boil:2519, color:"#D1D5DB", stateIcon:"📦",
+    desc:"Aluminium foil is pure aluminium rolled to ~0.016mm thickness. Solid at all everyday temperatures, melts at 660°C. Excellent reflector of heat and light. A good electrical conductor but forms an insulating oxide layer (Al₂O₃) instantly on the surface.", category:"manmade" },
+
+  "solder": { name:"Solder (Tin-Lead)", symbol:"Sn₆₃Pb₃₇", type:"Low Melting Alloy", melt:183, boil:1750, color:"#9CA3AF", stateIcon:"🔧",
+    desc:"Traditional solder is 63% tin, 37% lead — a eutectic alloy that melts sharply at just 183°C (lower than either pure metal). Used in electronics to join components. Lead-free solders (Sn+Ag+Cu) melt at ~217°C. Solid at room temperature.", category:"manmade" },
+
+  "gunpowder": { name:"Gunpowder (Black Powder)", symbol:"KNO₃+C+S", type:"Explosive Solid Mixture", melt:334, boil:400, color:"#374151", stateIcon:"💥",
+    desc:"Gunpowder is a solid mixture of potassium nitrate (75%), charcoal (15%), and sulfur (10%). When ignited it rapidly converts to hot gases (CO₂, N₂, K₂S) releasing energy — deflagration, not detonation. Invented in China ~9th century AD.", category:"manmade" },
+
+  "soap": { name:"Soap", symbol:"C₁₇H₃₅COONa", type:"Sodium Salt of Fatty Acid", melt:120, boil:360, color:"#FEF9C3", stateIcon:"🧼",
+    desc:"Soap is the sodium or potassium salt of fatty acids. Solid bars soften at ~120°C. Each molecule has a hydrophilic (water-loving) end and hydrophobic (oil-loving) end — this lets soap surround grease particles and wash them away with water.", category:"manmade" },
+
+  "cement": { name:"Portland Cement (Dry)", symbol:"Ca₃SiO₅+Ca₂SiO₄", type:"Hydraulic Powder Solid", melt:1450, boil:2500, color:"#9CA3AF", stateIcon:"🏗️",
+    desc:"Dry cement is a fine solid powder of calcium silicates made by heating limestone with clay to 1450°C (clinker). When mixed with water it undergoes irreversible chemical hydration, forming hard solid concrete — this is a chemical change, not a phase change.", category:"manmade" },
+
+  "epoxy_resin": { name:"Epoxy Resin (Cured)", symbol:"Polymer network", type:"Thermoset Plastic Solid", melt:300, boil:450, color:"#FEF3C7", stateIcon:"🔩",
+    desc:"Cured epoxy is a solid thermoset — once hardened by chemical cross-linking it cannot be re-melted. Unlike thermoplastics (nylon, PET) thermosets decompose rather than flow. Used in aerospace composites, adhesives, and circuit boards.", category:"manmade" },
+
+  "fiberglass": { name:"Fibreglass (GFRP)", symbol:"SiO₂ fibres+epoxy", type:"Composite Solid", melt:800, boil:2000, color:"#E0F2FE", stateIcon:"⛵",
+    desc:"Fibreglass is a composite of glass fibres embedded in polymer resin. The glass fibres (SiO₂) melt at ~800°C; the resin decomposes at ~300°C. Stronger than steel by weight. Used in boats, car body panels, and wind turbine blades.", category:"manmade" },
+
+  "asphalt": { name:"Asphalt (Bitumen)", symbol:"C₇₀H₉₈S (heavy hydrocarbons)", type:"Viscous Solid/Liquid", melt:50, boil:400, color:"#111827", stateIcon:"🛣️",
+    desc:"Asphalt is a black semi-solid petroleum residue. It softens at ~50°C and flows at road-laying temperatures (150°C). At room temperature it is solid but classified as a highly viscous liquid — given centuries, it would flow (demonstrated in the famous Pitch Drop experiment).", category:"manmade" },
+
+  "explosives_tnt": { name:"TNT (Trinitrotoluene)", symbol:"C₇H₅N₃O₆", type:"Explosive Organic Solid", melt:80, boil:295, color:"#FCD34D", stateIcon:"💣",
+    desc:"TNT is a pale yellow crystalline solid that melts at 80°C (safe to cast into shells). It detonates at ~295°C producing 7× its volume in gas almost instantaneously. Unlike gunpowder, TNT is a detonating explosive — it produces a supersonic shockwave.", category:"manmade" },
+
+  "aerogel": { name:"Aerogel (Silica)", symbol:"SiO₂(99% air)", type:"Ultra-low Density Solid", melt:1200, boil:2500, color:"#E0F2FE", stateIcon:"☁️",
+    desc:"Aerogel is the world's lightest solid — 99.8% air trapped in a silica nanopore network. It can support 1000× its own weight. It is an excellent thermal insulator (better than glass wool). Melts above 1200°C. Used in NASA spacecraft insulation.", category:"manmade" },
+
+  "dry_ice_sublimation": { name:"Dry Ice (Sublimation Demo)", symbol:"CO₂(s→g)", type:"Sublimating Solid", melt:-78.5, boil:-78.5, color:"#BFDBFE", stateIcon:"❄️",
+    desc:"Dry ice sublimates directly from solid CO₂ to CO₂ gas at -78.5°C — it skips the liquid phase entirely at normal atmospheric pressure. The 'smoke' you see is actually condensed water vapour from the air chilled by the dry ice, not CO₂ itself.", category:"manmade" },
+
+  // ══ MORE NATURAL MATERIALS ════════════════════════════════════════════════
+  "crude_oil": { name:"Crude Oil (Petroleum)", symbol:"CₙH₂ₙ₊₂ mix", type:"Fossil Fuel Liquid", melt:-60, boil:350, color:"#1F2937", stateIcon:"🛢️",
+    desc:"Crude oil is a liquid mixture of hundreds of hydrocarbons formed from ancient marine organisms. It does not have a single boiling point — light fractions (petrol) boil at ~35°C, heavy fractions (bitumen) above 300°C. The basis of modern industrial civilisation.", category:"natural" },
+
+  "natural_gas_methane": { name:"Natural Gas (Methane)", symbol:"CH₄", type:"Fossil Fuel Gas", melt:-182, boil:-161, color:"#FCD34D", stateIcon:"🔥",
+    desc:"Methane is a colourless, odourless gas at room temperature (the smell added is mercaptan). Liquefies at -161°C (LNG). Highly flammable. The most potent common greenhouse gas — 80× more warming than CO₂ over 20 years.", category:"natural" },
+
+  "river_water": { name:"River Water (Fresh)", symbol:"H₂O + trace minerals", type:"Natural Liquid", melt:0, boil:100, color:"#60A5FA", stateIcon:"🏞️",
+    desc:"Fresh river water is ~99.9% H₂O with dissolved minerals (Ca, Mg, Na). Freezes at 0°C and boils at 100°C. Unlike sea water, evaporating river water leaves almost no residue. Supports ~10% of all known animal species in freshwater ecosystems.", category:"natural" },
+
+  "mud": { name:"Mud (Wet Soil)", symbol:"SiO₂+Al₂O₃+H₂O+organics", type:"Suspension / Plastic Solid", melt:1200, boil:2500, color:"#92400E", stateIcon:"🌍",
+    desc:"Mud is a suspension of clay and silt particles in water — it behaves as a liquid under force (thixotropic) but sits solid when undisturbed. Drying converts it to a brittle solid. Mud has been used for brick-making since 7500 BCE.", category:"natural" },
+
+  "fog": { name:"Fog / Mist", symbol:"H₂O(l) aerosol", type:"Liquid Aerosol in Gas", melt:0, boil:100, color:"#F3F4F6", stateIcon:"🌫️",
+    desc:"Fog is NOT a gas — it is tiny liquid water droplets (1–100 µm) suspended in air. Each droplet is liquid water. The droplets form when air cools below its dew point. Fog is a colloid: liquid dispersed in gas. It clears when temperature rises and droplets evaporate.", category:"natural" },
+
+  "cloud": { name:"Cloud", symbol:"H₂O(l/s) droplets", type:"Liquid/Ice Aerosol", melt:0, boil:100, color:"#F9FAFB", stateIcon:"☁️",
+    desc:"Clouds contain tiny liquid water droplets (warm clouds) or ice crystals (cold clouds above -10°C), each formed on a dust or sea-salt particle. Despite appearing solid, a cloud is a suspension of liquid or solid water in air. 1 cubic km of cloud contains ~500 tonnes of water.", category:"natural" },
+
+  "steam_natural": { name:"Geothermal Steam", symbol:"H₂O(g)", type:"Natural Gas", melt:0, boil:100, color:"#F3F4F6", stateIcon:"♨️",
+    desc:"Steam is water vapour above 100°C — a completely invisible, colourless gas. What looks like white 'steam' from a kettle is actually condensed liquid droplets. Geothermal steam from below Earth's crust powers turbines in Iceland and New Zealand.", category:"natural" },
+
+  "magma": { name:"Magma (Underground Lava)", symbol:"SiO₂+MgO+FeO melt", type:"Molten Rock (Underground)", melt:700, boil:2000, color:"#DC2626", stateIcon:"🌋",
+    desc:"Magma is molten rock below Earth's surface; when it erupts it becomes lava. It is a complex silicate liquid containing dissolved gases. Pressure underground keeps gases dissolved. When magma rises and pressure drops, gases bubble out — driving volcanic explosions.", category:"natural" },
+
+  "pearls": { name:"Pearl", symbol:"CaCO₃+Conchiolin", type:"Biomineral Composite Solid", melt:825, boil:1200, color:"#F9FAFB", stateIcon:"🦪",
+    desc:"Pearls are solid concentric layers of aragonite (CaCO₃) and protein secreted by molluscs around an irritant. They cannot melt cleanly — CaCO₃ decomposes at 825°C releasing CO₂. Natural pearls form over 5–20 years; cultured pearls over 2–5 years.", category:"natural" },
+
+  "coral": { name:"Coral Skeleton", symbol:"CaCO₃", type:"Biomineral Solid", melt:825, boil:1200, color:"#FBBF24", stateIcon:"🪸",
+    desc:"Coral skeleton is calcium carbonate (aragonite) secreted by coral polyps. Solid at all normal temperatures. Dissolves in mildly acidic water (ocean acidification threatening coral reefs). Decomposes above 825°C, not melting but releasing CO₂.", category:"natural" },
+
+  "milk_powder": { name:"Powdered Milk", symbol:"Lactose+Casein+Fat (dry)", type:"Dried Biological Solid", melt:170, boil:300, color:"#FFFBEB", stateIcon:"🥛",
+    desc:"Milk powder is liquid milk with ~95% of the water removed by spray-drying. It is a solid at room temperature. The lactose crystallises and proteins form a dry matrix. Rehydrating with water reconstitutes the original liquid. Melting point is approx. 170°C (lactose).", category:"living" },
+
+  "plasma_sun": { name:"Solar Plasma (Sun's Core)", symbol:"H⁺+e⁻ (fusion plasma)", type:"Stellar Plasma", melt:0, boil:0, color:"#F97316", stateIcon:"☀️",
+    desc:"The Sun's core is plasma at ~15 million °C and 340 billion atm pressure. Hydrogen nuclei fuse into helium releasing 3.8×10²⁶ W of power. This plasma state — the 4th state of matter — accounts for ~99% of all visible matter in the universe.", category:"plasma" },
+
+  "lightning_plasma": { name:"Lightning (Plasma Channel)", symbol:"N₂⁺+O₂⁺+e⁻", type:"Natural Plasma", melt:0, boil:0, color:"#FDE68A", stateIcon:"⚡",
+    desc:"A lightning bolt superheats air to ~30,000 K — five times hotter than the Sun's surface — creating a plasma channel. This plasma lasts ~0.2 seconds, emitting visible light and thunder (the shockwave). The channel diameter is only ~2–5 cm despite the enormous energy.", category:"plasma" },
+
+  // ══ NEW: LIVING THINGS ═══════════════════════════════════════════════════
+  "human_blood": { name:"Human Blood", symbol:"H₂O+Hb+RBC+WBC+Plasma", type:"Living Biological Fluid", melt:-1, boil:101, color:"#DC2626", stateIcon:"🩸",
+    desc:"Human blood is a living liquid tissue — 55% plasma (water+proteins) and 45% red blood cells. Normal body temperature is 37°C. Below -1°C ice crystals rupture blood cells (haemolysis). Blood clots when proteins like fibrin polymerise into solid fibres to seal wounds.", category:"living" },
+
+  "bone": { name:"Bone (Human)", symbol:"Ca₅(PO₄)₃OH+Collagen", type:"Living Composite Solid", melt:1670, boil:2500, color:"#FFFBEB", stateIcon:"🦴",
+    desc:"Living bone is 70% hydroxyapatite mineral (calcium phosphate) and 30% collagen protein — giving it both hardness and flexibility. It does not melt at normal temperatures; it decomposes above 300°C losing collagen. Burned bone (solid white ash) is pure hydroxyapatite.", category:"living" },
+
+  "wood": { name:"Wood (Dry)", symbol:"Cellulose+Lignin+Hemicellulose", type:"Natural Plant Solid", melt:300, boil:400, color:"#92400E", stateIcon:"🪵",
+    desc:"Dry wood is a composite of cellulose fibres (40–50%), hemicellulose (20–30%) and lignin (20–30%). It never melts — at 270°C pyrolysis begins, releasing combustible gases and leaving charcoal. Wood was humanity's primary fuel and construction material for millennia.", category:"living" },
+
+  "grass": { name:"Grass / Hay", symbol:"Cellulose+SiO₂+H₂O", type:"Plant Biomass Solid", melt:300, boil:500, color:"#16A34A", stateIcon:"🌱",
+    desc:"Dry grass is ~40% cellulose, 30% hemicellulose, and 12% lignin with silica deposits in the cells (making it feel rough). It combusts at ~300°C and does not melt. Fresh grass is 75–80% water. Hay (dry grass) has only ~15% water and is highly flammable.", category:"living" },
+
+  "crab_shell": { name:"Crab Shell (Chitin)", symbol:"(C₈H₁₃O₅N)ₙ", type:"Biological Solid Polymer", melt:280, boil:450, color:"#F97316", stateIcon:"🦀",
+    desc:"Crab shells are made of chitin — a nitrogen-containing polysaccharide polymer — reinforced with calcium carbonate. It is solid at all normal temperatures and begins to decompose above 280°C. Chitin is the second most abundant natural polymer after cellulose.", category:"living" },
+
+  "fur": { name:"Animal Fur / Hair (Keratin)", symbol:"α-keratin protein", type:"Biological Solid Fibre", melt:230, boil:400, color:"#F59E0B", stateIcon:"🐾",
+    desc:"Fur and hair are made of α-keratin — a fibrous protein stabilised by disulfide bonds between cysteine amino acids. Solid at all normal temperatures. Begins to melt/deform at ~230°C. Keratin also makes hooves, claws, and horn. It is extremely resistant to chemical digestion.", category:"living" },
+
+  "feather": { name:"Bird Feather (β-keratin)", symbol:"β-keratin protein", type:"Biological Composite Solid", melt:250, boil:400, color:"#FEF9C3", stateIcon:"🪶",
+    desc:"Bird feathers are made of β-keratin — a sheet-like protein structure different from mammalian α-keratin. They are among the lightest, most aerodynamic solid structures in nature. A feather is 90% air by volume. Decomposes above 250°C without melting.", category:"living" },
+
+  "coral_living": { name:"Living Coral Polyp", symbol:"CaCO₃+Zooxanthellae+H₂O", type:"Living Biomineral Organism", melt:825, boil:1200, color:"#FB923C", stateIcon:"🪸",
+    desc:"Living coral polyps are soft animals that secrete a hard CaCO₃ skeleton. The polyp tissue (liquid-filled cells) exists at ocean temperatures (~25°C). The skeleton solid decomposes above 825°C. Coral reefs support 25% of all marine species despite covering only 0.1% of ocean floor.", category:"living" },
+
+  "mushroom": { name:"Mushroom (Fungus)", symbol:"Chitin+H₂O+Ergosterol", type:"Living Fungal Solid", melt:250, boil:400, color:"#D97706", stateIcon:"🍄",
+    desc:"Mushrooms are ~90% water by mass. The cell walls are made of chitin (same as crab shells). They dry from solid to a lightweight, brittle solid as water evaporates. Fresh mushrooms are a hydrated solid; dried mushrooms combust at ~250°C. Fungi are neither plants nor animals.", category:"living" },
+
+  // ══ NEW: MAN-MADE THINGS ═══════════════════════════════════════════════════
+  "candle_wax": { name:"Candle Wax (Paraffin)", symbol:"CₙH₂ₙ₊₂ (n=20–40)", type:"Petroleum-derived Solid", melt:46, boil:370, color:"#FFFBEB", stateIcon:"🕯️",
+    desc:"Paraffin wax is a mixture of long-chain alkane hydrocarbons. It melts at just 46–68°C — a burning candle flame is ~1400°C, but the wax pool near the wick only reaches ~70°C (liquid). The liquid wax wicks upward and vaporises near the flame where it combusts.", category:"manmade" },
+
+  "pencil_graphite": { name:"Pencil Lead (Graphite)", symbol:"C (layered)", type:"Carbon Allotrope Solid", melt:3527, boil:4027, color:"#374151", stateIcon:"✏️",
+    desc:"Pencil 'lead' is graphite (carbon) — layers of hexagonal carbon atoms that slide easily over each other, leaving marks. It melts at 3527°C — one of the highest melting points of any substance. Graphite is a better electrical conductor than many metals, unlike diamond.", category:"manmade" },
+
+  "brick": { name:"Fired Brick (Ceramic)", symbol:"SiO₂+Al₂O₃+Fe₂O₃", type:"Ceramic Solid", melt:1600, boil:3000, color:"#B45309", stateIcon:"🧱",
+    desc:"Fired brick is clay heated to 900–1200°C in a kiln, causing irreversible ceramic sintering. The clay minerals recrystallise into mullite (Al₆Si₂O₁₃). Bricks do not melt at normal conditions — they soften above 1600°C. The oldest fired bricks date to ~3000 BCE in the Indus Valley.", category:"manmade" },
+
+  "paint": { name:"Paint (Dried Acrylic)", symbol:"Acrylic polymer+pigment", type:"Polymer Film Solid", melt:160, boil:350, color:"#EF4444", stateIcon:"🎨",
+    desc:"Wet acrylic paint is a liquid dispersion of polymer particles in water. As water evaporates, polymer particles fuse into a continuous solid film. The dried paint is a thermoplastic solid that softens at ~160°C. It binds to surfaces because the polymer chains interlock with surface irregularities.", category:"manmade" },
+
+  "copper_wire": { name:"Copper Wire", symbol:"Cu", type:"Metal Conductor", melt:1085, boil:2562, color:"#F97316", stateIcon:"⚡",
+    desc:"Copper is the world's most widely used electrical conductor — only silver conducts better but costs far more. Solid at all everyday temperatures, melting at 1085°C. Copper atoms form a face-centred cubic lattice; free electrons between atoms give it excellent conductivity. Drawn into wire by pulling through dies.", category:"manmade" },
+
+  "cotton": { name:"Cotton Fabric", symbol:"(C₆H₁₀O₅)ₙ cellulose", type:"Natural Textile Solid", melt:260, boil:400, color:"#F9FAFB", stateIcon:"👕",
+    desc:"Cotton is pure cellulose — the same polymer that forms plant cell walls. Cotton fibres are seed hairs of the Gossypium plant, ~30mm long. It does not melt — it decomposes above 260°C (scorches, then burns). Cotton absorbs water very well because OH groups in cellulose are hydrophilic.", category:"manmade" },
+
+  "silicone": { name:"Silicone (PDMS)", symbol:"(Si(CH₃)₂O)ₙ", type:"Synthetic Elastomer", melt:-50, boil:300, color:"#F3F4F6", stateIcon:"🍳",
+    desc:"Silicone (polydimethylsiloxane) is a synthetic polymer with Si-O-Si backbone — not carbon-based like most polymers. Flexible solid from -50°C to 200°C — outstanding thermal stability. Used in cookware, medical implants, and lubricants. The Si-O bond is inherently more heat-stable than C-C.", category:"manmade" },
+
+  "chalk": { name:"Chalk (CaCO₃)", symbol:"CaCO₃", type:"Sedimentary Mineral Solid", melt:825, boil:1200, color:"#F9FAFB", stateIcon:"🖍️",
+    desc:"Chalk is a soft form of limestone — made of the compressed shells of ancient marine microorganisms (coccolithophores). It does not melt; above 825°C it decomposes: CaCO₃ → CaO + CO₂. The CO₂ escapes, leaving quicklime (CaO). Used in writing, cement production, and farming.", category:"manmade" },
+
+  "battery_acid": { name:"Battery Acid (Sulfuric Acid)", symbol:"H₂SO₄(aq)", type:"Corrosive Liquid Solution", melt:-35, boil:337, color:"#FDE68A", stateIcon:"🔋",
+    desc:"Car battery electrolyte is ~35% sulfuric acid in water. It is a highly corrosive liquid at room temperature. Pure H₂SO₄ freezes at -35°C and boils at 337°C. The acid ionises into H⁺ and SO₄²⁻ ions that carry electrical charge between battery plates, storing energy.", category:"manmade" },
+
+  "ceramic_tile": { name:"Ceramic Floor Tile", symbol:"SiO₂+Al₂O₃ (sintered)", type:"Sintered Ceramic Solid", melt:1700, boil:3000, color:"#BFDBFE", stateIcon:"🏠",
+    desc:"Ceramic tiles are made by pressing and kiln-firing clay at 1100–1300°C — the particles sinter (fuse without fully melting). The result is a hard, dense, chemically inert solid. Does not melt below 1700°C. Tiles resist water, heat, and scratching, making them ideal for floors and walls.", category:"manmade" },
+
+  "polyethylene": { name:"Polyethylene (PE Bag)", symbol:"(CH₂CH₂)ₙ", type:"Synthetic Thermoplastic", melt:130, boil:350, color:"#BFDBFE", stateIcon:"🛍️",
+    desc:"Polyethylene is the world's most produced plastic — used in bags, bottles, and pipes. Made of long -CH₂CH₂- chains. Melts at ~130°C (HDPE) making it easy to mould. It is chemically inert and takes ~1000 years to degrade. Over 100 million tonnes are produced annually.", category:"manmade" },
+
+  "cement_wet": { name:"Wet Cement (Setting)", symbol:"Ca₃SiO₅+H₂O→CSH gel", type:"Transitioning Composite", melt:1450, boil:2500, color:"#9CA3AF", stateIcon:"🏗️",
+    desc:"Freshly mixed cement is a viscous suspension (liquid-like). Within hours, calcium silicate hydrate (C-S-H) gel forms through irreversible chemical hydration, gradually converting it to a solid. This is NOT a phase change — it is a chemical reaction. Full strength is reached after ~28 days.", category:"manmade" },
+
+  "stained_glass": { name:"Stained Glass", symbol:"SiO₂+metal oxides", type:"Coloured Amorphous Solid", melt:750, boil:2200, color:"#60A5FA", stateIcon:"🪟",
+    desc:"Stained glass is silica glass coloured with metal oxides — cobalt for blue, copper for green, gold for red. Like all glass, it is an amorphous solid with no crystal structure. Softens at ~750°C and can be blown or shaped. Medieval cathedral windows are over 800 years old.", category:"manmade" },
+
+  "carbon_fibre": { name:"Carbon Fibre (CFRP)", symbol:"Carbon fibre+epoxy", type:"Advanced Composite Solid", melt:3527, boil:4027, color:"#1F2937", stateIcon:"✈️",
+    desc:"Carbon fibre is made by heating polyacrylonitrile (PAN) fibres to 1500°C in nitrogen, converting them to pure carbon. The fibres are 5–10 µm thick — 10× thinner than a human hair — yet stronger than steel at 1/5 the weight. Used in aircraft, racing cars, and spacecraft.", category:"manmade" },
+
+  // ══ NEW: MORE NON-LIVING NATURAL ══════════════════════════════════════════
+  "sand": { name:"Sand (Silica)", symbol:"SiO₂", type:"Natural Granular Solid", melt:1710, boil:2230, color:"#FCD34D", stateIcon:"🏖️",
+    desc:"Sand is tiny fragments of quartz (SiO₂) — the most common mineral on Earth. Individual grains are 0.0625–2mm across. Sand melts at 1710°C into liquid silica — which is how glass is made. Sand behaves like a liquid when vibrated (quicksand) but is a solid. Used in construction and glass.", category:"natural" },
+
+  "salt": { name:"Table Salt (NaCl)", symbol:"NaCl", type:"Ionic Crystal Solid", melt:801, boil:1413, color:"#F9FAFB", stateIcon:"🧂",
+    desc:"Sodium chloride forms a face-centred cubic ionic lattice of alternating Na⁺ and Cl⁻ ions. Solid at all everyday temperatures. Melts at 801°C — molten NaCl conducts electricity (free ions). Dissolved in water it also conducts electricity. Essential for human life — regulates cell osmosis.", category:"natural" },
+
+  "ice_dry": { name:"Dry Ice (CO₂ Solid)", symbol:"CO₂(s)", type:"Sublimating Solid", melt:-78.5, boil:-78.5, color:"#BFDBFE", stateIcon:"❄️",
+    desc:"Solid CO₂ (dry ice) sublimates directly from solid to gas at -78.5°C at normal pressure — it skips the liquid phase entirely. The 'smoke' produced is condensed water vapour from the air, not CO₂. Dry ice is used for food transport, fog effects, and shipping pharmaceuticals.", category:"natural" },
+
+  "sulfur": { name:"Sulfur", symbol:"S₈", type:"Non-Metal Solid", melt:113, boil:445, color:"#FCD34D", stateIcon:"🌋",
+    desc:"Sulfur is a bright yellow crystalline solid at room temperature, made of ring-shaped S₈ molecules. Melts at 113°C into a mobile yellow liquid; above 160°C the liquid turns viscous and brown as S₈ rings break into polymers. Boils at 445°C. Found near volcanoes and used to make sulfuric acid.", category:"natural" },
+
+  "sand_dune": { name:"Sand Dune", symbol:"SiO₂ grains", type:"Granular Natural Solid", melt:1710, boil:2230, color:"#F59E0B", stateIcon:"🏜️",
+    desc:"A sand dune is an accumulation of wind-blown quartz sand. Individual grains are solid SiO₂. Dunes behave like very slow-moving fluids on geological timescales — they migrate with wind at ~10–30 m/year. The largest sand dunes on Earth (Namib Desert) reach 300 m height.", category:"natural" },
+
+  "pumice_float": { name:"Pumice (Floating Rock)", symbol:"SiO₂ foam glass", type:"Vesicular Volcanic Solid", melt:1200, boil:2500, color:"#E5E7EB", stateIcon:"🪨",
+    desc:"Pumice is the only rock that floats on water — its density is less than 1 g/cm³ because of the millions of gas bubbles trapped as lava cooled explosively. It is a solid amorphous glass foam. Used as an abrasive in cosmetics and as a lightweight aggregate in concrete.", category:"natural" },
+
+  "resin_tree": { name:"Tree Resin (Pine Sap)", symbol:"C₁₀H₁₆ (terpenes)", type:"Natural Organic Liquid/Solid", melt:70, boil:250, color:"#F59E0B", stateIcon:"🌲",
+    desc:"Fresh pine resin is a viscous liquid secreted by trees to seal wounds and repel insects. It hardens into a brittle solid as volatile terpenes evaporate. Heated above 70°C it melts to a sticky liquid (rosin). Over millions of years, buried resin fossilises into amber.", category:"natural" },
+
+  "quartz": { name:"Quartz Crystal", symbol:"SiO₂ (crystalline)", type:"Crystalline Mineral Solid", melt:1710, boil:2230, color:"#E0F2FE", stateIcon:"💎",
+    desc:"Quartz is crystalline silicon dioxide — the most abundant mineral in Earth's continental crust. It has a hexagonal crystal structure. Melts at 1710°C to give amorphous silica glass. Quartz crystals vibrate at precise frequencies under electric fields — used in watches and electronics (piezoelectric effect).", category:"natural" },
+
+  "nitrogen_liquid": { name:"Liquid Nitrogen", symbol:"N₂(l)", type:"Cryogenic Liquid", melt:-210, boil:-196, color:"#BFDBFE", stateIcon:"🧪",
+    desc:"Liquid nitrogen exists between -210°C (freezing) and -196°C (boiling) at normal pressure. At room temperature nitrogen is a gas. Liquid nitrogen is used to preserve biological samples, freeze food instantly, and in cryotherapy. It 'boils' visibly at room temperature due to rapid vaporisation.", category:"natural" },
+
+  // ══ NEW: SPECIAL MULTI-STAGE (MAN-MADE) ══════════════════════════════════
+  "chocolate": {
+    name:"Chocolate (Melting)", symbol:"Cocoa butter+Sugar+Lecithin", type:"Food Solid — Polymorphic",
+    melt:34, boil:150, color:"#78350F", stateIcon:"🍫",
+    specialStages:[
+      { temp:15,  state:"solid",  label:"Tempered chocolate (snap-hard)",   note:"Well-tempered chocolate at 15°C is in cocoa butter's stable Form V crystal — it has a sharp snap, glossy surface, and melts cleanly at 34°C. The crystal structure matters enormously to texture." },
+      { temp:25,  state:"solid",  label:"Room temp chocolate (still solid)", note:"Dark chocolate stays solid at 25°C. Milk/white chocolate may begin to soften slightly. The cocoa butter crystalline network holds it firm." },
+      { temp:34,  state:"liquid", label:"Melts on tongue / in hand",         note:"Cocoa butter melts at exactly 34°C — just below human body temperature (37°C). This is why chocolate melts in the mouth but not in a cool hand. Genius confectionery physics!" },
+      { temp:50,  state:"liquid", label:"Liquid chocolate (fluid)",          note:"Fully liquid above 50°C. Chocolate makers temper (cool carefully) liquid chocolate to grow stable Form V crystals — if cooled too fast you get grainy, bloom-covered chocolate." },
+      { temp:150, state:"gas",    label:"Sugars caramelise / burn",          note:"Above 150°C sugars undergo Maillard reactions and caramelise. Above 180°C the chocolate burns, releasing acrid gases. Milk solids and sugars char irreversibly." },
+    ],
+    desc:"Chocolate melting is a fascinating polymorphic phase change — cocoa butter can form 6 different crystal structures (I–VI). Only Form V gives the glossy, snappy chocolate you love. Tempering is the art of controlling which crystal form grows.",
+    category:"special"
+  },
+
+  "butter": {
+    name:"Butter (Melting)", symbol:"Triglycerides+H₂O+Proteins", type:"Dairy Fat Solid",
+    melt:32, boil:150, color:"#FCD34D", stateIcon:"🧈",
+    specialStages:[
+      { temp:4,   state:"solid",  label:"Refrigerator butter (hard solid)",  note:"Cold butter is hard and brittle — the saturated fat crystals form a rigid network. Hard to spread without tearing bread." },
+      { temp:15,  state:"solid",  label:"Room temp butter (soft solid)",     note:"At 15–18°C butter softens — some fat crystals melt while others remain. This is the ideal 'spreadable' state — a plastic solid." },
+      { temp:32,  state:"liquid", label:"Melted butter (liquid)",            note:"Above 32°C the remaining fat crystals melt and butter becomes a liquid. The water and fat separate if heated slowly — the water sinks." },
+      { temp:100, state:"liquid", label:"Clarified butter (water boils off)", note:"At 100°C the water in butter boils away as steam, leaving clear golden clarified butter (ghee). Milk proteins form white foam that can be skimmed. Ghee has a much higher smoke point than whole butter." },
+      { temp:150, state:"gas",    label:"Smoke point — proteins burn",       note:"Above 150°C (whole butter's smoke point) milk proteins begin to burn, giving a bitter taste. Clarified butter can reach 250°C before smoking." },
+    ],
+    desc:"Butter transitions from hard solid to soft plastic solid to liquid in a narrow temperature range around 32°C — entirely due to changes in fat crystal structure. Ghee (clarified butter) is made by boiling away water at 100°C.",
+    category:"special"
+  },
+
+  "candle_burning": {
+    name:"Candle (Burning)", symbol:"C₂₅H₅₂ (paraffin)", type:"Man-Made — Combustion Stages",
+    melt:46, boil:370, color:"#FCD34D", stateIcon:"🕯️",
+    specialStages:[
+      { temp:25,  state:"solid",  label:"Unlit candle (solid wax)",          note:"Paraffin wax is a solid mixture of long-chain alkanes at room temperature. Firm, waxy texture." },
+      { temp:46,  state:"liquid", label:"Wax melts — liquid pool forms",     note:"Near the flame the wax melts at ~46–68°C, forming the liquid wax pool. The wick draws liquid wax upward by capillary action." },
+      { temp:370, state:"gas",    label:"Wax vaporises — combustion zone",   note:"Liquid wax near the flame vaporises at ~370°C. The wax vapour (gas) combusts with oxygen: C₂₅H₅₂ + O₂ → CO₂ + H₂O + heat + light. The flame is ~1400°C. The candle converts solid wax → liquid → gas → combustion products." },
+      { temp:1400,state:"plasma", label:"Flame tip — plasma region",         note:"The very tip of a candle flame approaches plasma conditions — highly ionised gas. A flame can conduct electricity, demonstrating the presence of ions." },
+    ],
+    desc:"A burning candle beautifully demonstrates all states of matter: solid wax → liquid pool → wax vapour (gas) → flame plasma. The wick is merely a guide for liquid wax — remove the wick and the flame goes out even if wax is present.",
+    category:"special"
+  },
+
+  "ice_cream": {
+    name:"Ice Cream (Melting)", symbol:"H₂O(ice)+Fat+Sugar+Air", type:"Frozen Food Emulsion",
+    melt:-5, boil:100, color:"#BFDBFE", stateIcon:"🍦",
+    specialStages:[
+      { temp:-18, state:"solid",  label:"Frozen solid ice cream",            note:"At freezer temperature (-18°C) ice cream is a solid: ice crystals, frozen fat globules, and air bubbles locked in a firm matrix. About 30% of the water is still unfrozen due to dissolved sugars (freezing point depression)." },
+      { temp:-5,  state:"solid",  label:"Scoopable (partially melted)",      note:"Near -5°C ice crystals begin to melt. Ice cream reaches its ideal scoopable texture — a 'plastic' solid with some liquid. This is why ice cream is 'tempered' at -11°C before serving." },
+      { temp:0,   state:"liquid", label:"Melted ice cream — liquid emulsion", note:"At 0°C+ ice cream melts to a liquid emulsion of fat, water, sugar, and dissolved air. The structure collapses — you cannot refreeze it to the same texture (ice crystals become large and grainy)." },
+      { temp:100, state:"gas",    label:"Water boils off",                    note:"Above 100°C the water boils away. The remaining fat and sugar caramelise. You're essentially making toffee at this point." },
+    ],
+    desc:"Ice cream is a complex frozen colloid — not pure water ice but a mixture of ice crystals, fat globules, sugar solution, and 30–50% air (overrun). The fat and sugar lower the freezing point, giving a creamy scoopable texture between -18°C and -5°C.",
+    category:"special"
+  },
+
+};
+
+// Examples for quick access
+const EXAMPLES = [
+  { id:"iron", label:"Iron Bar", icon:"🔩", state:"s" },
+  { id:"water", label:"Water", icon:"💧", state:"l" },
+  { id:"oxygen", label:"Oxygen", icon:"💨", state:"g" },
+  { id:"gold", label:"Gold", icon:"🥇", state:"s" },
+  { id:"ethanol", label:"Ethanol", icon:"🍺", state:"l" },
+  { id:"nitrogen", label:"N₂ Gas", icon:"🌬️", state:"g" },
+  { id:"ice", label:"Ice", icon:"🧊", state:"s" },
+  { id:"mercury", label:"Mercury", icon:"🌡️", state:"l" },
+  { id:"helium", label:"Helium", icon:"🎈", state:"g" },
+  { id:"diamond", label:"Diamond", icon:"💎", state:"s" },
+  { id:"lava", label:"Lava", icon:"🌋", state:"l" },
+  { id:"steam", label:"Steam", icon:"♨️", state:"g" },
+  { id:"silicon", label:"Silicon", icon:"💻", state:"s" },
+  { id:"gallium", label:"Gallium", icon:"🤚", state:"l" },
+  { id:"carbon dioxide", label:"CO₂", icon:"🌿", state:"g" },
+  { id:"sodium", label:"Sodium", icon:"🧂", state:"s" },
+  { id:"bromine", label:"Bromine", icon:"🟤", state:"l" },
+  { id:"methane", label:"Methane", icon:"🔥", state:"g" },
+  { id:"seawater", label:"Sea Water", icon:"🌊", state:"l" },
+  { id:"ocean_water", label:"Ocean Water", icon:"🌊", state:"l" },
+  { id:"salt_water_heated", label:"Salt Water→Salt", icon:"🧂", state:"l" },
+  { id:"lava_cooled", label:"Lava Cooling", icon:"🌋", state:"l" },
+  { id:"wood_burned", label:"Wood Burning", icon:"🪵", state:"s" },
+  { id:"egg_heated", label:"Egg Heated", icon:"🥚", state:"l" },
+  { id:"honey_heated", label:"Honey", icon:"🍯", state:"l" },
+  { id:"milk_heated", label:"Milk Heated", icon:"🥛", state:"l" },
+  { id:"blood_heated", label:"Blood", icon:"🩸", state:"l" },
+
+  // ── NEW: Living things ──
+  { id:"bone", label:"Bone", icon:"🦴", state:"s" },
+  { id:"wood", label:"Wood", icon:"🪵", state:"s" },
+  { id:"grass", label:"Grass", icon:"🌱", state:"s" },
+  { id:"crab_shell", label:"Crab Shell", icon:"🦀", state:"s" },
+  { id:"fur", label:"Fur/Hair", icon:"🐾", state:"s" },
+  { id:"feather", label:"Feather", icon:"🪶", state:"s" },
+  { id:"mushroom", label:"Mushroom", icon:"🍄", state:"s" },
+
+  // ── NEW: Man-made things ──
+  { id:"candle_wax", label:"Candle Wax", icon:"🕯️", state:"s" },
+  { id:"pencil_graphite", label:"Pencil Lead", icon:"✏️", state:"s" },
+  { id:"brick", label:"Fired Brick", icon:"🧱", state:"s" },
+  { id:"paint", label:"Dried Paint", icon:"🎨", state:"s" },
+  { id:"copper_wire", label:"Copper Wire", icon:"⚡", state:"s" },
+  { id:"cotton", label:"Cotton Fabric", icon:"👕", state:"s" },
+  { id:"silicone", label:"Silicone", icon:"🍳", state:"s" },
+  { id:"chalk", label:"Chalk", icon:"🖍️", state:"s" },
+  { id:"polyethylene", label:"Plastic Bag", icon:"🛍️", state:"s" },
+  { id:"carbon_fibre", label:"Carbon Fibre", icon:"✈️", state:"s" },
+  { id:"stained_glass", label:"Stained Glass", icon:"🪟", state:"s" },
+  { id:"battery_acid", label:"Battery Acid", icon:"🔋", state:"l" },
+
+  // ── NEW: Non-living natural ──
+  { id:"sand", label:"Sand", icon:"🏖️", state:"s" },
+  { id:"salt", label:"Table Salt", icon:"🧂", state:"s" },
+  { id:"sulfur", label:"Sulfur", icon:"🌋", state:"s" },
+  { id:"quartz", label:"Quartz Crystal", icon:"💎", state:"s" },
+  { id:"nitrogen_liquid", label:"Liquid Nitrogen", icon:"🧪", state:"l" },
+  { id:"resin_tree", label:"Tree Resin", icon:"🌲", state:"l" },
+
+  // ── NEW: Special multi-stage ──
+  { id:"chocolate", label:"Chocolate", icon:"🍫", state:"s" },
+  { id:"butter", label:"Butter", icon:"🧈", state:"s" },
+  { id:"candle_burning", label:"Candle Burning", icon:"🕯️", state:"s" },
+  { id:"ice_cream", label:"Ice Cream", icon:"🍦", state:"s" },
+];
+
+// ═══════════════════════════════════════════════════
+//  SIMULATION ENGINE
+// ═══════════════════════════════════════════════════
+const canvas = document.getElementById('simCanvas');
+const ctx = canvas.getContext('2d');
+
+let particles = [];
+let state = 'solid';
+let temperature = 25;
+let pressure = 50;
+let targetParticleCount = 50;
+let isPlaying = true;
+let animId;
+let currentSubstance = null;
+let lastState = 'solid';
+
+// Particle colors per state
+const STATE_COLORS = {
+  solid:  { base:'#3b82f6', glow:'#60a5fa', trail:'rgba(59,130,246,', core:'#93c5fd' },
+  liquid: { base:'#06b6d4', glow:'#22d3ee', trail:'rgba(6,182,212,',   core:'#67e8f9' },
+  gas:    { base:'#a855f7', glow:'#c084fc', trail:'rgba(168,85,247,', core:'#d8b4fe' },
+  plasma: { base:'#f97316', glow:'#fb923c', trail:'rgba(249,115,22,', core:'#fed7aa' },
+};
+
+// ── MORE SPECIAL TRANSITION MATERIALS ────────────────────────────────────
+Object.assign(SUBSTANCES, {
+  "milk_heated": {
+    name:"Milk (Heated)", symbol:"H₂O+Protein+Fat+Lactose", type:"Biological Emulsion — Special",
+    melt:-0.5, boil:101, color:"#FAFAFA", stateIcon:"🥛",
+    specialStages:[
+      { temp:-1,  state:"solid",  label:"Frozen Milk",                  note:"Below -1°C milk freezes. Fat and protein separate into layers as ice crystals form from the water content." },
+      { temp:0,   state:"liquid", label:"Liquid Milk",                  note:"Fresh milk is a liquid emulsion — fat droplets suspended in water-based plasma containing proteins, lactose and minerals." },
+      { temp:72,  state:"liquid", label:"Pasteurised (still liquid)",    note:"At 72°C milk is pasteurised — bacteria are killed but milk stays liquid. Proteins begin to denature very slowly." },
+      { temp:100, state:"solid",  label:"Boiled — proteins clump (solid skin forms)", note:"Boiling milk causes casein proteins to aggregate forming a solid skin (lactoderm) on the surface. The bulk water evaporates, leaving a thicker, denser residue. Eventually a dry solid powder-like residue remains as water boils away." },
+      { temp:170, state:"gas",    label:"Lactose burns → caramel gas",   note:"Above 170°C lactose undergoes Maillard reactions and caramelisation, releasing gas and producing brown solids. Further heating chars and vaporises the organic matter." },
+    ],
+    desc:"Milk is not a simple substance — heating it causes protein denaturation (60-70°C), skin formation (100°C), and eventually caramelisation. It does not have clean melting/boiling points like pure water.",
+    category:"special"
+  },
+  "wood_burned": {
+    name:"Wood (Heated / Burning)", symbol:"C₆H₁₀O₅ + Lignin", type:"Natural Composite — Pyrolysis",
+    melt:0, boil:0, color:"#92400E", stateIcon:"🪵",
+    specialStages:[
+      { temp:25,  state:"solid",  label:"Solid Wood (room temp)",        note:"Wood is a solid composite of cellulose fibres and lignin polymer at all normal temperatures. It has no melting point." },
+      { temp:150, state:"solid",  label:"Drying — water evaporates",     note:"Above 150°C: moisture inside wood cells evaporates as steam. The wood is still solid but losing mass." },
+      { temp:270, state:"gas",    label:"Pyrolysis begins — gases released", note:"At 270°C pyrolysis starts: cellulose and lignin break down, releasing combustible gases (CO, CH₄, H₂) and tars. The wood chars to solid carbon. Wood does NOT melt — it decomposes." },
+      { temp:400, state:"gas",    label:"Flaming combustion",            note:"Above 400°C wood ignites. The gases burn with a flame. What remains is charcoal (solid carbon) + ash (mineral oxides). The original wood never becomes liquid." },
+      { temp:3500,state:"gas",    label:"Carbon burns / gasifies",        note:"The solid charcoal residue combusts or can be gasified to CO at extreme temperatures. Carbon itself melts at 3500°C." },
+    ],
+    desc:"Wood never melts — it decomposes (pyrolysis) releasing gases and leaving charcoal. There is no liquid wood phase. This is different from metals or ice that have clean solid → liquid → gas transitions.",
+    category:"special"
+  },
+  "egg_heated": {
+    name:"Egg (Heated)", symbol:"H₂O + Ovalbumin + Fat", type:"Biological — Irreversible Transition",
+    melt:0, boil:100, color:"#FEF3C7", stateIcon:"🥚",
+    specialStages:[
+      { temp:4,   state:"liquid", label:"Cold raw egg (liquid white + yolk)", note:"Raw egg white is a liquid protein solution (ovalbumin in water). Yolk is a liquid fat emulsion. Both are liquid when cold." },
+      { temp:60,  state:"solid",  label:"Proteins denature → SOLID white", note:"⚠️ IRREVERSIBLE: At 60-65°C egg white proteins unfold and cross-link permanently, forming a white solid. This is a CHEMICAL change — it cannot be reversed by cooling. The solid cooked egg will never return to liquid." },
+      { temp:70,  state:"solid",  label:"Fully cooked solid",              note:"Yolk solidifies at ~70°C. The egg is now a stable solid. All proteins are denatured and cross-linked." },
+      { temp:300, state:"gas",    label:"Charring / burning",              note:"Above 300°C the organic matter in the egg chars and combusts, releasing gases. The simulation shows gas to represent decomposition products." },
+    ],
+    desc:"Cooking an egg is NOT a phase change — it is an irreversible chemical reaction (protein denaturation). Unlike ice melting, a cooked egg cannot be 'uncooked' by cooling. It goes from liquid → solid permanently.",
+    category:"special"
+  },
+  "honey_heated": {
+    name:"Honey (Heated)", symbol:"Fructose+Glucose+H₂O", type:"Supersaturated Solution — Special",
+    melt:14, boil:107, color:"#F59E0B", stateIcon:"🍯",
+    specialStages:[
+      { temp:-20, state:"solid",  label:"Frozen honey (glassy solid)",    note:"At very low temperatures honey freezes into a glassy amorphous solid — it has no crystalline melting point because it is a mixture." },
+      { temp:14,  state:"solid",  label:"Crystallised honey (grainy solid)", note:"Below ~14°C fresh honey crystallises — glucose crystallises out of the supersaturated solution forming a granular solid. This is natural and reversible by gentle warming." },
+      { temp:25,  state:"liquid", label:"Liquid honey (viscous)",         note:"At room temperature honey is a very viscous liquid (1000× more viscous than water). It flows slowly due to its high sugar concentration." },
+      { temp:107, state:"gas",    label:"Water boils off → caramel forms", note:"Above 107°C the water in honey boils away. The concentrated sugar solution undergoes Maillard reactions and caramelisation, forming caramel (solid when cooled). The water becomes steam (gas)." },
+      { temp:160, state:"gas",    label:"Caramel burns → gases + char",    note:"Above 160°C the sugars decompose into volatile gases and solid black char. The honey is now completely transformed." },
+    ],
+    desc:"Honey does not have clean melting/boiling points. It crystallises below 14°C, flows as a liquid at room temperature, and decomposes (caramelises) rather than simply boiling.",
+    category:"special"
+  },
+  "lava_cooled": {
+    name:"Lava (Cooling Magma)", symbol:"SiO₂+MgO+FeO melt", type:"Molten Rock — Multi-Stage",
+    melt:700, boil:2000, color:"#EF4444", stateIcon:"🌋",
+    specialStages:[
+      { temp:25,  state:"solid",  label:"Solid Rock (basalt/obsidian)",   note:"At room temperature lava has already solidified into rock. Slow cooling = basalt (crystalline); fast cooling = obsidian (glassy amorphous solid)." },
+      { temp:700, state:"liquid", label:"Lava / Magma (molten rock)",     note:"Above 700°C silicate minerals melt into a viscous liquid called magma underground or lava at the surface. High-silica lava is very thick and slow; low-silica basalt lava is thin and flows fast." },
+      { temp:1200,state:"liquid", label:"Very fluid basalt lava",         note:"At 1200°C lava is intensely fluid. The entire rock is liquid. Volcanic eruptions in Hawaii produce lava at ~1170°C." },
+      { temp:2000,state:"gas",    label:"Vaporised rock (rare)",          note:"Above 2000°C rock minerals begin to vaporise. This occurs near lightning strikes on rock, meteorite impacts, and in volcanic lightning. Particle simulation shows gas state." },
+    ],
+    desc:"Lava starts as solid rock, melts at 700-1200°C depending on composition, and only vaporises above 2000°C. When lava cools it forms different rocks depending on cooling rate: obsidian (fast), basalt (medium), granite (very slow underground).",
+    category:"special"
+  },
+  "blood_heated": {
+    name:"Blood (Heated)", symbol:"H₂O+Haemoglobin+Cells", type:"Biological Fluid — Special",
+    melt:-0.5, boil:101, color:"#DC2626", stateIcon:"🩸",
+    specialStages:[
+      { temp:-1,  state:"solid",  label:"Frozen blood",                  note:"Blood freezes near -1°C. Ice crystals rupture red blood cells (haemolysis) — this is why blood must be carefully cryopreserved." },
+      { temp:0,   state:"liquid", label:"Liquid blood",                  note:"Blood is a liquid tissue — about 55% plasma (water + proteins) and 45% blood cells (solid particles suspended in liquid)." },
+      { temp:42,  state:"liquid", label:"Hyperthermia — proteins begin to denature", note:"Above 42°C (body temp 37°C + 5°C) blood proteins begin denaturing. This is medically dangerous — heat stroke occurs." },
+      { temp:60,  state:"solid",  label:"Proteins coagulate → solid clot", note:"Above 60°C haemoglobin and plasma proteins permanently denature and coagulate, forming a dark solid (like cooked blood sausage). This change is IRREVERSIBLE." },
+      { temp:100, state:"gas",    label:"Water boils off → dry protein char", note:"Above 100°C all the water boils away, leaving a dry solid of denatured protein and iron compounds, which eventually chars and burns." },
+    ],
+    desc:"Blood is a living fluid that behaves very differently from simple liquids. It has an irreversible transition at 60°C (protein coagulation) — the solid that forms cannot return to liquid blood by cooling.",
+    category:"special"
+  },
+});
+
+function resizeCanvas() {
+  const wrapper = canvas.parentElement;
+  canvas.width = wrapper.clientWidth;
+  canvas.height = wrapper.clientHeight;
+  initParticles();
+}
+
+function createParticle(forceState) {
+  const s = forceState || state;
+  const w = canvas.width, h = canvas.height;
+  const colors = STATE_COLORS[s];
+  
+  let x, y, vx, vy, radius;
+  
+  if (s === 'solid') {
+    // Grid layout
+    const cols = Math.ceil(Math.sqrt(targetParticleCount * 1.5));
+    const rows = Math.ceil(targetParticleCount / cols);
+    const spacingX = Math.min(50, (w * 0.7) / cols);
+    const spacingY = Math.min(50, (h * 0.7) / rows);
+    const startX = (w - cols * spacingX) / 2 + spacingX / 2;
+    const startY = (h - rows * spacingY) / 2 + spacingY / 2;
+    const idx = particles.length;
+    x = startX + (idx % cols) * spacingX + (Math.random()-0.5)*3;
+    y = startY + Math.floor(idx / cols) * spacingY + (Math.random()-0.5)*3;
+    vx = (Math.random()-0.5) * 0.4;
+    vy = (Math.random()-0.5) * 0.4;
+    radius = 9 + Math.random()*2;
+  } else if (s === 'liquid') {
+    x = w*0.1 + Math.random() * w*0.8;
+    y = h*0.2 + Math.random() * h*0.7;
+    vx = (Math.random()-0.5) * 2;
+    vy = (Math.random()-0.5) * 2 + 0.3;
+    radius = 8 + Math.random()*2;
+  } else if (s === 'gas') {
+    x = Math.random() * w;
+    y = Math.random() * h;
+    vx = (Math.random()-0.5) * 5;
+    vy = (Math.random()-0.5) * 5;
+    radius = 5 + Math.random()*3;
+  } else { // plasma
+    x = Math.random() * w;
+    y = Math.random() * h;
+    vx = (Math.random()-0.5) * 8;
+    vy = (Math.random()-0.5) * 8;
+    radius = 4 + Math.random()*4;
+  }
+  
+  return {
+    x, y, vx, vy, radius,
+    baseRadius: radius,
+    ox: x, oy: y,
+    phase: Math.random() * Math.PI * 2,
+    trail: [],
+    opacity: 1,
+    color: colors.base,
+    glow: colors.glow,
+    core: colors.core,
+    trailColor: colors.trail,
+  };
+}
+
+function initParticles() {
+  particles = [];
+  for (let i = 0; i < targetParticleCount; i++) {
+    particles.push(createParticle());
+  }
+}
+
+function transitionParticles() {
+  const colors = STATE_COLORS[state];
+  const w = canvas.width, h = canvas.height;
+  
+  if (state === 'solid') {
+    const cols = Math.ceil(Math.sqrt(particles.length * 1.5));
+    const rows = Math.ceil(particles.length / cols);
+    const spacingX = Math.min(50, (w * 0.7) / cols);
+    const spacingY = Math.min(50, (h * 0.7) / rows);
+    const startX = (w - cols * spacingX) / 2 + spacingX / 2;
+    const startY = (h - rows * spacingY) / 2 + spacingY / 2;
+    
+    particles.forEach((p, i) => {
+      p.ox = startX + (i % cols) * spacingX;
+      p.oy = startY + Math.floor(i / cols) * spacingY;
+      p.color = colors.base;
+      p.glow = colors.glow;
+      p.core = colors.core;
+      p.trailColor = colors.trail;
+    });
+  } else {
+    particles.forEach(p => {
+      p.color = colors.base;
+      p.glow = colors.glow;
+      p.core = colors.core;
+      p.trailColor = colors.trail;
+      if (state === 'gas' || state === 'plasma') {
+        p.vx = (Math.random()-0.5) * (state === 'plasma' ? 9 : 5);
+        p.vy = (Math.random()-0.5) * (state === 'plasma' ? 9 : 5);
+      }
+    });
+  }
+}
+
+function getSpeedFactor() {
+  const t = temperature;
+  if (t < -200) return 0.1;
+  if (t > 5000) return 10;
+  return 0.1 + (t + 200) / 620;
+}
+
+function updateParticle(p) {
+  const sf = getSpeedFactor();
+  const w = canvas.width, h = canvas.height;
+  
+  if (state === 'solid') {
+    // Vibrate around origin
+    const vibrateAmp = Math.min(8, 0.5 + sf * 2.5);
+    p.phase += 0.08 + sf * 0.05;
+    const targetX = p.ox + Math.sin(p.phase) * vibrateAmp + Math.cos(p.phase*1.3) * vibrateAmp*0.5;
+    const targetY = p.oy + Math.cos(p.phase*0.7) * vibrateAmp + Math.sin(p.phase*1.1) * vibrateAmp*0.5;
+    p.x += (targetX - p.x) * 0.25;
+    p.y += (targetY - p.y) * 0.25;
+    
+  } else if (state === 'liquid') {
+    // Fluid flow
+    p.vy += 0.02; // slight gravity
+    p.vx *= 0.99;
+    p.vy *= 0.99;
+    const speed = Math.min(sf * 2.5, 4);
+    const mag = Math.sqrt(p.vx*p.vx + p.vy*p.vy) || 1;
+    p.vx = (p.vx/mag) * speed * (0.8 + Math.random()*0.4);
+    p.vy = (p.vy/mag) * speed * (0.8 + Math.random()*0.4);
+    p.x += p.vx;
+    p.y += p.vy;
+    
+    // Bounce with energy loss
+    if (p.x < p.radius) { p.x = p.radius; p.vx = Math.abs(p.vx)*0.7; }
+    if (p.x > w-p.radius) { p.x = w-p.radius; p.vx = -Math.abs(p.vx)*0.7; }
+    if (p.y < p.radius) { p.y = p.radius; p.vy = Math.abs(p.vy)*0.7; }
+    if (p.y > h-p.radius) { p.y = h-p.radius; p.vy = -Math.abs(p.vy)*0.7; }
+    
+  } else { // gas / plasma
+    const speed = state === 'plasma' ? sf * 5 : sf * 3.5;
+    p.x += p.vx * speed * 0.3;
+    p.y += p.vy * speed * 0.3;
+    
+    if (p.x < 0) { p.x = 0; p.vx = Math.abs(p.vx); }
+    if (p.x > w) { p.x = w; p.vx = -Math.abs(p.vx); }
+    if (p.y < 0) { p.y = 0; p.vy = Math.abs(p.vy); }
+    if (p.y > h) { p.y = h; p.vy = -Math.abs(p.vy); }
+    
+    // Random direction changes
+    if (Math.random() < 0.02) {
+      p.vx += (Math.random()-0.5) * 2;
+      p.vy += (Math.random()-0.5) * 2;
+      const mag = Math.sqrt(p.vx*p.vx+p.vy*p.vy)||1;
+      p.vx = (p.vx/mag)*(1+Math.random()*2);
+      p.vy = (p.vy/mag)*(1+Math.random()*2);
+    }
+  }
+  
+  // Update trail
+  if (state !== 'solid') {
+    p.trail.push({ x: p.x, y: p.y });
+    if (p.trail.length > (state === 'gas' || state === 'plasma' ? 8 : 5)) p.trail.shift();
+  } else {
+    p.trail = [];
+  }
+}
+
+function drawParticle(p) {
+  const sf = getSpeedFactor();
+  
+  // Trail
+  if (p.trail.length > 1 && state !== 'solid') {
+    ctx.beginPath();
+    ctx.moveTo(p.trail[0].x, p.trail[0].y);
+    for (let i = 1; i < p.trail.length; i++) ctx.lineTo(p.trail[i].x, p.trail[i].y);
+    ctx.strokeStyle = p.trailColor + '0.3)';
+    ctx.lineWidth = p.radius * 0.6;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+  }
+  
+  // Glow
+  const glowSize = p.radius * (2 + sf);
+  const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowSize);
+  gradient.addColorStop(0, p.trailColor + '0.4)');
+  gradient.addColorStop(1, p.trailColor + '0)');
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, glowSize, 0, Math.PI*2);
+  ctx.fillStyle = gradient;
+  ctx.fill();
+  
+  // Main body
+  const bodyGrad = ctx.createRadialGradient(p.x - p.radius*0.3, p.y - p.radius*0.3, 0, p.x, p.y, p.radius);
+  bodyGrad.addColorStop(0, p.core);
+  bodyGrad.addColorStop(0.5, p.color);
+  bodyGrad.addColorStop(1, p.glow + '99');
+  
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+  ctx.fillStyle = bodyGrad;
+  ctx.fill();
+  
+  // Shimmer for plasma
+  if (state === 'plasma') {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(255,200,100,0.5)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  
+  // Highlight
+  ctx.beginPath();
+  ctx.arc(p.x - p.radius*0.3, p.y - p.radius*0.3, p.radius*0.3, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,255,255,0.4)';
+  ctx.fill();
+}
+
+function drawConnections() {
+  if (state !== 'solid') return;
+  const threshold = 60;
+  const sf = getSpeedFactor();
+  ctx.lineWidth = 1;
+  
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i+1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < threshold) {
+        const alpha = (1 - dist/threshold) * 0.35;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(96,165,250,${alpha})`;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function drawBackground() {
+  // Grid lines for solid
+  if (state === 'solid') {
+    ctx.strokeStyle = 'rgba(59,130,246,0.04)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < canvas.width; x += 40) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+    }
+    for (let y = 0; y < canvas.height; y += 40) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+    }
+  }
+}
+
+function animate() {
+  if (!isPlaying) { animId = requestAnimationFrame(animate); return; }
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Background
+  ctx.fillStyle = 'rgba(2,8,16,1)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  drawBackground();
+  drawConnections();
+  
+  particles.forEach(p => {
+    updateParticle(p);
+    drawParticle(p);
+  });
+  
+  animId = requestAnimationFrame(animate);
+}
+
+// ═══════════════════════════════════════════════════
+//  STATE / TEMPERATURE / PRESSURE CONTROLS
+// ═══════════════════════════════════════════════════
+function selectState(s, btn) {
+  state = s;
+  document.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  transitionParticles();
+  updateBadge();
+  updateStats();
+  updateExplanation();
+}
+
+function updateBadge() {
+  const badge = document.getElementById('stateBadge');
+  const wm = document.getElementById('stateWatermark');
+  badge.className = 'state-badge badge-' + state;
+  const labels = { solid:'Solid', liquid:'Liquid', gas:'Gas', plasma:'Plasma' };
+  badge.textContent = 'Current State: ' + labels[state];
+  wm.textContent = labels[state].toUpperCase();
+  wm.style.color = STATE_COLORS[state].glow;
+}
+
+function getStateFromTemp(sub, temp) {
+  if (!sub) {
+    if (temp < 0) return 'solid';
+    if (temp < 70) return 'liquid';
+    if (temp < 400) return 'gas';
+    return 'plasma';
+  }
+  // Special multi-stage substances (sea water, wood, egg, honey, blood, lava...)
+  if (sub.specialStages) {
+    const stages = sub.specialStages;
+    for (let i = stages.length - 1; i >= 0; i--) {
+      if (temp >= stages[i].temp) return stages[i].state;
+    }
+    return stages[0].state;
+  }
+  if (temp >= sub.boil + 1000) return 'plasma';
+  if (temp >= sub.boil)        return 'gas';
+  if (temp >= sub.melt)        return 'liquid';
+  return 'solid';
+}
+
+function getSpecialStage(sub, temp) {
+  if (!sub || !sub.specialStages) return null;
+  const stages = sub.specialStages;
+  for (let i = stages.length - 1; i >= 0; i--) {
+    if (temp >= stages[i].temp) return stages[i];
+  }
+  return stages[0];
+}
+
+function updateTemp(val) {
+  temperature = parseInt(val);
+  const display = document.getElementById('tempDisplay');
+  display.textContent = temperature + ' °C';
+  
+  // Color transition based on temp
+  const hot = Math.max(0, Math.min(1, (temperature + 200) / 500));
+  const r = Math.round(59 + hot * 196);
+  const g = Math.round(130 - hot * 62);
+  const b = Math.round(246 - hot * 178);
+  display.style.color = `rgb(${r},${g},${b})`;
+  
+  // Auto update state
+  if (currentSubstance) {
+    const newState = getStateFromTemp(currentSubstance, temperature);
+    if (newState !== state) {
+      state = newState;
+      syncStateButtons();
+      transitionParticles();
+      updateBadge();
+      showPhaseToast(newState, currentSubstance.name);
+    }
+    // Refresh special stage note live
+    const stage = getSpecialStage(currentSubstance, temperature);
+    const noteEl = document.getElementById('specialStageNote');
+    if (stage && noteEl) {
+      noteEl.style.display = 'block';
+      noteEl.innerHTML = `⚠️ <strong>At ${temperature}°C — ${stage.label}</strong><br>${stage.note}`;
+    } else if (noteEl) {
+      noteEl.style.display = 'none';
+    }
+  } else {
+    const newState = getStateFromTemp(null, temperature);
+    if (newState !== state) {
+      state = newState;
+      syncStateButtons();
+      transitionParticles();
+      updateBadge();
+      showPhaseToast(newState, 'substance');
+    }
+  }
+  
+  updateStats();
+  updateExplanation();
+  updateDefaultProps();
+}
+
+function updatePressure(val) {
+  pressure = parseInt(val);
+  const level = pressure < 20 ? 'Vacuum' : pressure < 40 ? 'Low' : pressure < 60 ? 'Normal' : pressure < 80 ? 'High' : 'Extreme';
+  document.getElementById('pressureDisplay').textContent = pressure + ' (' + level + ')';
+  updateStats();
+}
+
+function updateParticleCount(val) {
+  targetParticleCount = parseInt(val);
+  document.getElementById('particleCountDisplay').textContent = val;
+  document.getElementById('liveCount').textContent = val;
+  
+  while (particles.length > targetParticleCount) particles.pop();
+  while (particles.length < targetParticleCount) particles.push(createParticle());
+  
+  if (state === 'solid') transitionParticles();
+}
+
+function syncStateButtons() {
+  document.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.state-btn.${state}`)?.classList.add('active');
+}
+
+function updateStats() {
+  const labels = { solid:'Solid', liquid:'Liquid', gas:'Gas', plasma:'Plasma' };
+  const colors = { solid: 'var(--solid-glow)', liquid:'var(--liquid-glow)', gas:'var(--gas-glow)', plasma:'var(--plasma-glow)' };
+  document.getElementById('statSt').textContent = labels[state];
+  document.getElementById('statSt').style.color = colors[state];
+  document.getElementById('statT').textContent = temperature + '°C';
+  document.getElementById('statP').textContent = pressure + ' atm';
+  
+  const sf = getSpeedFactor();
+  const ke = sf < 0.3 ? 'Very Low' : sf < 1 ? 'Low' : sf < 2 ? 'Medium' : sf < 4 ? 'High' : 'Very High';
+  document.getElementById('statKE').textContent = ke;
+}
+
+function showPhaseToast(newState, subName) {
+  const icons = { solid:'🧊', liquid:'💧', gas:'💨', plasma:'⚡' };
+  const toast = document.getElementById('phaseToast');
+  toast.textContent = `${icons[newState]} ${subName} transitioned to ${newState.toUpperCase()}!`;
+  toast.style.borderColor = STATE_COLORS[newState].base;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════════════════
+//  SUBSTANCE SEARCH
+// ═══════════════════════════════════════════════════
+function onSearchInput(val) {
+  const ac = document.getElementById('autocomplete');
+  if (!val || val.length < 1) { ac.classList.remove('show'); return; }
+  
+  const q = val.toLowerCase();
+  const matches = Object.entries(SUBSTANCES)
+    .filter(([k, v]) => k.includes(q) || v.name.toLowerCase().includes(q) || (v.symbol && v.symbol.toLowerCase().includes(q)))
+    .slice(0, 8);
+  
+  if (matches.length === 0) { ac.classList.remove('show'); return; }
+  
+  ac.innerHTML = matches.map(([k, v]) => {
+    const stateAtRoom = getStateAtRoom(v);
+    const cls = stateAtRoom === 'solid' ? 'ac-s' : stateAtRoom === 'liquid' ? 'ac-l' : 'ac-g';
+    const label = stateAtRoom.charAt(0).toUpperCase() + stateAtRoom.slice(1);
+    return `<div class="ac-item" onclick="selectSubstance('${k}')">
+      <span>${v.stateIcon} ${v.name} <span style="color:var(--text-dim);font-size:0.75rem">${v.symbol||''}</span></span>
+      <span class="ac-state-tag ${cls}">${label}</span>
+    </div>`;
+  }).join('');
+  ac.classList.add('show');
+}
+
+function getStateAtRoom(sub) {
+  return getStateFromTemp(sub, 25);
+}
+
+function selectSubstance(key) {
+  document.getElementById('searchInput').value = SUBSTANCES[key].name;
+  document.getElementById('autocomplete').classList.remove('show');
+  analyzeSubstance(key);
+}
+
+function analyzeSubstance(keyOverride) {
+  document.getElementById('autocomplete').classList.remove('show');
+  const query = keyOverride || document.getElementById('searchInput').value.trim().toLowerCase();
+  
+  // Try to find substance
+  let sub = SUBSTANCES[query] || SUBSTANCES[Object.keys(SUBSTANCES).find(k => 
+    SUBSTANCES[k].name.toLowerCase() === query || k === query
+  )];
+  
+  if (!sub) {
+    // Partial match
+    const match = Object.keys(SUBSTANCES).find(k => 
+      k.includes(query) || SUBSTANCES[k].name.toLowerCase().includes(query)
+    );
+    if (match) sub = SUBSTANCES[match];
+  }
+  
+  if (!sub) {
+    // Try AI for unknown substances
+    analyzeWithAI(query);
+    return;
+  }
+  
+  showSubstanceResult(sub);
+}
+
+async function analyzeWithAI(query) {
+  const resultArea = document.getElementById('substanceResult');
+  resultArea.style.display = 'block';
+  resultArea.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text-secondary)">
+    <div class="spinner" style="display:inline-block;margin:0 auto 10px"></div>
+    <div class="spinner" style="display:block;width:24px;height:24px;border-width:3px;margin:0 auto 12px;border-top-color:var(--solid-color)"></div>
+    🔍 Analyzing <strong>${query}</strong> with AI...
+  </div>`;
+  
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{
+          role: "user",
+          content: `Analyze the substance "${query}" for a states of matter science simulation. Return ONLY a JSON object, no other text, no markdown. The JSON must have these exact fields:
+{
+  "name": "Full name",
+  "symbol": "Chemical formula or symbol",
+  "type": "Category (Metal/Gas/Liquid/Organic/etc)",
+  "melt": melting point in Celsius (number),
+  "boil": boiling point in Celsius (number),
+  "color": "hex color code representing the substance",
+  "stateIcon": "single relevant emoji",
+  "desc": "2 sentence scientific description",
+  "shape": "Definite/Indefinite",
+  "volume": "Definite/Indefinite",
+  "arrangement": "Tightly Packed/Loosely Packed/Random/Highly Random",
+  "motion": "Vibrates in place/Flows freely/Moves rapidly/Moves erratically",
+  "compressibility": "Very Low/Low/Moderate/High/Very High",
+  "category": "solid/liquid/gas"
+}`
+        }]
+      })
+    });
+    
+    const data = await resp.json();
+    const text = data.content?.map(c => c.text||'').join('').trim().replace(/```json|```/g,'').trim();
+    const sub = JSON.parse(text);
+    sub._aiGenerated = true;
+    
+    // Cache it
+    SUBSTANCES[query] = sub;
+    showSubstanceResult(sub);
+    
+  } catch(e) {
+    resultArea.innerHTML = `<div style="background:rgba(239,68,68,0.1);border:1px solid var(--danger);border-radius:10px;padding:16px;font-size:0.82rem;color:var(--text-secondary)">
+      ❌ Could not analyze "<strong>${query}</strong>". Please check the spelling or try a different substance.
+    </div>`;
+  }
+}
+
+function showSubstanceResult(sub) {
+  currentSubstance = sub;
+  
+  // Set temperature-based state
+  const newState = getStateFromTemp(sub, temperature);
+  state = newState;
+  syncStateButtons();
+  transitionParticles();
+  updateBadge();
+  updateStats();
+  
+  const stateAtRoom = getStateAtRoom(sub);
+  const stateColor = stateAtRoom === 'solid' ? 'var(--solid-glow)' : stateAtRoom === 'liquid' ? 'var(--liquid-glow)' : 'var(--gas-glow)';
+  
+  // Build phase zones for this substance
+  buildPhaseZones(sub);
+
+  // Get current special stage note (if any)
+  const stage = getSpecialStage(sub, temperature);
+  const stageNoteHTML = stage
+    ? `<div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:8px 12px;margin-top:10px;font-size:0.75rem;color:var(--accent);line-height:1.5">
+        ⚠️ <strong>At ${temperature}°C — ${stage.label}</strong><br>${stage.note}
+       </div>`
+    : '';
+  
+  const resultEl = document.getElementById('substanceResult');
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = `
+    <div class="result-card state-transition">
+      <div class="result-header">
+        <span style="font-size:1.3rem">${sub.stateIcon||'⚗️'}</span>
+        <div class="result-name">${sub.name}</div>
+        ${sub._aiGenerated ? '<span style="font-size:0.6rem;color:var(--accent);background:rgba(245,158,11,0.1);padding:2px 8px;border-radius:8px;border:1px solid rgba(245,158,11,0.3)">AI</span>' : ''}
+        ${sub.specialStages ? '<span style="font-size:0.6rem;color:#f97316;background:rgba(249,115,22,0.1);padding:2px 8px;border-radius:8px;border:1px solid rgba(249,115,22,0.3)">SPECIAL</span>' : ''}
+      </div>
+      <div class="result-body">
+        <div class="prop-row"><span class="prop-key">Symbol / Formula</span><span class="prop-val">${sub.symbol||'—'}</span></div>
+        <div class="prop-row"><span class="prop-key">Type</span><span class="prop-val">${sub.type||'—'}</span></div>
+        <div class="prop-row"><span class="prop-key">State at 25°C, 1 atm</span><span class="prop-val state-val" style="color:${stateColor}">${stateAtRoom.charAt(0).toUpperCase()+stateAtRoom.slice(1)}</span></div>
+        ${sub.specialStages ? `
+        <div class="prop-row"><span class="prop-key">Phase Behaviour</span><span class="prop-val" style="color:var(--accent)">Multi-stage (see below)</span></div>
+        ` : `
+        <div class="prop-row"><span class="prop-key">Melting Point</span><span class="prop-val">${sub.melt}°C</span></div>
+        <div class="prop-row"><span class="prop-key">Boiling Point</span><span class="prop-val">${sub.boil}°C</span></div>
+        `}
+        <div class="prop-row"><span class="prop-key">Current State (${temperature}°C)</span><span class="prop-val state-val" style="color:${newState==='solid'?'var(--solid-glow)':newState==='liquid'?'var(--liquid-glow)':newState==='gas'?'var(--gas-glow)':'var(--plasma-glow)'}">${newState.charAt(0).toUpperCase()+newState.slice(1)}</span></div>
+      </div>
+    </div>
+    ${stageNoteHTML}
+  `;
+  
+  // Update explanation
+  updateExplanation(sub);
+  
+  // Update properties grid
+  const propsGrid = document.getElementById('propsGrid');
+  const curState = newState;
+  const props = [
+    ['Shape',           curState === 'solid' ? 'Definite' : 'Indefinite'],
+    ['Volume',          curState === 'gas'   ? 'Indefinite' : 'Definite'],
+    ['Arrangement',     curState === 'solid' ? 'Tightly Packed' : curState === 'liquid' ? 'Loosely Packed' : 'Random'],
+    ['Motion',          curState === 'solid' ? 'Vibrates in place' : curState === 'liquid' ? 'Flows freely' : 'Moves rapidly'],
+    ['Compressibility', curState === 'solid' ? 'Very Low' : curState === 'liquid' ? 'Low' : 'High'],
+    ['Category', sub.type || sub.category || '—'],
+  ];
+  
+  propsGrid.innerHTML = props.map(([k,v]) => `
+    <div class="prop-card">
+      <div class="prop-card-label">${k}</div>
+      <div class="prop-card-val">${v}</div>
+    </div>`).join('');
+  
+  // Hide default info
+  document.getElementById('defaultInfo').style.display = 'none';
+}
+
+function buildPhaseZones(sub) {
+  const zonesEl = document.getElementById('phaseZones');
+  if (sub.specialStages) {
+    // Build a zone for each stage
+    const stageClass = { solid:'zone-solid', liquid:'zone-liquid', gas:'zone-gas', plasma:'zone-gas' };
+    zonesEl.innerHTML = sub.specialStages.map((s, i) => {
+      const nextTemp = sub.specialStages[i+1] ? sub.specialStages[i+1].temp : '↑';
+      return `<div class="phase-zone ${stageClass[s.state]}" style="font-size:0.55rem;flex:1">${s.temp >= 0 ? '>'+s.temp : '<'+Math.abs(s.temp)}°C<br>${s.label}</div>`;
+    }).join('');
+  } else {
+    zonesEl.innerHTML = `
+      <div class="phase-zone zone-solid" style="font-size:0.58rem">< ${sub.melt}°C<br>Solid</div>
+      <div class="phase-zone zone-liquid" style="font-size:0.58rem">${sub.melt}–${sub.boil}°C<br>Liquid</div>
+      <div class="phase-zone zone-gas" style="font-size:0.58rem">> ${sub.boil}°C<br>Gas</div>
+    `;
+  }
+}
+
+function updateExplanation(sub) {
+  const el = document.getElementById('explanationText');
+  const stateDescriptions = {
+    solid: (name) => `In its <strong>solid state</strong>, ${name||'this substance'}'s particles are arranged in a tightly-packed crystalline or amorphous lattice. Intermolecular forces are strong enough to hold particles in fixed positions — they only vibrate in place. This gives solids a <strong>definite shape and volume</strong> that resists deformation. To break out of this state, you must supply enough energy to overcome these bonds.`,
+    liquid: (name) => `As a <strong>liquid</strong>, ${name||'this substance'}'s particles have enough thermal energy to overcome the rigid lattice, but not enough to fully escape intermolecular attraction. Particles <strong>flow freely</strong> past each other while remaining in contact. This grants liquids a definite volume but an <strong>indefinite shape</strong> — they take the form of their container. Surface tension arises from cohesive forces at the liquid-gas boundary.`,
+    gas: (name) => `In the <strong>gaseous state</strong>, ${name||'this substance'}'s particles move with high kinetic energy, spreading out to fill any container. Intermolecular forces are negligible compared to thermal energy, so particles move <strong>rapidly and independently</strong>. Gases have <strong>no fixed shape or volume</strong> and are highly compressible. Pressure increases when particles collide more frequently with container walls.`,
+    plasma: (name) => `At extreme temperatures, ${name||'this substance'} enters a <strong>plasma state</strong> — the fourth state of matter. Electrons are stripped from atoms, creating a highly ionized gas of free electrons and ions. Plasma is <strong>electrically conductive</strong>, responds to magnetic fields, and emits intense radiation. It's the most common state of visible matter in the universe (stars are made of plasma).`,
+  };
+  
+  el.innerHTML = stateDescriptions[state](sub?.name) || stateDescriptions.solid(null);
+  
+  if (sub) {
+    el.innerHTML += `<br><br>📌 <strong>${sub.name}</strong>: ${sub.desc}`;
+    // If special, show stage timeline
+    if (sub.specialStages) {
+      el.innerHTML += `<br><br><strong style="color:var(--accent)">🔬 Full Phase Journey (move the Temperature slider!):</strong><div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">` +
+        sub.specialStages.map(s => {
+          const sc = s.state==='solid'?'var(--solid-glow)':s.state==='liquid'?'var(--liquid-glow)':s.state==='gas'?'var(--gas-glow)':'var(--plasma-glow)';
+          return `<div style="font-size:0.72rem;padding:4px 8px;background:rgba(255,255,255,0.03);border-left:2px solid ${sc};border-radius:0 4px 4px 0">
+            <span style="color:${sc};font-weight:700">${s.state.toUpperCase()} above ${s.temp}°C</span> — ${s.label}
+          </div>`;
+        }).join('') + '</div>';
+    }
+    // Live special stage note container
+    el.innerHTML += `<div id="specialStageNote" style="display:none;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:8px 12px;margin-top:10px;font-size:0.75rem;color:var(--accent);line-height:1.5"></div>`;
+    // Trigger once immediately
+    const stage = getSpecialStage(sub, temperature);
+    const noteEl = document.getElementById('specialStageNote');
+    if (stage && noteEl) {
+      noteEl.style.display = 'block';
+      noteEl.innerHTML = `⚠️ <strong>At ${temperature}°C — ${stage.label}</strong><br>${stage.note}`;
+    }
+  }
+}
+
+function updateDefaultProps() {
+  const propsEl = document.getElementById('defaultProps');
+  const labels = { solid:'Solid', liquid:'Liquid', gas:'Gas', plasma:'Plasma' };
+  const colors = { solid:'var(--solid-glow)', liquid:'var(--liquid-glow)', gas:'var(--gas-glow)', plasma:'var(--plasma-glow)' };
+  const icons = { solid:'🧊', liquid:'💧', gas:'💨', plasma:'⚡' };
+  
+  propsEl.innerHTML = `
+    <div class="prop-row"><span class="prop-key">Current State</span><span class="prop-val state-val" style="color:${colors[state]}">${icons[state]} ${labels[state]}</span></div>
+    <div class="prop-row"><span class="prop-key">Temperature</span><span class="prop-val">${temperature}°C</span></div>
+    <div class="prop-row"><span class="prop-key">Pressure</span><span class="prop-val">${pressure} atm</span></div>
+    <div class="prop-row"><span class="prop-key">Particle Motion</span><span class="prop-val">${state==='solid'?'Vibrating':state==='liquid'?'Flowing':state==='gas'?'Rapid/Random':'Ionized Rapid'}</span></div>
+    <div class="prop-row"><span class="prop-key">Kinetic Energy</span><span class="prop-val">${document.getElementById('statKE').textContent}</span></div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════
+//  UTILITY CONTROLS
+// ═══════════════════════════════════════════════════
+function togglePlay() {
+  isPlaying = !isPlaying;
+  document.getElementById('playPauseBtn').innerHTML = isPlaying ? '⏸ Pause' : '▶ Play';
+}
+
+function resetSim() {
+  document.getElementById('tempSlider').value = 25;
+  document.getElementById('pressureSlider').value = 50;
+  document.getElementById('particleSlider').value = 50;
+  temperature = 25; pressure = 50; targetParticleCount = 50;
+  state = 'solid';
+  syncStateButtons();
+  initParticles();
+  updateBadge();
+  updateStats();
+  updateDefaultProps();
+  updateExplanation();
+  document.getElementById('tempDisplay').textContent = '25 °C';
+  document.getElementById('pressureDisplay').textContent = '50 (Medium)';
+  document.getElementById('particleCountDisplay').textContent = '50';
+  document.getElementById('liveCount').textContent = '50';
+}
+
+function randomize() {
+  const states = ['solid','liquid','gas','plasma'];
+  const keys = Object.keys(SUBSTANCES);
+  const randKey = keys[Math.floor(Math.random()*keys.length)];
+  const randTemp = Math.round(-100 + Math.random() * 600);
+  
+  document.getElementById('tempSlider').value = randTemp;
+  document.getElementById('searchInput').value = SUBSTANCES[randKey].name;
+  updateTemp(randTemp);
+  analyzeSubstance(randKey);
+}
+
+function clearSearch() {
+  currentSubstance = null;
+  document.getElementById('searchInput').value = '';
+  document.getElementById('substanceResult').style.display = 'none';
+  document.getElementById('defaultInfo').style.display = 'block';
+  
+  // Reset phase zones
+  document.getElementById('phaseZones').innerHTML = `
+    <div class="phase-zone zone-solid">Solid</div>
+    <div class="phase-zone zone-liquid">Liquid</div>
+    <div class="phase-zone zone-gas">Gas</div>
+  `;
+  
+  document.getElementById('propsGrid').innerHTML = '';
+  updateExplanation();
+  updateDefaultProps();
+}
+
+function scrollToExamples() {
+  document.getElementById('examplesSection').scrollIntoView({ behavior:'smooth' });
+}
+function scrollToLearn() {
+  document.getElementById('learnSection').scrollIntoView({ behavior:'smooth' });
+}
+
+// ═══════════════════════════════════════════════════
+//  BUILD EXAMPLES
+// ═══════════════════════════════════════════════════
+function buildExamples() {
+  const grid = document.getElementById('examplesGrid');
+  grid.innerHTML = EXAMPLES.map(ex => `
+    <div class="example-chip ${ex.state}" onclick="selectSubstance('${ex.id}')">
+      <span class="ex-icon">${ex.icon}</span>
+      <span class="ex-name">${ex.label}</span>
+      <span class="ex-state" style="color:${ex.state==='s'?'var(--solid-glow)':ex.state==='l'?'var(--liquid-glow)':'var(--gas-glow)'}">${ex.state==='s'?'Solid':ex.state==='l'?'Liquid':'Gas'}</span>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  resizeCanvas();
+  buildExamples();
+  updateDefaultProps();
+  updateExplanation();
+  updateStats();
+  animate();
+});
+
+window.addEventListener('resize', () => {
+  resizeCanvas();
+});
+
+// Close autocomplete on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-group')) {
+    document.getElementById('autocomplete').classList.remove('show');
+  }
+});
+</script>
+</body>
+</html>

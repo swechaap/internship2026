@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prevention of Diseases Caused by Microorganisms</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fb;
+      color: #1f2d3d;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    header {
+      background-color: #1f78b4;
+      color: white;
+      text-align: center;
+      padding: 35px 15px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    section {
+      margin-top: 28px;
+    }
+
+    .intro,
+    .tips,
+    .quiz-section,
+    .conclusion,
+    .details-box {
+      background-color: white;
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      color: #166a9c;
+      margin-top: 0;
+    }
+
+    .card-row {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 18px;
+      flex: 1 1 250px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 2px solid transparent;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .card.active {
+      border-color: #4caf50;
+      background-color: #f3fbf4;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #1d5f87;
+    }
+
+    .details-text ul {
+      padding-left: 20px;
+      line-height: 1.8;
+    }
+
+    .tips ul {
+      padding-left: 20px;
+      line-height: 1.8;
+      margin-bottom: 0;
+    }
+
+    .quiz-question {
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e2ecf3;
+    }
+
+    .quiz-question:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .quiz-question p {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .quiz-question label {
+      display: block;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .quiz-buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: #1f78b4;
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #166a9c;
+    }
+
+    #quizResult {
+      margin-top: 16px;
+      font-weight: bold;
+      color: #1f6f43;
+    }
+
+    .conclusion {
+      margin-bottom: 35px;
+    }
+
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      .container {
+        width: 94%;
+      }
+
+      .intro,
+      .tips,
+      .quiz-section,
+      .conclusion,
+      .details-box,
+      .card {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Prevention of Diseases Caused by Microorganisms</h1>
+      <p>Learning simple prevention methods can help us stay healthy and stop infections from spreading.</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="intro">
+      <h2>Why Prevention is Important</h2>
+      <p>
+        Microorganisms such as bacteria, viruses, fungi, and protozoa can cause many diseases.
+        Prevention is important because it helps protect individuals and communities before illness begins.
+        Good habits reduce the spread of infection and support a healthier environment for everyone.
+      </p>
+    </section>
+
+    <section>
+      <h2>Prevention Methods</h2>
+      <p>Click on a card to read more about each prevention method.</p>
+
+      <div class="card-row">
+        <div class="card active" onclick="showDetails('hygiene', this)">
+          <div class="card-icon">🧼</div>
+          <h3>Personal Hygiene</h3>
+          <p>Handwashing, safe food and water, and clean habits.</p>
+        </div>
+
+        <div class="card" onclick="showDetails('vaccination', this)">
+          <div class="card-icon">💉</div>
+          <h3>Vaccination</h3>
+          <p>Vaccines help the body build protection against diseases.</p>
+        </div>
+
+        <div class="card" onclick="showDetails('sanitation', this)">
+          <div class="card-icon">🚮</div>
+          <h3>Sanitation</h3>
+          <p>Clean surroundings, waste disposal, and mosquito control.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="details-box">
+      <div class="details-text" id="detailText">
+        <h2>Personal Hygiene</h2>
+        <p>Personal hygiene helps prevent germs from entering the body and spreading from one person to another.</p>
+        <ul>
+          <li>Wash hands regularly with soap, especially before eating and after using the toilet.</li>
+          <li>Cover your mouth and nose while coughing or sneezing.</li>
+          <li>Drink clean water and eat safe, properly cooked food.</li>
+          <li>Keep your body, clothes, and surroundings clean.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="tips">
+      <h2>Health Awareness Tips</h2>
+      <ul>
+        <li>Wash hands often and avoid touching your face with dirty hands.</li>
+        <li>Use clean drinking water and wash fruits and vegetables before eating.</li>
+        <li>Take vaccines on time according to medical advice.</li>
+        <li>Keep classrooms, homes, and public places clean.</li>
+        <li>Do not allow water to collect in open containers because mosquitoes can breed there.</li>
+        <li>Use a handkerchief, tissue, or your elbow when coughing or sneezing.</li>
+      </ul>
+    </section>
+
+    <section class="quiz-section">
+      <h2>Interactive Quiz</h2>
+
+      <div class="quiz-question">
+        <p>1. Which habit helps prevent the spread of microorganisms the most?</p>
+        <label><input type="radio" name="q1" value="correct"> Washing hands with soap</label>
+        <label><input type="radio" name="q1" value="wrong"> Throwing waste on the road</label>
+        <label><input type="radio" name="q1" value="wrong"> Drinking dirty water</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>2. What is the main purpose of vaccination?</p>
+        <label><input type="radio" name="q2" value="correct"> To build immunity against diseases</label>
+        <label><input type="radio" name="q2" value="wrong"> To make germs stronger</label>
+        <label><input type="radio" name="q2" value="wrong"> To replace healthy habits completely</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>3. Which is an example of good sanitation?</p>
+        <label><input type="radio" name="q3" value="wrong"> Letting water collect near houses</label>
+        <label><input type="radio" name="q3" value="correct"> Proper waste disposal and clean drainage</label>
+        <label><input type="radio" name="q3" value="wrong"> Leaving garbage in open spaces</label>
+      </div>
+
+      <div class="quiz-question">
+        <p>4. Why should food and water be kept safe and clean?</p>
+        <label><input type="radio" name="q4" value="wrong"> It changes the color of food</label>
+        <label><input type="radio" name="q4" value="correct"> It helps prevent infections and disease</label>
+        <label><input type="radio" name="q4" value="wrong"> It is only important during winter</label>
+      </div>
+
+      <div class="quiz-buttons">
+        <button onclick="checkQuiz()">Submit Quiz</button>
+      </div>
+
+      <div id="quizResult"></div>
+    </section>
+
+    <section class="conclusion">
+      <h2>Conclusion</h2>
+      <p>
+        Prevention is better than cure. By following personal hygiene, taking vaccinations, and maintaining sanitation,
+        we can reduce the spread of diseases caused by microorganisms. Small healthy habits practiced every day can make
+        a big difference in keeping us safe.
+      </p>
+    </section>
+  </div>
+
+  <script>
+    function showDetails(type, clickedCard) {
+      var detailText = document.getElementById("detailText");
+      var cards = document.querySelectorAll(".card");
+
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].classList.remove("active");
+      }
+
+      clickedCard.classList.add("active");
+
+      if (type === "hygiene") {
+        detailText.innerHTML =
+          "<h2>Personal Hygiene</h2>" +
+          "<p>Personal hygiene helps prevent germs from entering the body and spreading from one person to another.</p>" +
+          "<ul>" +
+          "<li>Wash hands regularly with soap, especially before eating and after using the toilet.</li>" +
+          "<li>Cover your mouth and nose while coughing or sneezing.</li>" +
+          "<li>Drink clean water and eat safe, properly cooked food.</li>" +
+          "<li>Keep your body, clothes, and surroundings clean.</li>" +
+          "</ul>";
+      } else if (type === "vaccination") {
+        detailText.innerHTML =
+          "<h2>Vaccination</h2>" +
+          "<p>Vaccination is an important method of disease prevention because it prepares the body to fight harmful microorganisms.</p>" +
+          "<ul>" +
+          "<li>Vaccines help the immune system recognize and fight infections.</li>" +
+          "<li>They reduce the risk of serious diseases and outbreaks.</li>" +
+          "<li>Vaccination protects both individuals and the community.</li>" +
+          "<li>Taking vaccines on time is an important part of staying healthy.</li>" +
+          "</ul>";
+      } else if (type === "sanitation") {
+        detailText.innerHTML =
+          "<h2>Sanitation</h2>" +
+          "<p>Sanitation keeps our environment clean and helps stop the spread of germs, insects, and contaminated waste.</p>" +
+          "<ul>" +
+          "<li>Dispose of waste properly in bins or safe collection systems.</li>" +
+          "<li>Keep homes, schools, and streets clean.</li>" +
+          "<li>Use proper sewage and drainage systems.</li>" +
+          "<li>Remove stagnant water to control mosquito breeding.</li>" +
+          "</ul>";
+      }
+    }
+
+    function checkQuiz() {
+      var total = 4;
+      var score = 0;
+      var answers = ["q1", "q2", "q3", "q4"];
+
+      for (var i = 0; i < answers.length; i++) {
+        var selected = document.querySelector('input[name="' + answers[i] + '"]:checked');
+        if (selected && selected.value === "correct") {
+          score++;
+        }
+      }
+
+      var result = document.getElementById("quizResult");
+      result.innerHTML = "You scored " + score + " out of " + total + ".";
+
+      if (score === total) {
+        result.innerHTML += " Excellent work!";
+      } else if (score >= 2) {
+        result.innerHTML += " Good job. You understand the main prevention ideas.";
+      } else {
+        result.innerHTML += " Keep revising the prevention methods and try again.";
+      }
+    }
+  </script>
+</body>
+</html>

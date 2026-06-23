@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn Conductors & Insulators</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        ⚡ ConductoVerse
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="learn.html">Learn</a></li>
+        <li><a href="bulb.html">Bulb Test</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="uses.html">Uses</a></li>
+        <li><a href="lab.html">Virtual Lab</a></li>
+        <li><a href="certificate.html">Certificate</a></li>
+    </ul>
+
+</nav>
+
+<!-- Rest of page -->
+<body>
+
+<h1>⚡ Learn Conductors & Insulators</h1>
+
+<div class="container">
+
+    <div class="card" onclick="toggleCard(this)">
+        <h2>⚡ What are Conductors?</h2>
+        <div class="content">
+            <p>
+                Conductors are materials that allow electricity
+                to flow through them easily.
+            </p>
+            <br>
+            <strong>Examples:</strong>
+            <ul>
+                <li>Copper</li>
+                <li>Silver</li>
+                <li>Aluminum</li>
+                <li>Iron</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" onclick="toggleCard(this)">
+        <h2>🛡️ What are Insulators?</h2>
+        <div class="content">
+            <p>
+                Insulators are materials that prevent electricity
+                from flowing easily.
+            </p>
+            <br>
+            <strong>Examples:</strong>
+            <ul>
+                <li>Rubber</li>
+                <li>Plastic</li>
+                <li>Glass</li>
+                <li>Wood</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" onclick="toggleCard(this)">
+        <h2>🔍 Key Differences</h2>
+        <div class="content">
+            <table border="1" cellpadding="10">
+                <tr>
+                    <th>Conductors</th>
+                    <th>Insulators</th>
+                </tr>
+                <tr>
+                    <td>Copper</td>
+                    <td>Rubber</td>
+                </tr>
+                <tr>
+                    <td>Silver</td>
+                    <td>Plastic</td>
+                </tr>
+                <tr>
+                    <td>Aluminum</td>
+                    <td>Glass</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" onclick="toggleCard(this)">
+        <h2>🌍 Real-Life Examples</h2>
+        <div class="content">
+            <p>🏠 House Wiring → Copper</p>
+            <p>🔌 Charger Cable → Copper + Plastic</p>
+            <p>🧤 Electrician Gloves → Rubber</p>
+            <p>⚡ Power Lines → Aluminum</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="fun-fact">
+    <h2>💡 Did You Know?</h2>
+    <br>
+    <p>Silver is one of the best conductors of electricity.</p>
+    <p>Rubber is used to cover wires because it is a good insulator.</p>
+    <p>Lightning can travel at over 270,000 mph!</p>
+</div>
+
+<div class="buttons">
+    <a href="index.html" class="btn">⬅ Back Home</a>
+    <a href="bulb.html" class="btn">💡 Virtual Bulb Test ➡</a>
+</div>
+
+<script>
+function toggleCard(card){
+    card.classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

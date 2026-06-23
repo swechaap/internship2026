@@ -1,0 +1,15 @@
+body{
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.screen{
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+button{
+    padding: 8px 15px;
+    margin: 5px;
+}

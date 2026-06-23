@@ -1,0 +1,34 @@
+Eye Function Simulation Website – Task Division (5 Members)
+Member-1 
+Responsibilities:
+Project planning and coordination
+Requirement gathering
+Preparing project report
+Creating story board
+Managing GitHub repository
+Testing coordination
+
+Member 2 –
+Responsibilities:
+Design website layout
+Create homepage and navigation
+Develop responsive user interface
+Implement animations and styling
+
+Member 3 – 
+Responsibilities
+Develop eye anatomy section
+Create interactive eye model
+Add labels and descriptions
+Implement hover/click interactions
+
+Member 4 – 
+Responsibilities
+Implement normal vision simulation
+Develop adjustable controls
+
+
+Member 5-
+Responsibilities:
+Create eye-related quizzes
+result display.

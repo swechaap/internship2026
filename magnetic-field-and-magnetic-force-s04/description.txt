@@ -1,0 +1,409 @@
+================================================================================
+  COMPLETE CODE DESCRIPTION — Magnetic Field & Force Interactive Simulation
+================================================================================
+
+FILE: index.html  (~1100 lines)
+TYPE: Single-page HTML application (no frameworks, no backend)
+STACK: HTML5 + CSS3 + Vanilla JavaScript
+DEPLOYMENT: Static hosting (Vercel / GitHub Pages)
+
+────────────────────────────────────────────────────────────────────────────────
+1. OVERALL ARCHITECTURE
+────────────────────────────────────────────────────────────────────────────────
+
+The entire application lives in ONE self-contained HTML file. It has three
+layers embedded in the same document:
+
+  <style>    ── CSS design system (~480 lines)
+  <body>     ── HTML structure (~260 lines)
+  <script>   ── JavaScript logic (~350 lines)
+
+No external dependencies except Google Fonts (DM Sans, Space Mono, DM Serif
+Display) loaded via a @font-face stylesheet link.
+
+────────────────────────────────────────────────────────────────────────────────
+2. CSS DESIGN SYSTEM (lines 8–486)
+────────────────────────────────────────────────────────────────────────────────
+
+2a. CSS Custom Properties (lines 9–29)
+    ───
+    All colors, fonts, and spacing are defined as :root variables for
+    consistency and easy theming:
+    
+    --bg        #0a0c12     (dark background)
+    --blue      #4f8ef7     (primary accent)
+    --cyan      #38d9d9     (secondary accent)
+    --red       #f75e5e     (negative / error)
+    --green     #3ddc84     (positive / success)
+    --amber     #f7b731     (warning / force direction)
+    --text      #e8ecf7     (primary text)
+    --text2     #8892b0     (secondary text)
+    --surface   #1c2138     (card background)
+    --border    rgba(79,142,247,0.15)
+    
+    Three font families:
+      --font-head  : DM Serif Display (headings)
+      --font-mono  : Space Mono       (labels, code, values)
+      --font-body  : DM Sans          (body text)
+
+2b. Hero Section (lines 43–127)
+    ───
+    Full-viewport centered layout with:
+    - .hero-bg   : radial gradient overlay
+    - .hero-grid : grid pattern with CSS mask (fades at edges)
+    - .hero-canvas-wrap : absolute-positioned canvas for particle animation
+    - .hero-content : stacked text with staggered fadeUp animations
+    - .scroll-hint   : bouncing "↓ scroll" indicator
+
+    Key animation: @keyframes fadeUp (opacity 0→1 + translateY 20px→0)
+    with increasing delays (0s, 0.1s, 0.2s, 0.3s) on child elements.
+
+2c. Sticky Navigation (lines 130–156)
+    ───
+    position: sticky with backdrop-filter: blur(16px) for glassmorphism.
+    Uses overflow-x: auto with hidden scrollbar for horizontal tab layout.
+    Active tab gets blue bottom border via .nav-tab.active.
+
+2d. Section Layout (lines 159–174)
+    ───
+    Each section uses .section (max-width: 1100px, centered).
+    .section-label : monospace uppercase label (e.g. "01 — Foundation")
+    .section-title : serif heading with clamp() for fluid sizing
+    .section-desc  : muted secondary text
+
+2e. Canvas Boxes (lines 186–193)
+    ───
+    .canvas-box wraps each <canvas> with dark background, rounded corners,
+    and border. The canvas itself is display:block; width:100% to fill parent.
+
+2f. Form Controls (lines 196–225)
+    ───
+    Custom styled <input type="range"> with:
+    - Thin track (4px) with --surface2 background
+    - Circular thumb (16px) with blue glow box-shadow
+    - .ctrl-val floats right showing current value
+    
+    <select> elements get dark surface background with border accent on focus.
+
+2g. Responsive Breakpoints (lines 303–366)
+    ───
+    Three breakpoints:
+    - 900px  : reduced padding, smaller formula
+    - 680px  : grid→single column, smaller text, full-width controls
+    - 480px  : stacked buttons, larger touch targets (20px slider thumb),
+               floating values become inline
+
+2h. Custom Scrollbar (lines 472–481)
+    ───
+    Both WebKit (::-webkit-scrollbar) and Firefox (scrollbar-width: thin)
+    variants for a consistent dark theme scrollbar.
+
+2i. Scroll Reveal (lines 483–485)
+    ───
+    .reveal elements start invisible+shifted down, become visible when
+    IntersectionObserver triggers .visible class (opacity:1, transform:none).
+
+────────────────────────────────────────────────────────────────────────────────
+3. HTML STRUCTURE (lines 488–744)
+────────────────────────────────────────────────────────────────────────────────
+
+Seven sections accessed via sticky nav:
+
+  1. Hero (#top)              — Landing with canvas + CTA buttons
+  2. Magnets (#magnets)       — Bar magnet attract/repel visualization
+  3. Field Lines (#field)     — N–S dipole field lines with strength control
+  4. Moving Charge (#charge)  — Particle in uniform B-field simulation
+  5. Fleming's Rule (#fleming)— Left-hand rule interactive direction finder
+  6. Formula (#formula)       — F = q(v×B) calculator with live meter
+  7. Applications (#apps)     — 6 real-world use case cards
+  8. Quiz (#quiz)             — 5-question knowledge check
+
+────────────────────────────────────────────────────────────────────────────────
+4. JAVASCRIPT — DETAILED FUNCTION ANALYSIS
+────────────────────────────────────────────────────────────────────────────────
+
+4a. Navigation (lines 747–767)
+    ───
+    scrollTo(id, btn):
+      Calls scrollIntoView({behavior:'smooth'}) on target section, then
+      removes 'active' from all tabs and adds it to the clicked one.
+    
+    IntersectionObserver (lines 753–767):
+      Observes all 7 section IDs. When a section crosses 30% threshold,
+      the corresponding nav-tab gets .active class. This auto-highlights
+      the current section as the user scrolls.
+
+4b. Scroll Reveal (lines 770–773)
+    ───
+    Separate IntersectionObserver with 10% threshold. When a .reveal element
+    becomes visible, adds .visible class → CSS transition plays the
+    fade+slide-up animation.
+
+4c. Hero Canvas (lines 775–818) — ANIMATED PARTICLE BACKGROUND
+    ───
+    Self-executing function that:
+    1. Gets the #heroCanvas element and sets its dimensions via resize().
+    2. Creates 60 particles with random positions, velocities, radius, alpha.
+    3. draw() function runs via requestAnimationFrame:
+       a. Clears canvas
+       b. Updates each particle position (wraps around edges)
+       c. Draws particle as a circle with rgba(79,142,247, alpha*0.4)
+       d. Nested loop: for each pair of particles, if distance < 120px,
+          draws a connection line with opacity proportional to proximity.
+    4. IntersectionObserver (roHero) pauses the animation when the hero
+       section is not visible (sets running=false). This saves CPU and
+       eliminates scroll lag — the animation only runs when user is at
+       the top of the page.
+
+4d. Helper — getCtx(id) (lines 820–826)
+    ───
+    Utility function used by all canvas sections:
+    - Gets canvas element by ID
+    - Sets canvas.width to parent element's offsetWidth (responsive)
+    - Sets canvas.height from the 'height' attribute (or defaults to 280)
+    - Returns [context, width, height] array
+
+4e. Magnets Section (lines 828–883)
+    ───
+    State: magnetMode ('attract' | 'repel')
+    
+    toggleMagnet():
+      Flips mode, updates chip text, calls drawMagnet().
+    
+    drawMagnet():
+      Draws two bar magnet blocks on a dark background.
+      In attract mode: magnets face N→S with curved lines between them.
+      In repel mode: magnets face S→N (or N→S) with outward-curving lines.
+      Uses drawMagBlock() to render each half-colored rectangle.
+      Uses drawCurvedLines() to draw 7 dashed Bézier curves with arrowheads.
+      The arrow direction changes based on attract/repel.
+    
+    drawMagBlock(ctx, x, y, w, h, c1, c2, l1, l2):
+      Draws a rectangle split vertically — left half color c1 with label l1,
+      right half color c2 with label l2 (N or S).
+      Uses ctx.roundRect() for rounded inner corners.
+    
+    drawCurvedLines(ctx, x1, y, x2, y2, attract):
+      Draws 7 evenly spaced lines between (x1,y) and (x2,y).
+      Attract: Bézier curves bow upward (midpoint controls).
+      Repel: Bézier curves bow outward away from center.
+      Each line has a triangular arrowhead at the end via drawHead().
+    
+    drawHead(ctx, x, y, d, col):
+      Draws a small triangle pointing right (d=1) or left (d=-1).
+
+4f. Field Lines Section (lines 886–920)
+    ───
+    State: fsNames array ['Very weak','Weak','Medium','Strong','Very strong']
+    
+    updateField(el):
+      Reads slider value (1–5), updates label text, calls drawField().
+    
+    drawField():
+      Calculates number of field lines: n = 6 + strength * 2 (8 to 16 lines).
+      For each line i (0 to n-1):
+        - Calculates angle a = (i/n) * 2π
+        - Start point (px,py) on N pole circle (left)
+        - End point (qx,qy) on S pole circle (right, offset by π)
+        - Control point (cpx,cpy) bows outward proportional to strength
+        - Draws quadratic Bézier curve
+        - Draws arrowhead at midpoint of the curve
+      Poles are drawn as filled circles (N=blue, S=red) with labels.
+
+4g. Moving Charge Section (lines 922–987) — LORENTZ FORCE SIMULATION
+    ───
+    State:
+      pState    = {x, y, vx, vy, trail[], q, w, h}
+      animRef   = requestAnimationFrame ID
+      pPaused   = boolean
+    
+    resetParticle():
+      Cancels any running animation, resets paused flag, reads velocity and
+      charge sign from controls. Creates particle at (80, h/2) with velocity
+      v * 1.3 moving right. Clears trail. Calls animCharge().
+    
+    updateVel(el):
+      Updates velocity label text, calls resetParticle() to restart.
+    
+    togglePause():
+      Toggles pPaused. If resuming, calls animCharge() to restart loop.
+    
+    animCharge() — THE CORE LOOP:
+      1. Clears canvas, draws B-field region (central area with ⊗ symbols
+         indicating field into page).
+      2. Draws vertical dashed lines marking field boundaries.
+      3. If pState exists, adds current position to trail (max 100 points).
+         - Optimization: only pushes to trail if position actually changed
+           (prevents wasteful accumulation at velocity=0).
+      4. Draws the trail as a polyline (blue for +, red for −).
+      5. Draws the particle as a glowing circle with charge sign inside.
+      6. PHYSICS UPDATE (if not paused):
+         a. If particle is inside the B-field region (x between 140 and w-140):
+            - Applies Lorentz force using simplified Boris algorithm:
+              vx += q * (vy * (-B)) * 0.5
+              vy += q * (vx * B) * 0.5
+              where B = 0.008 (constant field strength into page)
+            - Clamps speed to maxSp = velocity_setting * 1.6 to prevent
+              runaway acceleration.
+         b. Updates position: x += vx, y += vy
+         c. If particle exits canvas bounds, resets it to starting position
+            with initial velocity (looping simulation).
+      7. Requests next animation frame (unless paused).
+
+    Physics explanation:
+      The Lorentz force F = q(v × B) is perpendicular to both velocity and
+      field. For B into the page (z-axis), this produces:
+        Fx = q * vy * (-Bz)    → vx += q * vy * (-B) * dt
+        Fy = q * vx * Bz       → vy += q * vx * B * dt
+      This creates circular motion. Positive charge curves one way,
+      negative charge curves the opposite direction.
+
+4h. Fleming's Left-Hand Rule (lines 989–1034)
+    ───
+    Lookup tables:
+      fMap    = maps "(v_dir)_(b_dir)" to force direction text
+                e.g. "right_into" → "↑ Up"
+      fDirs   = maps direction name to [dx, dy] vector
+      fForce  = precomputed force vectors for all 8 combinations
+    
+    updateFleming():
+      Reads selected v direction (right/up/left/down) and B direction
+      (into/out of page). Looks up result in fMap. Updates text display.
+      Calls drawFleming().
+    
+    drawFleming():
+      Draws on the canvas:
+      - Central dot (pivot point)
+      - Velocity arrow (blue) from center in selected direction
+      - Force arrow (amber) computed from cross product
+      - B symbol (⊗ for into page, ⊙ for out of page) at center
+      Both arrows have arrowheads and labels.
+      Uses shadowBlur for glow effect on arrows.
+
+4i. Formula Calculator (lines 1036–1047)
+    ───
+    calcForce():
+      Reads q (1–10 C), v (1–10 m/s), B (1–10 T) from sliders.
+      Computes F = q * v * B (simplified, assumes perpendicular v and B).
+      Updates force value display and meter bar width (0–1000 N range).
+
+4j. Quiz Module (lines 1049–1089)
+    ───
+    Qs array: 5 question objects, each with:
+      q     = question text
+      opts  = array of 4 answer strings
+      ans   = index of correct answer (0-based)
+      exp   = explanation text
+    
+    State:
+      qIdx  = current question index (0–4, then 5 = results)
+      qAns  = array of booleans (correct/incorrect per answer)
+    
+    initQuiz(): Resets state, calls renderQ().
+    
+    renderQ():
+      Draws progress bar segments (done=green, current=blue).
+      If all questions done, shows score screen with personalized message.
+      Otherwise renders the current question with 4 option buttons.
+    
+    ansQ(i):
+      Records answer, disables all options, highlights correct (green) and
+      wrong (red) choices, shows feedback with explanation.
+      Shows "Next →" button.
+    
+    nextQ(): Advances to next question, re-renders.
+
+4k. Initialization (lines 1091–1097)
+    ───
+    window.addEventListener('load', ...) calls all draw functions and
+    initializes the quiz. Also attaches a resize handler that redraws
+    the static canvases (magnets, field, fleming) when window resizes.
+    (The charge canvas and hero canvas handle resize internally.)
+
+────────────────────────────────────────────────────────────────────────────────
+5. KEY DESIGN DECISIONS & OPTIMIZATIONS
+────────────────────────────────────────────────────────────────────────────────
+
+  a. Single HTML file
+     ─────────────────
+     Zero build step, zero dependencies. Works when opened directly in a
+     browser. Deployable by dragging to Netlify Drop or running vercel.
+
+  b. Canvas-based animations vs DOM
+     ──────────────────────────────
+     Canvas chosen over DOM elements for the particle effects, field lines,
+     and charge simulation because canvas is more performant for per-frame
+     redraws with many visual elements.
+
+  c. IntersectionObserver for performance
+     ────────────────────────────────────
+     The hero canvas animation pauses when scrolled off-screen using
+     IntersectionObserver with threshold:0. This prevents unnecessary CPU
+     usage and eliminates scroll jank — a common issue with continuous
+     requestAnimationFrame loops.
+
+  d. Responsive canvas sizing
+     ────────────────────────
+     Canvas width is set dynamically to parent.offsetWidth, not hardcoded.
+     This makes all simulations responsive without extra CSS.
+
+  e. Simplified physics
+     ──────────────────
+     The Lorentz force uses a semi-implicit Euler integration with speed
+     clamping (not full Boris algorithm) to keep the code understandable
+     for educational purposes while still producing visually correct
+     circular motion.
+
+  f. Trail optimization
+     ──────────────────
+     Trail points are only appended when position actually changes,
+     preventing memory waste when velocity=0 and the particle is stationary.
+
+────────────────────────────────────────────────────────────────────────────────
+6. FILES IN THIS DIRECTORY
+────────────────────────────────────────────────────────────────────────────────
+
+  index.html          — Main application (1100 lines, all-in-one)
+  deployment.txt      — Step-by-step deployment guide (Vercel)
+  requirements.txt    — Project requirements, features, task division
+  description.txt     — This file — complete code explanation
+
+────────────────────────────────────────────────────────────────────────────────
+7. HOW TO ANSWER INTERVIEW QUESTIONS ABOUT THIS PROJECT
+────────────────────────────────────────────────────────────────────────────────
+
+  Q: "What does this project do?"
+  A: "It's an interactive physics education tool that teaches magnetic
+      fields and forces through 7 hands-on simulations — from bar magnets
+      to Lorentz force on moving charges — all in a single HTML file with
+      no frameworks."
+
+  Q: "What technologies did you use?"
+  A: "Pure HTML5, CSS3 with custom properties and responsive design, and
+      vanilla JavaScript with Canvas API for real-time animations. No
+      libraries, no build tools, no backend."
+
+  Q: "How did you handle performance?"
+  A: "The hero canvas uses IntersectionObserver to pause its
+      requestAnimationFrame loop when scrolled off-screen, preventing
+      unnecessary CPU usage and scroll jank. Trail rendering is also
+      optimized to only store points when position changes."
+
+  Q: "How does the moving charge physics work?"
+  A: "It simulates the Lorentz force F = q(v × B). For a uniform magnetic
+      field into the page, we apply perpendicular velocity updates each
+      frame, producing circular motion. The direction curves oppositely
+      for positive vs negative charges, demonstrating Fleming's rule."
+
+  Q: "How did you make it responsive?"
+  A: "Three breakpoints at 900px, 680px, and 480px. Canvas sizes adapt
+      dynamically to parent width. Layout shifts from multi-column to
+      single-column on mobile. Touch targets increase on small screens."
+
+  Q: "How would you add a new feature?"
+  A: "I'd add a new <section> in HTML, style it with CSS variables, and
+      write the JavaScript function following the existing patterns —
+      using getCtx() for canvas access and the same dark-theme design
+      language."
+
+================================================================================

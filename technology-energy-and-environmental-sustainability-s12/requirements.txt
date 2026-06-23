@@ -1,0 +1,10 @@
+Smart Energy Advisor - Web Application
+
+Project Type:
+Frontend Web Development Project
+
+Tech Stack:
+- HTML5
+- CSS3
+- JavaScript (ES6)
+- React

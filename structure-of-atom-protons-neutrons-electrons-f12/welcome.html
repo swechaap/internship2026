@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atom Universe</title>
+
+    <link rel="stylesheet" href="css/welcome.css">
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <div class="container">
+
+        <div class="atom-logo">
+            ⚛️
+        </div>
+
+        <h1>Atom Universe</h1>
+
+        <p class="tagline">
+            Explore • Build • Discover
+        </p>
+
+        <p class="description">
+            Journey through the fascinating
+            world of Atomic Science
+        </p>
+
+        <p class="mini-text">
+        Ready to begin your atomic journey?
+        </p>
+
+        <div class="avatar-section">
+    <h3>Select Your Avatar</h3>
+
+    <div class="avatar-container">
+
+       <div class="avatar-card" onclick="selectAvatar('Student Boy', this)">
+    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+    <p>Student Boy</p>
+    <span>Explorer</span>
+</div>
+
+<div class="avatar-card" onclick="selectAvatar('Student Girl', this)">
+    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140051.png">
+    <p>Student Girl</p>
+    <span>Researcher</span>
+</div>
+
+<div class="avatar-card" onclick="selectAvatar('Scientist', this)">
+    <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png">
+    <p>Scientist</p>
+    <span>Mentor</span>
+</div>
+
+    </div>
+</div>
+
+        <a href="index.html" class="enter-btn">
+            🚀 Enter Universe
+        </a>
+
+    </div>
+    <button id="enterBtn" disabled>
+    Select Avatar First
+</button>
+
+    <script>
+function selectAvatar(name, element){
+
+    localStorage.setItem("avatar", name);
+
+    document.querySelectorAll(".avatar-card")
+    .forEach(card => card.classList.remove("selected"));
+
+    element.classList.add("selected");
+}
+</script>
+
+</body>
+</html>

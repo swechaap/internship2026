@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Real Life Uses</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        ⚡ ConductoVerse
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="learn.html">Learn</a></li>
+        <li><a href="bulb.html">Bulb Test</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="uses.html">Uses</a></li>
+        <li><a href="lab.html">Virtual Lab</a></li>
+        <li><a href="certificate.html">Certificate</a></li>
+    </ul>
+
+</nav>
+
+<!-- Rest of page -->
+<body>
+
+<h1>🌍 Real-Life Uses</h1>
+
+<div class="container">
+
+<div class="card"
+onclick="showInfo(
+'House Wiring',
+'Copper wires are used in homes because they conduct electricity efficiently.'
+)">
+🏠 House Wiring
+</div>
+
+<div class="card"
+onclick="showInfo(
+'Phone Chargers',
+'Copper conducts electricity while plastic protects users.'
+)">
+🔌 Phone Chargers
+</div>
+
+<div class="card"
+onclick="showInfo(
+'Power Lines',
+'Aluminum is widely used in power transmission lines.'
+)">
+⚡ Power Lines
+</div>
+
+<div class="card"
+onclick="showInfo(
+'Safety Gloves',
+'Rubber gloves protect electricians from electric shock.'
+)">
+🧤 Safety Gloves
+</div>
+
+<div class="card"
+onclick="showInfo(
+'Switch Boards',
+'Plastic switch covers prevent accidental shocks.'
+)">
+🎛️ Switch Boards
+</div>
+
+</div>
+
+<div id="popup" class="popup">
+
+<div class="popup-content">
+
+<h2 id="popupTitle"></h2>
+
+<p id="popupText"></p>
+
+<button onclick="closePopup()">
+Close
+</button>
+
+</div>
+
+</div>
+
+<div class="next">
+<a href="lab.html">
+🧪 Go To Virtual Lab
+</a>
+</div>
+
+<script src="js/uses.js"></script>
+
+</body>
+</html>

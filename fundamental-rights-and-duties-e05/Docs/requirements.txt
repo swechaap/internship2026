@@ -1,0 +1,149 @@
+                                           FUNDAMENTAL RIGHTS AND DUTIES SIMULATION
+
+PROJECT REQUIREMENTS :
+
+---> we have collected resources from different sites and textbooks we also used chatgpt for some portions.
+   https://byjus.com/free-ias-prep/fundamental-rights/ - byjus.
+   https://infinitylearn.com/question-answer/what-are-fundamental-rights-and-duties - infinity learn.
+   https://ncert.nic.in/textbook/pdf/fees1ps.pdf - ncert textbook of 6th class.
+   https://cdn1.byjus.com/wp-content/uploads/2020/02/Telangana-Board-Class-6-Social-Science-Textbook-English-Medium.pdf - telengana board material.
+   https://digital.nios.ac.in/content/213en/Lesson-16.pdf - class 6th digital textbook.
+--->Develop an educational simulation on Fundamental Rights and Duties.
+--->Provide interactive learning for students of Classes 6–10.
+--->Use simple language and engaging visuals.
+--->Include real-life examples related to rights and duties.
+--->Ensure easy navigation and user-friendly interface.
+--->Add assessment questions to test understanding.
+--->Maintain accuracy according to the Indian Constitution. 
+
+FEATURES AND MODULES :
+
+--->Interactive learning
+--->Simple explanations
+--->Real-life examples
+--->Quiz and assessment
+--->Visual illustrations
+--->Easy navigation
+
+
+Module 1: Introduction
+-->Overview of Fundamental Rights and Duties.
+-->Importance in daily life.
+
+Module 2: Fundamental Rights
+-->Right to Equality
+-->Right to Freedom
+-->Right against Exploitation
+-->Right to Freedom of Religion
+-->Cultural and Educational Rights
+-->Right to Constitutional Remedies
+
+Module 3: Fundamental Duties
+-->List of Fundamental Duties.
+-->Explanation with examples.
+
+Module 4: Interactive Simulation
+-->Scenario-based learning activities.
+-->Rights and duties identification exercises.
+
+Module 5: Quiz & Assessment
+-->Multiple-choice questions.
+-->Score calculation and feedback.
+
+Module 6: Conclusion
+-->Summary of key concepts.
+-->Learning outcomes.  
+
+TEAM TASK DIVISION :
+
+Member 1 – Storyboarding & Research
+
+- Collect information related to Fundamental Rights and Duties.
+- Create storyboard scenes for the simulation.
+- Gather reference images and educational resources.
+
+Member 2 – Documentation & Content Writing
+
+- Prepare project documentation.
+- Write content for all modules using proper resources and references.
+- Organize project requirements and reports.
+
+Member 3 – Initial Development & GitHub Setup
+
+- Create the GitHub repository.
+- Set up the basic project folder structure.
+- Implement the initial code base.
+- Push initial commits to GitHub.
+- Ensure visible project progress in the repository.
+
+Member 4 – Design, Testing & Review
+
+- Create visuals and presentation elements.
+- Test the simulation for errors and usability.
+- Review content and design consistency.
+- Assist in final project integration and submission.
+
+GITHUB ISSUES CREATED
+
+Issue #1 – Research on Fundamental Rights and Duties
+Assigned To: Member 1
+Status: Completed
+
+Issue #2 – Create Storyboard for Simulation
+Assigned To: Member 1
+Status: In Progress
+
+Issue #3 – Documentation and Content Writing
+Assigned To: Member 2
+Status: In Progress
+
+Issue #4 – Collect and Verify References/Resources
+Assigned To: Member 2
+Status: Completed
+
+Issue #5 – Repository Setup and Project Structure
+Assigned To: Member 3
+Status: Completed
+
+Issue #6 – Initial Code Base Development
+Assigned To: Member 3
+Status: In Progress
+
+Issue #7 – Design Visual Elements and User Interface
+Assigned To: Member 4
+Status: In Progress
+
+Issue #8 – Testing, Review and Final Integration
+Assigned To: Member 4
+Status: Pending  
+
+
+TASKS ASSIGNED TO TEAM MEMBERS
+
+Member 1 – Storyboarding & Research
+
+- Research Fundamental Rights and Duties.
+- Collect educational resources and reference materials.
+- Create storyboard scenes for the simulation.
+- Plan the flow of the simulation.
+
+Member 2 – Documentation & Content Writing
+
+- Prepare project documentation.
+- Write content for all simulation modules.
+- Organize and verify references/resources.
+- Prepare the requirements.txt file.
+
+Member 3 – Development & GitHub Management
+
+- Create and manage the GitHub repository.
+- Set up the basic project folder structure.
+- Develop the initial code base.
+- Push commits and maintain version control.
+
+Member 4 – Design, Testing & Final Review
+
+- Design visuals and presentation elements.
+- Review content and user interface.
+- Test the simulation for errors.
+- Perform final integration and submission. 

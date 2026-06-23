@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Science Lab</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        ⚡ ConductoVerse
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="learn.html">Learn</a></li>
+        <li><a href="bulb.html">Bulb Test</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="uses.html">Uses</a></li>
+        <li><a href="lab.html">Virtual Lab</a></li>
+        <li><a href="certificate.html">Certificate</a></li>
+    </ul>
+
+</nav>
+
+<!-- Rest of page -->
+<body>
+
+<h1>🧪 Virtual Sorting Lab</h1>
+
+<p class="instructions">
+Drag the items into the correct box.
+</p>
+
+<div class="items">
+
+<div class="item" draggable="true" id="Copper">
+Copper Wire
+</div>
+
+<div class="item" draggable="true" id="Coin">
+Coin
+</div>
+
+<div class="item" draggable="true" id="Spoon">
+Metal Spoon
+</div>
+
+<div class="item" draggable="true" id="Rubber">
+Rubber
+</div>
+
+<div class="item" draggable="true" id="Plastic">
+Plastic
+</div>
+
+<div class="item" draggable="true" id="Wood">
+Wood
+</div>
+
+</div>
+
+<div class="boxes">
+
+<div class="box"
+ondragover="allowDrop(event)"
+ondrop="dropConductor(event)">
+<h2>⚡ Conductors</h2>
+</div>
+
+<div class="box"
+ondragover="allowDrop(event)"
+ondrop="dropInsulator(event)">
+<h2>🛡️ Insulators</h2>
+</div>
+
+</div>
+
+<div id="score">
+Score: 0 / 6
+</div>
+
+<div class="nextBtn" id="nextBtn">
+<a href="certificate.html">
+🏆 Get Certificate
+</a>
+</div>
+
+<script>
+
+let score = 0;
+let placed = 0;
+
+const conductors = ["Copper","Coin","Spoon"];
+const insulators = ["Rubber","Plastic","Wood"];
+
+function allowDrop(ev){
+ev.preventDefault();
+}
+
+document.querySelectorAll(".item").forEach(item=>{
+item.addEventListener("dragstart",function(ev){
+ev.dataTransfer.setData("text",ev.target.id);
+});
+});
+
+function updateScore(){
+
+document.getElementById("score").innerHTML=
+`Score: ${score} / 6`;
+
+if(placed===6){
+document.getElementById("nextBtn").style.display="block";
+}
+
+}
+
+function dropConductor(ev){
+
+ev.preventDefault();
+
+let data = ev.dataTransfer.getData("text");
+
+let element = document.getElementById(data);
+
+if(conductors.includes(data)){
+score++;
+element.style.background="#22c55e";
+}
+else{
+element.style.background="#ef4444";
+}
+
+ev.target.appendChild(element);
+
+placed++;
+
+updateScore();
+
+}
+
+function dropInsulator(ev){
+
+ev.preventDefault();
+
+let data = ev.dataTransfer.getData("text");
+
+let element = document.getElementById(data);
+
+if(insulators.includes(data)){
+score++;
+element.style.background="#22c55e";
+}
+else{
+element.style.background="#ef4444";
+}
+
+ev.target.appendChild(element);
+
+placed++;
+
+updateScore();
+
+}
+
+</script>
+
+</body>
+</html>

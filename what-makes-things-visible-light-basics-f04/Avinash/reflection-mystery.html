@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow Quest - Reflection Mystery</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+background:radial-gradient(circle at top,#3a6ea5,#0a1931 70%);
+color:white;
+position:relative;
+}
+
+body::before{
+content:"";
+position:absolute;
+inset:0;
+background-image:
+radial-gradient(white 1px, transparent 1px);
+background-size:50px 50px;
+opacity:.35;
+animation:twinkle 5s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:.2;}
+to{opacity:.7;}
+}
+
+header{
+position:relative;
+z-index:10;
+text-align:center;
+padding:20px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(15px);
+border-bottom:1px solid rgba(255,255,255,.2);
+box-shadow:0 8px 32px rgba(0,0,0,.3);
+}
+
+header h1{
+font-size:2.5rem;
+background:linear-gradient(90deg,#ffd700,#fff8a6,#ffd700);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+header p{
+margin-top:5px;
+}
+
+#scoreBoard{
+margin-top:10px;
+font-size:22px;
+font-weight:bold;
+color:#ffd700;
+}
+
+.progress{
+width:300px;
+height:14px;
+background:rgba(255,255,255,.15);
+margin:15px auto;
+border-radius:50px;
+overflow:hidden;
+}
+
+.progress-fill{
+width:80%;
+height:100%;
+background:linear-gradient(90deg,#4ade80,#22c55e);
+}
+
+.game-container{
+position:relative;
+height:calc(100vh - 170px);
+}
+
+.sun{
+position:absolute;
+left:80px;
+top:90px;
+width:120px;
+height:120px;
+border-radius:50%;
+background:radial-gradient(circle,#fff8a6,#ffd700,orange);
+box-shadow:0 0 50px #ffd700,0 0 100px #ffd700;
+animation:pulse 3s infinite;
+}
+
+@keyframes pulse{
+50%{
+transform:scale(1.08);
+}
+}
+
+.flower{
+position:absolute;
+left:45%;
+top:38%;
+font-size:110px;
+filter:brightness(25%);
+transition:1.5s;
+animation:flowerFloat 3s ease-in-out infinite;
+}
+
+@keyframes flowerFloat{
+50%{
+transform:translateY(-10px);
+}
+}
+
+.eye{
+position:absolute;
+right:100px;
+top:40%;
+font-size:100px;
+animation:blink 5s infinite;
+}
+
+@keyframes blink{
+95%{transform:scaleY(1);}
+97%{transform:scaleY(.1);}
+100%{transform:scaleY(1);}
+}
+
+.ray{
+position:absolute;
+height:8px;
+display:none;
+background:linear-gradient(
+90deg,
+transparent,
+#fff8a6,
+#ffd700,
+transparent
+);
+box-shadow:0 0 20px #ffd700;
+animation:rayMove 2s infinite;
+}
+
+@keyframes rayMove{
+0%{opacity:.3;}
+50%{opacity:1;}
+100%{opacity:.3;}
+}
+
+.ray1{
+left:180px;
+top:140px;
+width:420px;
+transform:rotate(18deg);
+}
+
+.ray2{
+left:52%;
+top:48%;
+width:300px;
+transform:rotate(-8deg);
+}
+
+.learning-card{
+position:absolute;
+top:20px;
+right:20px;
+width:320px;
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(20px);
+padding:20px;
+border-radius:25px;
+border:1px solid rgba(255,255,255,.25);
+display:none;
+color:white;
+box-shadow:0 10px 40px rgba(0,0,0,.4);
+animation:popup .5s;
+}
+
+@keyframes popup{
+from{
+transform:scale(.5);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.guide{
+position:absolute;
+left:20px;
+bottom:150px;
+width:280px;
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(15px);
+padding:18px;
+border-radius:20px;
+}
+
+.message-box{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+width:85%;
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(15px);
+padding:25px;
+border-radius:25px;
+text-align:center;
+font-size:1.1rem;
+box-shadow:0 10px 40px rgba(0,0,0,.3);
+}
+
+button{
+padding:15px 35px;
+margin-top:15px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+font-size:18px;
+font-weight:700;
+background:linear-gradient(135deg,#ffd700,#ffb703);
+color:black;
+box-shadow:0 10px 25px rgba(255,215,0,.4);
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-3px) scale(1.05);
+}
+
+button:active{
+transform:scale(.95);
+}
+
+#badge{
+display:none;
+position:absolute;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+background:gold;
+color:black;
+padding:25px 40px;
+border-radius:25px;
+font-size:30px;
+font-weight:700;
+box-shadow:0 0 50px gold;
+z-index:20;
+animation:popup .5s;
+}
+
+.star{
+position:absolute;
+font-size:35px;
+animation:float 2s infinite;
+}
+
+@keyframes float{
+50%{
+transform:translateY(-15px);
+}
+}
+
+@media(max-width:768px){
+
+header h1{
+font-size:1.8rem;
+}
+
+.sun{
+width:80px;
+height:80px;
+left:20px;
+}
+
+.flower{
+font-size:70px;
+left:40%;
+}
+
+.eye{
+font-size:70px;
+right:20px;
+}
+
+.learning-card{
+width:250px;
+}
+
+.guide{
+width:220px;
+bottom:180px;
+}
+
+.progress{
+width:220px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🌟 Glow Quest: Reflection Mystery</h1>
+<p>Help the Light Detective discover how flowers become visible!</p>
+
+<div id="scoreBoard">
+⭐ Score: <span id="score">0</span>
+</div>
+
+<div class="progress">
+<div class="progress-fill"></div>
+</div>
+</header>
+
+<div class="game-container">
+
+<div class="sun"></div>
+
+<div class="flower" id="flower">🌸</div>
+
+<div class="eye">👁️</div>
+
+<div class="ray ray1" id="ray1"></div>
+<div class="ray ray2" id="ray2"></div>
+
+<div class="guide">
+🧙 <b>Luna the Light Detective</b><br><br>
+Watch carefully! The flower does not produce its own light. Can you discover how it becomes visible?
+</div>
+
+<div class="learning-card" id="card">
+<h2>💡 Reflection of Light</h2>
+<br>
+<p>
+☀️ Light from the Sun falls on the flower.<br><br>
+🌸 The flower reflects some of that light.<br><br>
+👁️ The reflected light enters our eyes.<br><br>
+✨ Therefore, we can see the flower.
+</p>
+</div>
+
+<div id="badge">
+🏆 Reflection Master
+</div>
+
+<div class="message-box">
+
+<p id="message">
+The flower is illuminated, but why can we see it?
+Click the button to investigate!
+</p>
+
+<button onclick="startReflection()">
+Show Reflection
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let score = 0;
+
+function startReflection(){
+
+document.getElementById("ray1").style.display="block";
+
+setTimeout(()=>{
+document.getElementById("flower").style.filter="brightness(100%)";
+},1000);
+
+setTimeout(()=>{
+document.getElementById("ray2").style.display="block";
+},2000);
+
+setTimeout(()=>{
+
+document.getElementById("card").style.display="block";
+
+score += 100;
+
+document.getElementById("score").innerText = score;
+
+document.getElementById("message").innerHTML =
+"🎉 Excellent Detective! The flower reflects light into our eyes, allowing us to see it.";
+
+document.getElementById("badge").style.display = "block";
+
+createStars();
+
+setTimeout(()=>{
+document.getElementById("badge").style.display = "none";
+},3000);
+
+},3000);
+}
+
+function createStars(){
+
+for(let i=0;i<15;i++){
+
+let star=document.createElement("div");
+
+star.className="star";
+
+star.innerHTML="⭐";
+
+star.style.left=Math.random()*window.innerWidth+"px";
+
+star.style.top=Math.random()*window.innerHeight+"px";
+
+document.body.appendChild(star);
+
+setTimeout(()=>{
+star.remove();
+},4000);
+}
+}
+
+</script>
+
+</body>
+</html>

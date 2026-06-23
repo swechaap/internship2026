@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blood Circulation Health Checker</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        background-color:#f4f7fa;
+        margin:0;
+        padding:20px;
+    }
+
+    h1{
+        text-align:center;
+        color:#0d47a1;
+        margin-bottom:10px;
+    }
+
+    .team-info{
+        position:absolute;
+        top:20px;
+        right:20px;
+        background:white;
+        padding:12px;
+        border:2px solid #1976d2;
+        font-weight:bold;
+        color:#0d47a1;
+        text-align:left;
+    }
+
+    .intro{
+        text-align:center;
+        max-width:900px;
+        margin:auto;
+        color:#555;
+        margin-bottom:20px;
+    }
+
+    .disclaimer{
+        background:#fff3cd;
+        border-left:5px solid #ffc107;
+        padding:15px;
+        border-radius:5px;
+        margin-bottom:20px;
+        max-width:1200px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .container{
+        max-width:1200px;
+        margin:auto;
+        display:grid;
+        grid-template-columns:repeat(2, 1fr);
+        gap:20px;
+    }
+
+    .box{
+        background:white;
+        padding:20px;
+        border:2px solid #1976d2;
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        min-height:140px;
+    }
+
+    .question{
+        font-size:18px;
+        font-weight:bold;
+        color:#0d47a1;
+        margin-bottom:10px;
+    }
+
+    .answer{
+        color:#444;
+        line-height:1.5;
+    }
+
+    @media(max-width:768px){
+        .container{
+            grid-template-columns:1fr;
+        }
+
+        .team-info{
+            position:static;
+            width:fit-content;
+            margin:0 auto 20px auto;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="team-info">
+    Team No : 6W S10<br>
+    Team Name : Heart Sync Innovators
+</div>
+
+<h1>Circulatory System S10</h1>
+
+<p class="intro">
+The circulatory system is responsible for transporting oxygen and nutrients throughout the body.
+These questions help you understand common signs and symptoms related to blood circulation and heart health.
+</p>
+
+<div class="disclaimer">
+<b>Disclaimer:</b> This website is for educational purposes only and does not provide a medical diagnosis.
+Consult a healthcare professional for proper medical advice and treatment.
+</div>
+
+
+<div class="container">
+
+<div class="box">
+    <div class="question">1. Hypertension (High Blood Pressure)</div>
+    <div class="answer">
+        Hypertension occurs when the force of blood against artery walls remains consistently high. It can damage blood vessels and increase the risk of heart attacks and strokes. Common causes include excessive salt intake, obesity, stress, and lack of exercise. Regular physical activity and a healthy diet can help prevent hypertension.
+    </div>
+</div>
+
+<div class="box">
+    <div class="question">2. Coronary Artery Disease</div>
+    <div class="answer">
+        Coronary artery disease develops when arteries supplying blood to the heart become narrowed due to plaque buildup. Symptoms include chest pain, fatigue, and shortness of breath. Smoking, unhealthy diets, and high cholesterol are major risk factors. Maintaining a healthy lifestyle helps reduce the risk.
+    </div>
+</div>
+
+<div class="box">
+    <div class="question">3. Heart Attack</div>
+    <div class="answer">
+        A heart attack occurs when blood flow to part of the heart is blocked. Symptoms include severe chest pain, sweating, dizziness, and difficulty breathing. Immediate medical attention is required because heart muscle damage can occur within minutes.
+    </div>
+</div>
+
+<div class="box">
+    <div class="question">4. Stroke</div>
+    <div class="answer">
+        A stroke happens when blood supply to the brain is interrupted. Symptoms may include sudden weakness, difficulty speaking, confusion, and loss of balance. High blood pressure is one of the leading causes of stroke. Early treatment can save lives and reduce disability.
+    </div>
+</div>
+
+<div class="box">
+    <div class="question">5. Anemia</div>
+    <div class="answer">
+        Anemia occurs when the body does not have enough healthy red blood cells to carry oxygen efficiently. Symptoms include fatigue, weakness, pale skin, and dizziness. Iron deficiency is one of the most common causes. Eating iron-rich foods can help prevent anemia.
+    </div>
+</div>
+
+<div class="box">
+    <div class="question">6. Varicose Veins</div>
+    <div class="answer">
+        Varicose veins are enlarged and twisted veins usually seen in the legs. They occur when vein valves become weak and allow blood to pool. Symptoms include swelling, aching, and visible blue veins. Regular exercise and avoiding prolonged standing may help.
+    </div>
+</div>
+
+<div class="box">
+    <div class="question">7. Atherosclerosis</div>
+    <div class="answer">
+        Atherosclerosis is the hardening and narrowing of arteries due to plaque buildup. It reduces blood flow and increases the risk of heart attacks and strokes. High cholesterol, smoking, and diabetes contribute to this condition. Healthy eating habits can lower the risk.
+    </div>
+</div>
+
+<div class="box">
+    <div class="question">8. Arrhythmia</div>
+    <div class="answer">
+        Arrhythmia is an abnormal heartbeat that may be too fast, too slow, or irregular. Symptoms include palpitations, dizziness, and fainting. It occurs when the heart's electrical signals are disrupted. Medical treatment may be required depending on severity.
+    </div>
+</div>
+
+<div class="box">
+    <div class="question">9. Heart Failure</div>
+    <div class="answer">
+        Heart failure occurs when the heart cannot pump blood effectively to meet the body's needs. Symptoms include fatigue, swelling of legs, and shortness of breath. It can result from untreated hypertension or heart disease. Early diagnosis improves treatment outcomes.
+    </div>
+</div>
+
+<div class="box">
+    <div class="question">10. Peripheral Artery Disease (PAD)</div>
+    <div class="answer">
+        PAD occurs when arteries in the legs become narrowed, reducing blood flow. Symptoms include leg pain while walking, numbness, and slow-healing wounds. Smoking and diabetes significantly increase the risk. Lifestyle changes and medical treatment can improve circulation.
+    </div>
+</div>
+
+</div>
+
+
+</body>
+</html>

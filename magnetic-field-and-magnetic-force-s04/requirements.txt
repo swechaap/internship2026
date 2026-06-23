@@ -1,0 +1,98 @@
+PROJECT REQUIREMENTS
+====================
+1. Interactive HTML-based physics simulation (no frameworks or backend)
+2. Deployable as a static site on Vercel/GitHub Pages
+3. Responsive design (desktop + mobile)
+4. Dark-themed modern UI
+5. Canvas-based real-time animations
+6. No external runtime dependencies (pure HTML/CSS/JS)
+
+FEATURES / MODULES
+==================
+1. Hero Canvas
+   - Animated particle background with connection lines
+   - Pauses animation when off-screen to save resources
+
+2. Magnets (Section 01)
+   - Visual representation of two bar magnets
+   - Toggle between attract / repel mode
+   - Animated field lines with direction arrows
+
+3. Field Lines (Section 02)
+   - N–S dipole field line visualization
+   - Adjustable field strength (5 levels)
+   - Curved field lines with directional arrowheads
+
+4. Moving Charge (Section 03)
+   - Charged particle moving through a uniform B-field (into page)
+   - Adjustable velocity (0–5 m/s)
+   - Charge sign selector (+ / −)
+   - Circular path trajectory (Lorentz force simulation)
+   - Pause / Resume and Launch controls
+   - Trail rendering
+
+5. Fleming's Left-Hand Rule (Section 04)
+   - Interactive direction selector (v: 4 directions, B: into/out of page)
+   - Visual arrow display for velocity, force, and field
+   - Correct force direction output based on Fleming's rule
+
+6. Formula Calculator (Section 05)
+   - F = q(v × B) interactive calculator
+   - Sliders for charge (1–10 C), velocity (1–10 m/s), field (1–10 T)
+   - Real-time force readout + meter bar
+   - Conductor formula reference (F = BIL sinθ)
+
+7. Applications (Section 06)
+   - 6 real-world application cards (Loudspeakers, Motors, Maglev, MRI, Compass, Particle Accelerators)
+
+8. Quiz (Section 07)
+   - 5-question knowledge check
+   - Progress bar, correct/wrong feedback with explanations
+   - Score summary at the end
+
+9. Navigation
+   - Sticky nav bar with smooth scroll to sections
+   - IntersectionObserver-based active tab highlighting
+   - Scroll reveal animations
+
+10. Custom Styling
+    - Dark theme with CSS variables
+    - Custom scrollbar styling
+    - Responsive breakpoints at 900px, 680px, 480px
+    - Google Fonts (DM Sans, Space Mono, DM Serif Display)
+
+TEAM TASK DIVISION
+==================
+Person A — UI/UX Design & Styling
+  - CSS design system (variables, layout, responsive breakpoints)
+  - Dark theme visual design
+  - Hero section layout and typography
+  - Application cards styling
+  - Nav bar and scroll animations
+
+Person B — Core Canvas Simulations
+  - Magnet attract/repel canvas rendering
+  - Field lines visualization with adjustable strength
+  - Moving charge particle physics (Lorentz force)
+  - Arrow heads and field line curves
+
+Person C — Interactive Controls & Logic
+  - Range sliders and select inputs wiring
+  - Fleming's left-hand rule direction logic
+  - Formula calculator (F = qvB) with live meter
+  - Pause/Resume and Launch particle controls
+  - Canvas resizing and helper functions
+
+Person D — Quiz Module & Documentation
+  - Quiz data, rendering, and scoring logic
+  - Progress bar and answer feedback
+  - Deployment documentation (deployment.txt)
+  - Requirements and task division (this file)
+  - README updates
+
+Person E — Testing & Deployment
+  - Cross-browser testing
+  - Mobile responsiveness verification
+  - Vercel deployment configuration
+  - Performance optimization (hero canvas pause, trail optimization)
+  - Bug fixes and polish

@@ -1,0 +1,38 @@
+body{
+     font-family: sans-serif;
+      background: #eeddc2;
+       margin: 0; 
+    
+}
+.container {
+     max-width: 600px;
+      margin: 60px auto;
+       padding: 20px; 
+}
+h1, h2 {
+     color: #141413;
+}
+
+.dialogue-box { 
+    background: rgb(250, 235, 235); 
+    border-radius: 12px;
+     padding: 20px; 
+     margin: 20px 0;
+}
+.character {
+     font-weight: bold;
+      color: #534AB7;
+       margin: 0 0 8px; 
+}
+button { 
+    background: #534AB7; 
+    color: white;
+     border: none;
+      padding: 12px 28px; 
+      border-radius: 8px;
+       font-size: 16px; 
+       cursor: pointer;
+}
+button:hover {
+     background: #3C3489;
+}

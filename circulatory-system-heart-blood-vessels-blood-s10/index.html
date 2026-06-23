@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Circulatory System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root{--bg1:#0f2040;--bg2:#071022;--card-bg:rgba(255,255,255,0.06);--glass-border:rgba(255,255,255,0.12);--accent1:#ff5f6d;--accent2:#ffc371;--glass-blur:8px;--max-width:1100px;--radius:14px}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:#e8f0ff;-webkit-font-smoothing:antialiased}
+    .container{max-width:var(--max-width);margin:0 auto;padding:24px}
+    .site-header{padding:20px 0}.header-inner{display:flex;flex-direction:column;gap:6px;align-items:flex-start}.brand{margin:0;font-size:20px;letter-spacing:0.6px}.tag{margin:0;color:rgba(232,240,255,0.75)}
+    .hero{display:flex;align-items:center;gap:24px;padding:36px 24px}.hero-left{flex:1}.hero-right{width:320px;display:flex;justify-content:center}.hero h2{margin:0;font-size:34px}.lead{color:rgba(232,240,255,0.85);margin:14px 0 20px}
+    .btn{display:inline-block;padding:10px 18px;border-radius:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#111;font-weight:600;text-decoration:none;box-shadow:0 6px 18px rgba(255,95,109,0.12);border:none}.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);color:inherit}
+    .heart-illustration{width:100%;max-width:320px;height:auto;filter:drop-shadow(0 10px 30px rgba(0,0,0,0.4))}
+    .glass{background:var(--card-bg);border:1px solid var(--glass-border);border-radius:var(--radius);backdrop-filter:blur(var(--glass-blur));padding:18px;margin:18px 0}
+    h3{margin:6px 0 14px}.grid{display:grid;gap:16px}.cards{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}.card{padding:16px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+    .card i{color:var(--accent1);background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text}.two-up{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .flow-steps{position:relative;padding:20px}.flow-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}.flow-list li{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;border:1px dashed rgba(255,255,255,0.04)}.flow-list .num{display:inline-flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#111;font-weight:700}
+    .flow-animation{position:absolute;right:24px;top:20px;width:80px;height:80px;display:flex;align-items:center;justify-content:center}.pulse{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#ff9aa2,#ff5f6d);box-shadow:0 0 14px rgba(255,95,109,0.6);animation:moveAlong 6s linear infinite}
+    @keyframes moveAlong{0%{transform:translateY(0) scale(1)}20%{transform:translateY(24px) scale(1.05)}40%{transform:translateY(48px) scale(1)}60%{transform:translateY(72px) scale(1.05)}80%{transform:translateY(48px) scale(1)}100%{transform:translateY(0) scale(1)}}
+    .tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;list-style:none;padding:12px;margin:0}.tips li{display:flex;gap:8px;align-items:center;padding:10px;border-radius:10px}
+    .quiz{display:grid;gap:12px}#quiz-card{padding:12px}.choices{list-style:none;padding:0;margin:10px 0;display:grid;gap:10px}.choices li{padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.03)}.choices li:hover{transform:translateY(-3px)}.choices li.selected{outline:2px solid rgba(255,195,113,0.35);background:linear-gradient(90deg,rgba(255,95,109,0.08),rgba(255,195,113,0.04))}
+    .quiz-controls{display:flex;gap:12px;margin-top:10px}.result{padding:12px}.facts{list-style:disc;padding-left:20px}.site-footer{padding:20px 0;margin-top:40px}.footer-inner{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+    @media (max-width:900px){.hero{flex-direction:column;align-items:flex-start}.hero-right{width:100%}.flow-animation{position:static;margin-top:10px}}@media (max-width:480px){.brand{font-size:18px}.hero h2{font-size:26px}.container{padding:16px}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="brand">Circulatory System</h1>
+      <p class="tag">How blood transports oxygen and nutrients throughout the body</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-left">
+        <h2>Circulatory System</h2>
+        <p class="lead">Explore how the heart, blood, and vessels work together to keep you alive. Interactive animations and a short quiz help you learn.</p>
+        <a class="btn" href="#how-it-circulates">Start Learning</a>
+      </div>
+      <div class="hero-right">
+        <svg viewBox="0 0 512 512" class="heart-illustration" aria-hidden="true" role="img">
+          <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0%" stop-color="#ff5f6d"/><stop offset="100%" stop-color="#ffc371"/></linearGradient></defs>
+          <path fill="url(#g1)" d="M256 464s-16-12-66-54c-48-40-112-96-112-176 0-78 64-146 122-146 34 0 56 22 66 34 10-12 32-34 66-34 58 0 122 68 122 146 0 80-64 136-112 176-50 42-66 54-66 54z"/>
+        </svg>
+      </div>
+    </section>
+
+    <section id="introduction" class="container glass">
+      <h3>Introduction</h3>
+      <p><strong>What is the circulatory system?</strong> The circulatory system moves blood, oxygen, and nutrients to every part of the body using the heart and a network of blood vessels.</p>
+      <p><strong>Why is it important?</strong> It delivers oxygen and nutrients to tissues, removes waste, and helps regulate temperature and immunity.</p>
+    </section>
+
+    <section id="components" class="container">
+      <h3>Main Components</h3>
+      <div class="grid cards">
+        <article class="card glass"><i class="fa-solid fa-heart fa-2x"></i><h4>Heart</h4><p>The muscular pump that moves blood through the body.</p></article>
+        <article class="card glass"><i class="fa-solid fa-droplet fa-2x"></i><h4>Blood</h4><p>Contains red blood cells, white blood cells, platelets, and plasma.</p></article>
+        <article class="card glass"><i class="fa-solid fa-code-branch fa-2x"></i><h4>Blood Vessels</h4><p>Arteries, veins, and capillaries form the network that carries blood.</p></article>
+      </div>
+    </section>
+
+    <section id="heart-structure" class="container glass">
+      <h3>Heart Structure and Function</h3>
+      <p>The heart is a muscular pump with four chambers and four major valves that control blood flow.</p>
+      <div class="grid two-up">
+        <div class="card"><h4>Four Chambers</h4><ul><li>Right Atrium</li><li>Right Ventricle</li><li>Left Atrium</li><li>Left Ventricle</li></ul></div>
+        <div class="card"><h4>Four Valves</h4><ul><li>Tricuspid Valve</li><li>Pulmonary Valve</li><li>Mitral Valve</li><li>Aortic Valve</li></ul></div>
+      </div>
+    </section>
+
+    <section id="how-it-circulates" class="container">
+      <h3>How Blood Circulates</h3>
+      <div class="flow-steps glass">
+        <ol class="flow-list">
+          <li data-step="1"><span class="num">1</span>Blood enters the heart.</li>
+          <li data-step="2"><span class="num">2</span>Blood travels to the lungs.</li>
+          <li data-step="3"><span class="num">3</span>Blood receives oxygen.</li>
+          <li data-step="4"><span class="num">4</span>Blood returns to the heart.</li>
+          <li data-step="5"><span class="num">5</span>Oxygen-rich blood is pumped to the body.</li>
+        </ol>
+        <div class="flow-animation" aria-hidden="true"><div class="pulse"></div></div>
+      </div>
+    </section>
+
+    <section id="vessels" class="container glass">
+      <h3>Types of Blood Vessels</h3>
+      <div class="grid cards">
+        <article class="card"><i class="fa-solid fa-arrow-up-wide-short fa-2x"></i><h4>Arteries</h4><p>Carry oxygen-rich blood away from the heart under high pressure.</p></article>
+        <article class="card"><i class="fa-solid fa-arrow-down-wide-short fa-2x"></i><h4>Veins</h4><p>Return oxygen-poor blood back to the heart. They have valves to prevent backflow.</p></article>
+        <article class="card"><i class="fa-solid fa-radiation fa-2x"></i><h4>Capillaries</h4><p>Tiny vessels where oxygen and nutrients exchange with tissues.</p></article>
+      </div>
+    </section>
+
+    <section id="health-tips" class="container">
+      <h3>Heart Health Tips</h3>
+      <ul class="tips glass">
+        <li><i class="fa-solid fa-apple-whole"></i> Eat healthy food</li>
+        <li><i class="fa-solid fa-person-running"></i> Exercise regularly</li>
+        <li><i class="fa-solid fa-water"></i> Drink water</li>
+        <li><i class="fa-solid fa-ban-smoking"></i> Avoid smoking</li>
+        <li><i class="fa-solid fa-bed"></i> Sleep well</li>
+        <li><i class="fa-solid fa-smile"></i> Manage stress</li>
+      </ul>
+    </section>
+
+    <section id="quiz" class="container glass">
+      <h3>Quick Quiz</h3>
+      <div class="quiz">
+        <div id="quiz-card">
+          <p id="question"></p>
+          <ul id="choices" class="choices"></ul>
+          <div class="quiz-controls">
+            <button id="nextBtn" class="btn">Next</button>
+            <button id="submitBtn" class="btn ghost">Submit</button>
+          </div>
+        </div>
+        <div id="result" class="result" hidden>
+          <h4>Your Score</h4>
+          <p id="scoreText"></p>
+          <button id="restartBtn" class="btn">Restart Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="fun-facts" class="container glass">
+      <h3>Fun Facts</h3>
+      <ul class="facts">
+        <li>The heart beats about 100,000 times a day.</li>
+        <li>Blood vessels can stretch for thousands of kilometers if laid end to end.</li>
+        <li>Blood makes up about 7% of your body weight.</li>
+        <li>A single drop of blood contains millions of cells.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner glass">
+      <p>For educational purposes only. Creator: [Your Name]</p>
+      <p>Icons by Font Awesome • Illustrations are simplified SVGs for learning.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const steps = Array.from(document.querySelectorAll('.flow-list li'));
+      let idx = 0;
+      function highlight(i){
+        steps.forEach((s,si)=>{
+          s.style.opacity = si===i? '1' : '0.45';
+          s.style.transform = si===i? 'translateX(4px)' : 'translateX(0)';
+        });
+      }
+      highlight(0);
+      setInterval(()=>{ idx = (idx+1) % steps.length; highlight(idx); }, 2500);
+
+      const quizData = [
+        {q: 'Which organ pumps blood through the body?', a:['Lungs','Heart','Kidney','Liver'], correct:1},
+        {q: 'Which vessels carry blood away from the heart?', a:['Veins','Capillaries','Arteries','Lymph vessels'], correct:2},
+        {q: 'Where does blood receive oxygen?', a:['Liver','Muscles','Lungs','Stomach'], correct:2},
+        {q: 'How many chambers does the heart have?', a:['Two','Three','Four','Five'], correct:2},
+        {q: 'What helps prevent blood loss after injury?', a:['Platelets','Red blood cells','Plasma','White blood cells'], correct:0}
+      ];
+
+      let current = 0; let answers = Array(quizData.length).fill(null);
+      const qEl = document.getElementById('question');
+      const choicesEl = document.getElementById('choices');
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
+      const resultEl = document.getElementById('result');
+      const scoreText = document.getElementById('scoreText');
+      const restartBtn = document.getElementById('restartBtn');
+
+      function renderQuestion(i){
+        const item = quizData[i];
+        qEl.textContent = `Q${i+1}. ${item.q}`;
+        choicesEl.innerHTML = '';
+        item.a.forEach((choice,ci)=>{
+          const li = document.createElement('li');
+          li.textContent = choice;
+          li.tabIndex = 0;
+          li.addEventListener('click', ()=> selectChoice(ci));
+          li.addEventListener('keypress', (e)=>{ if(e.key=== 'Enter') selectChoice(ci); });
+          if(answers[i]===ci) li.classList.add('selected');
+          choicesEl.appendChild(li);
+        });
+      }
+      function selectChoice(ci){
+        answers[current] = ci;
+        Array.from(choicesEl.children).forEach((li,idx)=> li.classList.toggle('selected', idx===ci));
+      }
+
+      nextBtn.addEventListener('click', ()=>{
+        if(current < quizData.length -1){ current++; renderQuestion(current); }
+      });
+      submitBtn.addEventListener('click', ()=>{
+        let score = 0;
+        answers.forEach((a,i)=>{ if(a===quizData[i].correct) score++; });
+        qEl.parentElement.hidden = true;
+        resultEl.hidden = false;
+        scoreText.textContent = `${score} / ${quizData.length} correct`;
+      });
+      restartBtn.addEventListener('click', ()=>{
+        answers = Array(quizData.length).fill(null); current = 0;
+        qEl.parentElement.hidden = false;
+        resultEl.hidden = true;
+        renderQuestion(current);
+      });
+
+      renderQuestion(0);
+    });
+  </script>
+</body>
+</html>

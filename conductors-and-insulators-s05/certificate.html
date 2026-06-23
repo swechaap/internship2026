@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate of Achievement</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        ⚡ ConductoVerse
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="learn.html">Learn</a></li>
+        <li><a href="bulb.html">Bulb Test</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="uses.html">Uses</a></li>
+        <li><a href="lab.html">Virtual Lab</a></li>
+        <li><a href="certificate.html">Certificate</a></li>
+    </ul>
+
+</nav>
+
+<!-- Rest of page -->
+<body>
+
+<div class="certificate">
+
+<h1>🏆 Certificate of Achievement</h1>
+
+<p>Enter your name below:</p>
+
+<input type="text" id="nameInput" placeholder="Your Name">
+
+<br>
+
+<button onclick="generateCertificate()">
+Generate Certificate
+</button>
+
+<div id="certificateContent" style="display:none;">
+
+<div class="badge">⚡</div>
+
+<p>This Certificate is Proudly Presented To</p>
+
+<div id="studentName"></div>
+
+<p>For Successfully Completing the</p>
+
+<h2>Conductors & Insulators Interactive Learning Program</h2>
+
+<p>and demonstrating an excellent understanding of</p>
+
+<p><strong>Electrical Conductors, Insulators, and Their Applications</strong></p>
+
+<h2>⚡ Junior Electricity Explorer ⚡</h2>
+
+<p>Date: <span id="date"></span></p>
+
+</div>
+
+<div class="restart">
+<a href="index.html">🏠 Back to Home</a>
+</div>
+
+</div>
+
+<script>
+
+function generateCertificate(){
+
+let name = document.getElementById("nameInput").value;
+
+if(name.trim() === ""){
+alert("Please enter your name.");
+return;
+}
+
+document.getElementById("studentName").innerHTML = name;
+
+let today = new Date();
+
+document.getElementById("date").innerHTML =
+today.toLocaleDateString();
+
+document.getElementById("certificateContent").style.display = "block";
+
+}
+
+</script>
+
+</body>
+</html>

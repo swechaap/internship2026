@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Is Inside Our Eyes? - Educational Simulation</title>
+  <!-- Link to external styling sheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER AREA -->
+  <header>
+    <h1>What Is Inside Our Eyes?</h1>
+    <p>Learn how the human eye works through interaction.</p>
+  </header>
+
+  <!-- MAIN THREE-PANEL LAYOUT -->
+  <main>
+    
+    <!-- LEFT PANEL: EYE PARTS SELECTOR -->
+    <section class="panel left-panel">
+      <h2 class="panel-title">Eye Parts</h2>
+      <div class="parts-list">
+        <button class="btn-part" id="btn-cornea" onclick="showPart('cornea')">Cornea</button>
+        <button class="btn-part" id="btn-iris" onclick="showPart('iris')">Iris</button>
+        <button class="btn-part" id="btn-pupil" onclick="showPart('pupil')">Pupil</button>
+        <button class="btn-part" id="btn-lens" onclick="showPart('lens')">Lens</button>
+        <button class="btn-part" id="btn-retina" onclick="showPart('retina')">Retina</button>
+        <button class="btn-part" id="btn-optic-nerve" onclick="showPart('opticNerve')">Optic Nerve</button>
+      </div>
+    </section>
+
+    <!-- CENTER PANEL: SIMULATION & CONTROLS -->
+    <section class="panel center-panel">
+      <h2 class="panel-title">Eye Simulation</h2>
+      
+      <!-- Eye Diagram Container -->
+      <div class="simulation-box">
+        <div class="eye-diagram-container">
+          <!-- Optic Nerve: Back connection -->
+          <div id="part-optic-nerve" class="eye-component optic-nerve"></div>
+          
+          <!-- Eyeball Structure (Acts as Sclera) -->
+          <div id="part-eyeball" class="eye-component eyeball">
+            <!-- Retina: Inside lining -->
+            <div id="part-retina" class="eye-component retina"></div>
+            
+            <!-- Lens: Behind iris/pupil -->
+            <div id="part-lens" class="eye-component lens"></div>
+            
+            <!-- Iris: Colored ring -->
+            <div id="part-iris" class="eye-component iris">
+              <!-- Pupil: Center opening -->
+              <div id="part-pupil" class="pupil"></div>
+            </div>
+            
+            <!-- Cornea: Front cover -->
+            <div id="part-cornea" class="eye-component cornea"></div>
+          </div>
+        </div>
+
+        <!-- Light controls to simulate pupil reaction -->
+        <div class="light-controls">
+          <button class="btn-control" id="btn-bright" onclick="brightLight()">Bright Light</button>
+          <button class="btn-control" id="btn-dim" onclick="dimLight()">Dim Light</button>
+        </div>
+      </div>
+
+      <!-- Object Flow Path Simulation Section -->
+      <div class="object-section">
+        <h3>Object Simulation</h3>
+        <div class="object-buttons">
+          <button class="btn-object" id="btn-cat" onclick="showObject('Cat')">Cat 🐱</button>
+          <button class="btn-object" id="btn-tree" onclick="showObject('Tree')">Tree 🌲</button>
+          <button class="btn-object" id="btn-car" onclick="showObject('Car')">Car 🚗</button>
+        </div>
+
+        <!-- Flowchart mapping light pathway from object to brain -->
+        <div class="path-container">
+          <div class="path-step" id="step-object">Object</div>
+          <div class="path-arrow" id="arrow-1">➔</div>
+          <div class="path-step" id="step-cornea">Cornea</div>
+          <div class="path-arrow" id="arrow-2">➔</div>
+          <div class="path-step" id="step-pupil">Pupil</div>
+          <div class="path-arrow" id="arrow-3">➔</div>
+          <div class="path-step" id="step-lens">Lens</div>
+          <div class="path-arrow" id="arrow-4">➔</div>
+          <div class="path-step" id="step-retina">Retina</div>
+          <div class="path-arrow" id="arrow-5">➔</div>
+          <div class="path-step" id="step-brain">Brain</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: INFORMATION, FACTS, & QUIZ -->
+    <section class="panel right-panel">
+      <!-- Dynamic Description Info Card -->
+      <div class="info-section">
+        <h2 class="panel-title" style="border-bottom: none; margin-bottom: 5px;">Information</h2>
+        <h3 id="info-part-title">Select an Eye Part</h3>
+        <p id="info-part-desc">Click any of the eye parts on the left panel to learn what they do and see where they are located on the eye diagram.</p>
+      </div>
+
+      <!-- Fun Facts Box (rotates every 5s) -->
+      <div class="fun-fact-section">
+        <div class="fact-title">👁️ Fun Fact</div>
+        <p id="fun-fact-text">Click parts to discover more or wait for an eye fact to load...</p>
+      </div>
+
+      <!-- Quick Quiz section -->
+      <div class="quiz-section">
+        <div class="quiz-title">Quick Quiz</div>
+        <p class="quiz-question">Which part controls the size of the pupil?</p>
+        <div class="quiz-options">
+          <button class="btn-quiz" id="quiz-btn-lens" onclick="quizAnswer('Lens')">Lens</button>
+          <button class="btn-quiz" id="quiz-btn-iris" onclick="quizAnswer('Iris')">Iris</button>
+        </div>
+        <div id="quiz-feedback" class="quiz-feedback"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Include external logic javascript script -->
+  <script src="script.js"></script>
+</body>
+</html>

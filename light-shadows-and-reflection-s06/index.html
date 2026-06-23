@@ -1,0 +1,1188 @@
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    background: var(--color-background-primary);
+  }
+  .app {
+    display: grid;
+    grid-template-columns: 220px 1fr 190px;
+    gap: 8px;
+    padding: 8px;
+    height: 580px;
+    font-family: var(--font-sans);
+  }
+  .panel {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .panel-scroll {
+    overflow-y: auto;
+  }
+  .ph {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: var(--color-text-secondary);
+    padding: 10px 12px 8px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-primary);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .cg {
+    padding: 10px 12px 8px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+  .cl {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .av {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-secondary);
+    padding: 1px 7px;
+    border-radius: 6px;
+    min-width: 42px;
+    text-align: center;
+  }
+  .sbg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+  .sb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 4px;
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    background: var(--color-background-primary);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .sb:hover,
+  .sb.on {
+    border-color: var(--color-border-info);
+    color: var(--color-text-info);
+    background: var(--color-background-info);
+  }
+  .si {
+    font-size: 18px;
+    line-height: 1;
+  }
+  .pg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+  .pb {
+    padding: 8px;
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    background: var(--color-background-primary);
+    color: var(--color-text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1;
+  }
+  .pb:hover,
+  .pb.on {
+    border-color: var(--color-border-info);
+    color: var(--color-text-info);
+    background: var(--color-background-info);
+  }
+  input[type="range"] {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+  }
+  .sl {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--color-text-secondary);
+    margin-top: 3px;
+  }
+  .trow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+  .ts {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 17px;
+    flex-shrink: 0;
+  }
+  .ts input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .tk {
+    position: absolute;
+    inset: 0;
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .tk:before {
+    content: "";
+    position: absolute;
+    height: 11px;
+    width: 11px;
+    left: 2px;
+    top: 2px;
+    background: var(--color-text-secondary);
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+  .ts input:checked + .tk {
+    background: var(--color-background-info);
+    border-color: var(--color-border-info);
+  }
+  .ts input:checked + .tk:before {
+    transform: translateX(15px);
+    background: var(--color-text-info);
+  }
+  .btn-ai {
+    width: calc(100% - 24px);
+    margin: 10px 12px 5px;
+    padding: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+  .btn-ai:hover {
+    background: var(--color-background-secondary);
+    border-color: var(--color-border-primary);
+  }
+  .btn-r {
+    width: calc(100% - 24px);
+    margin: 4px 12px;
+    padding: 8px;
+    font-size: 10px;
+    font-weight: 500;
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+  .btn-r:hover {
+    border-color: var(--color-border-danger);
+    color: var(--color-text-danger);
+  }
+  .panel-center {
+    padding: 8px;
+    gap: 8px;
+  }
+  .cc {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    background: var(--color-background-primary);
+    min-height: 0;
+  }
+  .ch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-secondary);
+    flex-shrink: 0;
+  }
+  .ct {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+  .lb {
+    font-size: 10px;
+    font-weight: 500;
+    color: #16a34a;
+  }
+  canvas {
+    flex: 1;
+    width: 100%;
+    display: block;
+  }
+  .cf {
+    padding: 6px 12px;
+    border-top: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-secondary);
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    flex-shrink: 0;
+  }
+  .aib {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .aibh {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .aibh button {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 4px;
+  }
+  .aibc {
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--color-text-primary);
+    line-height: 1.65;
+    max-height: 90px;
+    overflow-y: auto;
+  }
+  .ic {
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .icard {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    padding: 9px 11px;
+  }
+  .icl {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .icv {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+  .icv.acc {
+    color: var(--color-text-info);
+  }
+  .bar {
+    height: 3px;
+    background: var(--color-border-tertiary);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bf {
+    height: 100%;
+    background: var(--color-border-info);
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+  .fb {
+    margin: 6px 12px;
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    padding: 12px;
+    text-align: center;
+  }
+  .fbt {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .fbig {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+  }
+  .fbd {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+  .sdb {
+    margin: 4px 12px 12px;
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    padding: 10px 12px;
+  }
+  .sdt {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+  .sdd {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+</style>
+
+<h2 class="sr-only">
+  AI-Powered Light Reflection and Shadow Simulator — interactive physics canvas
+  with controls for surface type, incident angle, and light position
+</h2>
+
+<div class="app">
+  <div class="panel panel-scroll">
+    <div class="ph">Controls</div>
+    <div class="cg">
+      <div class="cl">Surface type</div>
+      <div class="sbg">
+        <button class="sb on" data-surface="plane" onclick="setSurface(this)">
+          <span class="si">—</span><span>Plane</span>
+        </button>
+        <button class="sb" data-surface="convex" onclick="setSurface(this)">
+          <span class="si">◠</span><span>Convex</span>
+        </button>
+        <button class="sb" data-surface="concave" onclick="setSurface(this)">
+          <span class="si">◡</span><span>Concave</span>
+        </button>
+      </div>
+    </div>
+    <div class="cg">
+      <div class="cl">Light position</div>
+      <div class="pg">
+        <button class="pb" data-pos="top-left" onclick="setPos(this)">↙</button>
+        <button class="pb on" data-pos="top-center" onclick="setPos(this)">
+          ↓
+        </button>
+        <button class="pb" data-pos="top-right" onclick="setPos(this)">
+          ↘
+        </button>
+      </div>
+    </div>
+    <div class="cg">
+      <div class="cl">Incident angle<span class="av" id="angD">45°</span></div>
+      <input
+        type="range"
+        id="angS"
+        min="0"
+        max="90"
+        value="45"
+        oninput="setAngle(this.value)"
+      />
+      <div class="sl"><span>0°</span><span>45°</span><span>90°</span></div>
+    </div>
+    <div class="cg">
+      <div class="cl">Intensity<span class="av" id="intD">80%</span></div>
+      <input
+        type="range"
+        id="intS"
+        min="10"
+        max="100"
+        value="80"
+        oninput="setIntensity(this.value)"
+      />
+    </div>
+    <div class="cg">
+      <div class="trow">
+        <label class="ts"
+          ><input
+            type="checkbox"
+            id="shT"
+            checked
+            onchange="st.showShadow = this.checked" /><span
+            class="tk"
+          ></span></label
+        >Show shadow
+      </div>
+      <div class="trow">
+        <label class="ts"
+          ><input
+            type="checkbox"
+            id="nrT"
+            checked
+            onchange="st.showNormal = this.checked" /><span
+            class="tk"
+          ></span></label
+        >Show normal
+      </div>
+      <div class="trow">
+        <label class="ts"
+          ><input
+            type="checkbox"
+            id="anT"
+            checked
+            onchange="st.animate = this.checked" /><span
+            class="tk"
+          ></span></label
+        >Animate rays
+      </div>
+    </div>
+    <button class="btn-ai" onclick="showAI()">✦ AI Explain</button>
+    <button class="btn-r" onclick="resetAll()">↺ Reset</button>
+  </div>
+
+  <div class="panel panel-center">
+    <div class="cc">
+      <div class="ch">
+        <span class="ct" id="canT">Plane surface — regular reflection</span>
+        <span class="lb">● LIVE</span>
+      </div>
+      <canvas id="c"></canvas>
+      <div class="cf" id="fmD">θᵢ = θᵣ = 45°</div>
+    </div>
+    <div class="aib" id="aiB" style="display: none">
+      <div class="aibh">
+        <span>✦ AI Physics Tutor</span
+        ><button
+          onclick="document.getElementById('aiB').style.display = 'none'"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="aibc" id="aiT"></div>
+    </div>
+  </div>
+
+  <div class="panel panel-scroll">
+    <div class="ph">Physics data</div>
+    <div class="ic">
+      <div class="icard">
+        <div class="icl">Angle of incidence</div>
+        <div class="icv" id="iInc">45°</div>
+        <div class="bar">
+          <div class="bf" id="bInc" style="width: 50%"></div>
+        </div>
+      </div>
+      <div class="icard">
+        <div class="icl">Angle of reflection</div>
+        <div class="icv acc" id="iRef">45°</div>
+        <div class="bar">
+          <div class="bf" id="bRef" style="width: 50%"></div>
+        </div>
+      </div>
+      <div class="icard">
+        <div class="icl">Surface type</div>
+        <div class="icv" id="iSurf">Plane</div>
+      </div>
+      <div class="icard">
+        <div class="icl">Reflection type</div>
+        <div class="icv" id="iRType">Regular</div>
+      </div>
+      <div class="icard">
+        <div class="icl">Shadow length</div>
+        <div class="icv" id="iShad">120 px</div>
+      </div>
+      <div class="icard">
+        <div class="icl">Light intensity</div>
+        <div class="icv" id="iInt">80%</div>
+        <div class="bar">
+          <div class="bf" id="bInt" style="width: 80%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fb">
+      <div class="fbt">Law of reflection</div>
+      <div class="fbig">θᵢ = θᵣ</div>
+      <div class="fbd">
+        Angle of incidence equals angle of reflection, both from the normal.
+      </div>
+    </div>
+    <div class="sdb">
+      <div class="sdt" id="sdT">Plane surface</div>
+      <div class="sdd" id="sdD">
+        Flat surface. All normals point the same direction — regular reflection,
+        sharp shadow.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d");
+  let raf;
+  let prog = 0,
+    progDir = 1;
+  const st = {
+    surface: "plane",
+    angle: 45,
+    intensity: 80,
+    showShadow: true,
+    showNormal: true,
+    animate: true,
+    lightPos: "top-center",
+  };
+
+  const surfProps = {
+    plane: {
+      name: "Plane",
+      rtype: "Regular",
+      desc: "Flat surface. All normals point the same direction — produces regular reflection and a sharp shadow.",
+    },
+    convex: {
+      name: "Convex",
+      rtype: "Diverging",
+      desc: "Curved outward. Normals fan outward — rays diverge after reflection. Wide field of view, diffuse shadow.",
+    },
+    concave: {
+      name: "Concave",
+      rtype: "Converging",
+      desc: "Curved inward. Normals point inward — rays converge to the focal point. Complex shadow pattern.",
+    },
+  };
+
+  const aiTexts = {
+    plane:
+      "On a plane surface all normals are parallel, so every ray reflects at the same angle (θᵢ = θᵣ). This is regular (specular) reflection — the kind you see in a bathroom mirror. The shadow cast is sharp and well-defined because light forms a coherent pattern.",
+    convex:
+      "A convex mirror curves outward, so each normal tilts slightly away from centre. Reflected rays diverge, spreading light over a wider area. This is why car side mirrors show a wider field of view. The shadow is diffuse — spread and blurry — because light scatters in many directions.",
+    concave:
+      "A concave mirror curves inward like a bowl. Each normal tilts toward the axis, making reflected rays converge at the focal point (f = R/2). Reflecting telescopes and solar concentrators exploit this to focus energy. The shadow is complex — a bright focal band flanked by dark regions.",
+  };
+
+  function setSurface(btn) {
+    document.querySelectorAll(".sb").forEach((b) => b.classList.remove("on"));
+    btn.classList.add("on");
+    st.surface = btn.dataset.surface;
+    updateInfo();
+  }
+  function setPos(btn) {
+    document.querySelectorAll(".pb").forEach((b) => b.classList.remove("on"));
+    btn.classList.add("on");
+    st.lightPos = btn.dataset.pos;
+  }
+  function setAngle(v) {
+    st.angle = +v;
+    document.getElementById("angD").textContent = v + "°";
+    updateInfo();
+  }
+  function setIntensity(v) {
+    st.intensity = +v;
+    document.getElementById("intD").textContent = v + "%";
+    updateInfo();
+  }
+
+  function updateInfo() {
+    const a = Math.round(st.angle);
+    const sp = surfProps[st.surface];
+    document.getElementById("iInc").textContent = a + "°";
+    document.getElementById("iRef").textContent = a + "°";
+    document.getElementById("bInc").style.width = (a / 90) * 100 + "%";
+    document.getElementById("bRef").style.width = (a / 90) * 100 + "%";
+    document.getElementById("iSurf").textContent = sp.name;
+    document.getElementById("iRType").textContent = sp.rtype;
+    document.getElementById("iShad").textContent = st.showShadow
+      ? Math.round(80 + a * 2) + " px"
+      : "Hidden";
+    document.getElementById("iInt").textContent =
+      Math.round(st.intensity) + "%";
+    document.getElementById("bInt").style.width = st.intensity + "%";
+    document.getElementById("fmD").textContent = "θᵢ = θᵣ = " + a + "°";
+    document.getElementById("canT").textContent =
+      sp.name + " surface — " + sp.rtype.toLowerCase() + " reflection";
+    document.getElementById("sdT").textContent = sp.name + " surface";
+    document.getElementById("sdD").textContent = sp.desc;
+  }
+
+  function showAI() {
+    const box = document.getElementById("aiB");
+    const el = document.getElementById("aiT");
+    box.style.display = "block";
+    const text = aiTexts[st.surface];
+    el.textContent = "";
+    let i = 0;
+    const type = () => {
+      if (i < text.length) {
+        el.textContent += text[i++];
+        setTimeout(type, 14);
+      }
+    };
+    type();
+  }
+
+  function resetAll() {
+    st.surface = "plane";
+    st.angle = 45;
+    st.intensity = 80;
+    st.showShadow = true;
+    st.showNormal = true;
+    st.animate = true;
+    st.lightPos = "top-center";
+    document.querySelectorAll(".sb").forEach((b) => b.classList.remove("on"));
+    document.querySelector("[data-surface=plane]").classList.add("on");
+    document.querySelectorAll(".pb").forEach((b) => b.classList.remove("on"));
+    document.querySelector("[data-pos=top-center]").classList.add("on");
+    document.getElementById("angS").value = 45;
+    document.getElementById("intS").value = 80;
+    document.getElementById("angD").textContent = "45°";
+    document.getElementById("intD").textContent = "80%";
+    document.getElementById("shT").checked = true;
+    document.getElementById("nrT").checked = true;
+    document.getElementById("anT").checked = true;
+    document.getElementById("aiB").style.display = "none";
+    updateInfo();
+  }
+
+  function resize() {
+    const c = canvas.parentElement;
+    canvas.width = c.clientWidth;
+    canvas.height = c.clientHeight - 62;
+  }
+
+  function getLightPos() {
+    const W = canvas.width,
+      H = canvas.height,
+      sy = H * 0.62;
+    const y = sy - 200;
+    if (st.lightPos === "top-left") return { x: W * 0.22, y };
+    if (st.lightPos === "top-right") return { x: W * 0.78, y };
+    return { x: W / 2, y };
+  }
+
+  function getSurfY(x) {
+    const W = canvas.width,
+      H = canvas.height,
+      sy = H * 0.62,
+      cx = W / 2,
+      r = W * 0.32;
+    if (st.surface === "plane") return sy;
+    const dx = x - cx;
+    if (Math.abs(dx) > r) return sy;
+    if (st.surface === "convex")
+      return sy - (r - Math.sqrt(r * r - dx * dx)) * 0.35;
+    return sy + (r - Math.sqrt(r * r - dx * dx)) * 0.35;
+  }
+
+  function getNormal(x) {
+    const W = canvas.width,
+      cx = W / 2,
+      r = W * 0.32;
+    if (st.surface === "plane") return { nx: 0, ny: -1 };
+    const angle = Math.asin(Math.max(-1, Math.min(1, (x - cx) / r)));
+    if (st.surface === "convex")
+      return { nx: Math.sin(angle), ny: -Math.cos(angle) };
+    return { nx: -Math.sin(angle), ny: Math.cos(angle) };
+  }
+
+  function reflect(d, n) {
+    const dot = d.dx * n.nx + d.dy * n.ny;
+    return { dx: d.dx - 2 * dot * n.nx, dy: d.dy - 2 * dot * n.ny };
+  }
+
+  function draw() {
+    const W = canvas.width,
+      H = canvas.height;
+    if (!W || !H) {
+      raf = requestAnimationFrame(draw);
+      return;
+    }
+    const sy = H * 0.62,
+      cx = W / 2,
+      r = W * 0.32,
+      sl = W * 0.15,
+      sr = W * 0.85;
+    const alpha = st.intensity / 100;
+
+    if (st.animate) {
+      prog += 0.018 * progDir;
+      if (prog >= 1) {
+        prog = 1;
+        progDir = -1;
+      }
+      if (prog <= 0) {
+        prog = 0;
+        progDir = 1;
+      }
+    } else prog = 1;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Background
+    ctx.fillStyle = "#f8fafc";
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.save();
+    ctx.strokeStyle = "rgba(0,0,0,0.04)";
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 36) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, H);
+      ctx.stroke();
+    }
+    for (let y = 0; y < H; y += 36) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(W, y);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    const ls = getLightPos();
+    const side = st.lightPos === "top-right" ? -1 : 1;
+    const rad = (st.angle * Math.PI) / 180;
+    const hitX =
+      cx +
+      (st.lightPos === "top-center" ? Math.sin(rad) * 80 * side : side * 30);
+    const hitY = getSurfY(hitX);
+    const norm = getNormal(hitX);
+    const dxR = hitX - ls.x,
+      dyR = hitY - ls.y,
+      len = Math.sqrt(dxR * dxR + dyR * dyR);
+    const incD = { dx: dxR / len, dy: dyR / len };
+    const refD = reflect(incD, norm);
+
+    // Shadow
+    if (st.showShadow) {
+      const sLen = 80 + st.angle * 2;
+      const op = alpha * 0.5;
+      if (st.surface === "plane") {
+        const sg = ctx.createLinearGradient(hitX, sy, hitX, sy + sLen * 0.5);
+        sg.addColorStop(0, `rgba(0,0,0,${op})`);
+        sg.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = sg;
+        ctx.beginPath();
+        ctx.moveTo(hitX - 16, sy);
+        ctx.lineTo(hitX + 16, sy);
+        ctx.lineTo(hitX + 32, sy + sLen * 0.45);
+        ctx.lineTo(hitX - 32, sy + sLen * 0.45);
+        ctx.closePath();
+        ctx.fill();
+      } else if (st.surface === "convex") {
+        for (let i = 0; i < 5; i++) {
+          const sp2 = ((i - 2) / 5) * 0.7;
+          const ex = hitX + Math.sin(sp2) * sLen;
+          const ey = sy + sLen * 0.55;
+          const g2 = ctx.createLinearGradient(hitX, sy, ex, ey);
+          g2.addColorStop(0, `rgba(0,0,0,${op * 0.7})`);
+          g2.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = g2;
+          ctx.beginPath();
+          ctx.moveTo(hitX - 8 + i * 4, sy);
+          ctx.lineTo(hitX + 8 + i * 4, sy);
+          ctx.lineTo(ex + 14, ey);
+          ctx.lineTo(ex - 14, ey);
+          ctx.closePath();
+          ctx.fill();
+        }
+      } else {
+        const fy = sy + 55,
+          fw = 10;
+        const g3 = ctx.createLinearGradient(cx, sy, cx, sy + sLen * 0.45);
+        g3.addColorStop(0, `rgba(0,0,0,${op})`);
+        g3.addColorStop(0.5, `rgba(0,0,0,${op * 0.6})`);
+        g3.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = g3;
+        ctx.beginPath();
+        ctx.moveTo(cx - 55, sy);
+        ctx.lineTo(cx + 55, sy);
+        ctx.lineTo(cx + fw, fy);
+        ctx.lineTo(cx + 55, sy + sLen * 0.45);
+        ctx.lineTo(cx - 55, sy + sLen * 0.45);
+        ctx.lineTo(cx - fw, fy);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+
+    // Surface
+    ctx.save();
+    if (st.surface === "plane") {
+      ctx.fillStyle = "rgba(0,120,200,0.08)";
+      ctx.fillRect(sl, sy, sr - sl, 16);
+      const lg = ctx.createLinearGradient(sl, 0, sr, 0);
+      lg.addColorStop(0, "transparent");
+      lg.addColorStop(0.2, "rgba(0,140,220,0.8)");
+      lg.addColorStop(0.5, "rgba(80,180,255,1)");
+      lg.addColorStop(0.8, "rgba(0,140,220,0.8)");
+      lg.addColorStop(1, "transparent");
+      ctx.strokeStyle = lg;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(sl, sy);
+      ctx.lineTo(sr, sy);
+      ctx.stroke();
+    } else if (st.surface === "convex") {
+      const bh = r * 0.3;
+      ctx.beginPath();
+      ctx.moveTo(sl, sy);
+      ctx.bezierCurveTo(cx - r * 0.5, sy - bh, cx + r * 0.5, sy - bh, sr, sy);
+      ctx.lineTo(sr, sy + 16);
+      ctx.bezierCurveTo(
+        cx + r * 0.5,
+        sy - bh + 16,
+        cx - r * 0.5,
+        sy - bh + 16,
+        sl,
+        sy + 16,
+      );
+      ctx.closePath();
+      ctx.fillStyle = "rgba(0,120,200,0.07)";
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(sl, sy);
+      ctx.bezierCurveTo(cx - r * 0.5, sy - bh, cx + r * 0.5, sy - bh, sr, sy);
+      ctx.strokeStyle = "rgba(0,150,230,0.85)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      // focal indicator faint
+      ctx.save();
+      ctx.globalAlpha = 0.25 + 0.15 * Math.sin(Date.now() * 0.004);
+      ctx.fillStyle = "rgba(250,200,0,0.9)";
+      ctx.beginPath();
+      ctx.arc(cx, sy - bh * 0.8, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    } else {
+      const dh = r * 0.3;
+      ctx.beginPath();
+      ctx.moveTo(sl, sy);
+      ctx.bezierCurveTo(cx - r * 0.5, sy + dh, cx + r * 0.5, sy + dh, sr, sy);
+      ctx.lineTo(sr, sy + 16);
+      ctx.bezierCurveTo(
+        cx + r * 0.5,
+        sy + dh + 16,
+        cx - r * 0.5,
+        sy + dh + 16,
+        sl,
+        sy + 16,
+      );
+      ctx.closePath();
+      ctx.fillStyle = "rgba(0,120,200,0.07)";
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(sl, sy);
+      ctx.bezierCurveTo(cx - r * 0.5, sy + dh, cx + r * 0.5, sy + dh, sr, sy);
+      ctx.strokeStyle = "rgba(0,150,230,0.85)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      const focalY = sy - dh * 0.7;
+      ctx.save();
+      ctx.globalAlpha = 0.3 + 0.2 * Math.sin(Date.now() * 0.004);
+      ctx.fillStyle = "rgba(250,200,0,0.9)";
+      ctx.beginPath();
+      ctx.arc(cx, focalY, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = "rgba(250,200,0,0.6)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, focalY, 10, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+    }
+    ctx.restore();
+
+    // Multi-rays for curved
+    if (st.surface !== "plane") {
+      ctx.save();
+      ctx.globalAlpha = 0.18;
+      const nr = 5,
+        hw = r * 0.55;
+      for (let i = 0; i < nr; i++) {
+        if (i === Math.floor(nr / 2)) continue;
+        const tx = cx + (i / (nr - 1) - 0.5) * hw * 2;
+        const ty = getSurfY(tx);
+        const nm = getNormal(tx);
+        const dx2 = tx - ls.x,
+          dy2 = ty - ls.y,
+          l2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+        const id = { dx: dx2 / l2, dy: dy2 / l2 };
+        const rd = reflect(id, nm);
+        ctx.strokeStyle = "rgba(200,160,0,0.6)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(ls.x, ls.y);
+        ctx.lineTo(tx, ty);
+        ctx.stroke();
+        ctx.strokeStyle = "rgba(0,120,200,0.6)";
+        ctx.beginPath();
+        ctx.moveTo(tx, ty);
+        ctx.lineTo(tx + rd.dx * 100, ty + rd.dy * 100);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // Normal line
+    if (st.showNormal) {
+      ctx.save();
+      ctx.setLineDash([7, 5]);
+      ctx.strokeStyle = "rgba(100,200,100,0.7)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(hitX - norm.nx * 65, hitY - norm.ny * 65);
+      ctx.lineTo(hitX + norm.nx * 65, hitY + norm.ny * 65);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "rgba(100,200,100,0.9)";
+      ctx.font = "bold 11px sans-serif";
+      ctx.fillText("N", hitX - norm.nx * 72 - 4, hitY - norm.ny * 72 + 4);
+      ctx.restore();
+    }
+
+    // Incident ray
+    const ip = prog;
+    const ix = ls.x + (hitX - ls.x) * ip,
+      iy = ls.y + (hitY - ls.y) * ip;
+    ctx.save();
+    ctx.strokeStyle = `rgba(200,140,0,${alpha})`;
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = "rgba(255,180,0,0.4)";
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.moveTo(ls.x, ls.y);
+    ctx.lineTo(ix, iy);
+    ctx.stroke();
+    if (ip >= 0.98) {
+      const a2 = Math.atan2(hitY - ls.y, hitX - ls.x);
+      ctx.fillStyle = `rgba(200,140,0,${alpha})`;
+      ctx.beginPath();
+      ctx.translate(hitX, hitY);
+      ctx.rotate(a2);
+      ctx.moveTo(0, 0);
+      ctx.lineTo(-9, -4);
+      ctx.lineTo(-9, 4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+    }
+    if (st.animate && ip < 1) {
+      ctx.fillStyle = "#fff";
+      ctx.shadowColor = "rgba(255,180,0,0.9)";
+      ctx.shadowBlur = 16;
+      ctx.beginPath();
+      ctx.arc(ix, iy, 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // Reflected ray
+    if (ip >= 0.98) {
+      const rp = st.animate ? Math.min(1, (ip - 0.98) / 0.02) : 1;
+      const rl = 160;
+      const rx = hitX + refD.dx * rl * rp,
+        ry = hitY + refD.dy * rl * rp;
+      ctx.save();
+      ctx.strokeStyle = `rgba(0,120,220,${alpha})`;
+      ctx.lineWidth = 2.5;
+      ctx.shadowColor = "rgba(0,150,255,0.4)";
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      ctx.moveTo(hitX, hitY);
+      ctx.lineTo(rx, ry);
+      ctx.stroke();
+      if (rp >= 0.98) {
+        const a3 = Math.atan2(refD.dy, refD.dx);
+        ctx.fillStyle = `rgba(0,120,220,${alpha})`;
+        ctx.beginPath();
+        ctx.translate(rx, ry);
+        ctx.rotate(a3);
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-9, -4);
+        ctx.lineTo(-9, 4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+      }
+      if (st.animate && rp < 1) {
+        ctx.fillStyle = "#fff";
+        ctx.shadowColor = "rgba(0,150,255,0.9)";
+        ctx.shadowBlur = 16;
+        ctx.beginPath();
+        ctx.arc(rx, ry, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    // Light source
+    const t2 = Date.now() * 0.003;
+    const ps = 1 + 0.06 * Math.sin(t2);
+    ctx.save();
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = "rgba(255,180,0,0.5)";
+    const og = ctx.createRadialGradient(ls.x, ls.y, 0, ls.x, ls.y, 40 * ps);
+    og.addColorStop(0, `rgba(255,210,80,${alpha * 0.3})`);
+    og.addColorStop(1, "transparent");
+    ctx.fillStyle = og;
+    ctx.beginPath();
+    ctx.arc(ls.x, ls.y, 40 * ps, 0, Math.PI * 2);
+    ctx.fill();
+    const ig = ctx.createRadialGradient(ls.x, ls.y, 0, ls.x, ls.y, 12);
+    ig.addColorStop(0, "#fff");
+    ig.addColorStop(0.4, `rgba(255,230,100,${alpha})`);
+    ig.addColorStop(1, `rgba(255,160,0,${alpha * 0.4})`);
+    ctx.fillStyle = ig;
+    ctx.beginPath();
+    ctx.arc(ls.x, ls.y, 12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = `rgba(255,200,50,${alpha * 0.35})`;
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 8; i++) {
+      const ra = (i / 8) * Math.PI * 2 + t2 * 0.5;
+      ctx.beginPath();
+      ctx.moveTo(ls.x + Math.cos(ra) * 14, ls.y + Math.sin(ra) * 14);
+      ctx.lineTo(
+        ls.x + Math.cos(ra) * (20 + 3 * Math.sin(t2 + i)),
+        ls.y + Math.sin(ra) * (20 + 3 * Math.sin(t2 + i)),
+      );
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Labels
+    ctx.save();
+    ctx.font = "bold 10px sans-serif";
+    ctx.fillStyle = "rgba(150,100,0,0.85)";
+    ctx.fillText("LIGHT SOURCE", ls.x + 16, ls.y);
+    ctx.fillStyle = "rgba(0,80,160,0.75)";
+    ctx.fillText("Point of incidence", hitX + 8, hitY - 16);
+    const ang = Math.round(st.angle);
+    ctx.fillStyle = "rgba(180,110,0,0.95)";
+    ctx.fillText("θᵢ=" + ang + "°", hitX - 68, hitY - 52);
+    ctx.fillStyle = "rgba(0,100,200,0.95)";
+    ctx.fillText("θᵣ=" + ang + "°", hitX + 18, hitY - 52);
+    if (ip >= 0.2) {
+      const mx = (ls.x + hitX) / 2,
+        my = (ls.y + hitY) / 2;
+      ctx.fillStyle = "rgba(180,110,0,0.75)";
+      ctx.fillText("Incident ray", mx - 30, my - 12);
+    }
+    if (ip >= 0.98) {
+      const ex = hitX + refD.dx * 160,
+        ey = hitY + refD.dy * 160;
+      ctx.fillStyle = "rgba(0,100,200,0.75)";
+      ctx.fillText("Reflected ray", (hitX + ex) / 2 + 4, (hitY + ey) / 2 - 10);
+    }
+    ctx.restore();
+
+    // Angle arcs
+    ctx.save();
+    const na = Math.atan2(-norm.ny, -norm.nx);
+    const ia2 = Math.atan2(incD.dy, incD.dx) + Math.PI;
+    ctx.beginPath();
+    ctx.arc(hitX, hitY, 38, na, ia2);
+    ctx.strokeStyle = "rgba(180,120,0,0.55)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    const ra2 = Math.atan2(refD.dy, refD.dx);
+    ctx.beginPath();
+    ctx.arc(hitX, hitY, 44, na, ra2);
+    ctx.strokeStyle = "rgba(0,100,200,0.55)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+
+    // Legend
+    ctx.save();
+    ctx.fillStyle = "rgba(248,250,252,0.9)";
+    ctx.strokeStyle = "rgba(0,0,0,0.1)";
+    ctx.lineWidth = 0.5;
+    roundR(ctx, W - 140, H - 95, 132, 88, 6);
+    ctx.fill();
+    ctx.stroke();
+    const legend = [
+      { c: "rgba(200,140,0,0.85)", l: "Incident ray" },
+      { c: "rgba(0,120,220,0.85)", l: "Reflected ray" },
+      { c: "rgba(100,200,100,0.7)", l: "Normal line" },
+      { c: "rgba(0,0,0,0.4)", l: "Shadow" },
+    ];
+    ctx.font = "10px sans-serif";
+    legend.forEach((it, i) => {
+      ctx.fillStyle = it.c;
+      ctx.fillRect(W - 132, H - 88 + i * 20, 18, 2.5);
+      ctx.fillStyle = "rgba(0,0,0,0.7)";
+      ctx.fillText(it.l, W - 108, H - 84 + i * 20);
+    });
+    ctx.restore();
+
+    updateInfo();
+    raf = requestAnimationFrame(draw);
+  }
+
+  function roundR(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.arcTo(x + w, y, x + w, y + r, r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+    ctx.lineTo(x + r, y + h);
+    ctx.arcTo(x, y + h, x, y + h - r, r);
+    ctx.lineTo(x, y + r);
+    ctx.arcTo(x, y, x + r, y, r);
+    ctx.closePath();
+  }
+
+  window.addEventListener("resize", () => {
+    resize();
+  });
+
+  setTimeout(() => {
+    resize();
+    if (raf) cancelAnimationFrame(raf);
+    draw();
+  }, 100);
+</script>

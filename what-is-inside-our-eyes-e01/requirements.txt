@@ -1,0 +1,41 @@
+Eye Function Simulation Website – Requirements Specification
+Project Overview
+The Eye Function Simulation Website is an interactive web application that demonstrates how the human eye works. Users can explore eye anatomy, simulate vision processes, and understand common vision defects such as myopia, hyperopia, astigmatism, and color blindness through visual simulations.
+
+Functional Requirements
+1. User Interface
+Interactive and responsive homepage.
+Navigation menu for different eye simulations.
+Educational content about eye anatomy and vision.
+
+2. Eye Anatomy Visualization
+Display a labeled human eye model.
+Highlight eye parts when selected.
+Show descriptions of each part:
+Cornea
+Iris
+Pupil
+Lens
+Retina
+Optic Nerve
+
+3. Vision Process Simulation
+Simulate the path of light entering the eye.
+Demonstrate image formation on the retina.
+Show how the brain interprets visual signals.
+
+4. Interactive Controls
+Users can adjust:
+Pupil size
+Viewing object
+
+5. Quiz Module
+Multiple-choice questions.
+Immediate feedback.
+
+6.Software Requirements
+Frontend
+HTML
+CSS
+Javascript 
+

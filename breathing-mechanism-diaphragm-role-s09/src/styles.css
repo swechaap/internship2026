@@ -1,0 +1,600 @@
+/* ============================================
+   BREATHING MECHANISM DEMO - STYLES
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', 'Baloo', sans-serif;
+  background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+
+.demo-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  animation: slideDown 0.6s ease-out;
+}
+
+.main-title {
+  font-size: 2.5rem;
+  color: #1e90ff;
+  font-weight: 700;
+  font-family: 'Baloo', sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #ff69b4;
+  font-weight: 600;
+  font-style: italic;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   PLAYER WRAPPER
+   ============================================ */
+
+.player-wrapper {
+  flex: 1;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  overflow: hidden;
+}
+
+/* ============================================
+   SCENE CONTENT
+   ============================================ */
+
+.scene-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 30px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scene-illustration {
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* ============================================
+   SCENE TEXT
+   ============================================ */
+
+.scene-text {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  animation: slideInRight 0.6s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.scene-header {
+  margin-bottom: 10px;
+}
+
+.scene-subtitle {
+  display: inline-block;
+  background: linear-gradient(135deg, #87CEEB, #87CEEB);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.scene-title {
+  font-size: 1.8rem;
+  color: #1e90ff;
+  font-family: 'Baloo', sans-serif;
+  font-weight: 700;
+}
+
+.scene-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 10px 0;
+}
+
+.characters-list {
+  background: #FFFACD;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 4px solid #FFD700;
+}
+
+.characters-list h4 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.characters-list ul {
+  list-style: none;
+}
+
+.characters-list li {
+  padding: 5px 0;
+  padding-left: 20px;
+  position: relative;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.characters-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #FFD700;
+  font-weight: bold;
+}
+
+/* ============================================
+   PROGRESS BAR & COUNTER
+   ============================================ */
+
+.progress-container {
+  margin: 25px 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1e90ff, #00bfff);
+  width: 0%;
+  transition: width 0.3s ease-out;
+  box-shadow: 0 0 10px rgba(30, 144, 255, 0.6);
+}
+
+.scene-counter {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 600;
+}
+
+/* ============================================
+   CONTROLS
+   ============================================ */
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+.play-btn {
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  color: white;
+  min-width: 110px;
+}
+
+.play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 20, 147, 0.4);
+}
+
+.play-btn:active {
+  transform: translateY(0);
+}
+
+.next-btn,
+.prev-btn {
+  background: linear-gradient(135deg, #87ceeb, #1e90ff);
+  color: white;
+}
+
+.next-btn:hover,
+.prev-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(30, 144, 255, 0.4);
+}
+
+.next-btn:active,
+.prev-btn:active {
+  transform: translateY(0);
+}
+
+.restart-btn {
+  background: linear-gradient(135deg, #90ee90, #32cd32);
+  color: white;
+}
+
+.restart-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(50, 205, 50, 0.4);
+}
+
+.restart-btn:active {
+  transform: translateY(0);
+}
+
+.thumbnails-btn {
+  background: linear-gradient(135deg, #ffa500, #ff8c00);
+  color: white;
+}
+
+.thumbnails-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 165, 0, 0.4);
+}
+
+.thumbnails-btn:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   THUMBNAILS NAVIGATION
+   ============================================ */
+
+.thumbnails-container {
+  background: #f9f9f9;
+  border-radius: 15px;
+  padding: 15px;
+  margin-top: 15px;
+  animation: slideInUp 0.4s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
+}
+
+.thumbnail {
+  padding: 12px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.thumbnail:hover {
+  border-color: #1e90ff;
+  background: #f0f8ff;
+  transform: translateY(-2px);
+}
+
+.thumbnail.active {
+  background: linear-gradient(135deg, #87ceeb, #1e90ff);
+  border-color: #1e90ff;
+  color: white;
+}
+
+.thumbnail-number {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.thumbnail-title {
+  font-size: 0.7rem;
+  line-height: 1.2;
+  color: #666;
+}
+
+.thumbnail.active .thumbnail-title {
+  color: white;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  .demo-container {
+    padding: 15px;
+  }
+
+  .player-wrapper {
+    padding: 20px;
+  }
+
+  .main-title {
+    font-size: 1.8rem;
+  }
+
+  .scene-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .scene-illustration {
+    min-height: 280px;
+  }
+
+  .scene-title {
+    font-size: 1.4rem;
+  }
+
+  .scene-description {
+    font-size: 0.95rem;
+  }
+
+  .control-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .thumbnails {
+    grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+  }
+
+  .thumbnail {
+    padding: 8px;
+  }
+
+  .thumbnail-title {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .demo-container {
+    padding: 10px;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .player-wrapper {
+    padding: 15px;
+  }
+
+  .main-title {
+    font-size: 1.4rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .scene-content {
+    gap: 15px;
+  }
+
+  .scene-illustration {
+    min-height: 220px;
+  }
+
+  .scene-header {
+    margin-bottom: 8px;
+  }
+
+  .scene-subtitle {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+  }
+
+  .scene-title {
+    font-size: 1.2rem;
+  }
+
+  .scene-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .controls {
+    gap: 8px;
+  }
+
+  .control-btn {
+    padding: 9px 12px;
+    font-size: 0.85rem;
+    min-width: auto;
+  }
+
+  .play-btn {
+    min-width: 90px;
+  }
+
+  .thumbnails {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  }
+
+  .thumbnail {
+    padding: 6px;
+  }
+
+  .thumbnail-number {
+    font-size: 0.95rem;
+  }
+
+  .thumbnail-title {
+    font-size: 0.6rem;
+  }
+
+  .footer {
+    padding: 15px;
+    margin-top: 20px;
+  }
+
+  .footer p {
+    font-size: 0.9rem;
+  }
+
+  .progress-fill {
+    box-shadow: 0 0 6px rgba(30, 144, 255, 0.5);
+  }
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #87ceeb, #1e90ff);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #1e90ff, #0066cc);
+}
+
+/* ============================================
+   TRANSITIONS FOR SCENE CHANGES
+   ============================================ */
+
+.scene-content {
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+  }
+
+  .demo-container {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .control-btn,
+  .thumbnails-btn {
+    display: none;
+  }
+}

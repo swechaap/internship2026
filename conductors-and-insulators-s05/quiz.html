@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conductors & Insulators Quiz</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        ⚡ ConductoVerse
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="learn.html">Learn</a></li>
+        <li><a href="bulb.html">Bulb Test</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="uses.html">Uses</a></li>
+        <li><a href="lab.html">Virtual Lab</a></li>
+        <li><a href="certificate.html">Certificate</a></li>
+    </ul>
+
+</nav>
+
+<!-- Rest of page -->
+<body>
+
+<div class="container">
+
+<h1>🎯 Conductors & Insulators Quiz</h1>
+
+<form id="quizForm">
+
+<div class="question">
+<h3>1. Which material is a conductor?</h3>
+<label><input type="radio" name="q1" value="0"> Rubber</label>
+<label><input type="radio" name="q1" value="1"> Copper</label>
+<label><input type="radio" name="q1" value="0"> Plastic</label>
+</div>
+
+<div class="question">
+<h3>2. Which material is an insulator?</h3>
+<label><input type="radio" name="q2" value="1"> Rubber</label>
+<label><input type="radio" name="q2" value="0"> Silver</label>
+<label><input type="radio" name="q2" value="0"> Copper</label>
+</div>
+
+<div class="question">
+<h3>3. House wiring is mostly made of?</h3>
+<label><input type="radio" name="q3" value="1"> Copper</label>
+<label><input type="radio" name="q3" value="0"> Wood</label>
+<label><input type="radio" name="q3" value="0"> Glass</label>
+</div>
+
+<div class="question">
+<h3>4. Why is rubber used around wires?</h3>
+<label><input type="radio" name="q4" value="1"> It is an insulator</label>
+<label><input type="radio" name="q4" value="0"> It is a conductor</label>
+<label><input type="radio" name="q4" value="0"> It produces electricity</label>
+</div>
+
+<div class="question">
+<h3>5. Which is NOT a conductor?</h3>
+<label><input type="radio" name="q5" value="0"> Iron</label>
+<label><input type="radio" name="q5" value="1"> Glass</label>
+<label><input type="radio" name="q5" value="0"> Aluminum</label>
+</div>
+
+<button type="button" onclick="calculateScore()">
+Submit Quiz
+</button>
+
+</form>
+
+<div id="result"></div>
+
+</div>
+
+<script src="js/quiz.js"></script>
+
+</body>
+
+</html>
