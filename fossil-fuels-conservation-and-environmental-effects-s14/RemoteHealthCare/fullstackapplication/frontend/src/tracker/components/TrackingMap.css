@@ -1,0 +1,180 @@
+.tracking-map {
+  display: grid;
+  gap: 16px;
+}
+
+.tracking-map__labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tracking-map__frame {
+  position: relative;
+  min-height: 620px;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.tracking-map__canvas {
+  width: 100%;
+  height: 620px;
+}
+
+.tracking-map__overlay {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  width: min(380px, calc(100% - 36px));
+  padding: 18px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.14);
+}
+
+.tracking-map__legend {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: calc(100% - 36px);
+  pointer-events: none;
+  z-index: 500;
+}
+
+.tracking-map__legend-item {
+  padding: 9px 14px;
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 14px 24px rgba(15, 23, 42, 0.18);
+}
+
+.tracking-map__legend-item--ambulance {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.tracking-map__legend-item--patient {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+}
+
+.tracking-map__legend-item--hospital {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+}
+
+.tracking-map__overlay-eyebrow {
+  margin: 0 0 8px;
+  color: #2563eb;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.tracking-map__overlay h4 {
+  margin: 0 0 14px;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+.tracking-map__live-name {
+  margin: -4px 0 14px;
+  color: #2563eb;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.tracking-map__overlay-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.tracking-map__overlay-grid span {
+  display: block;
+  margin-bottom: 4px;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tracking-map__overlay-grid strong {
+  color: #0f172a;
+}
+
+.tracking-map__marker-shell {
+  background: transparent;
+  border: none;
+}
+
+.tracking-map__marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 132px;
+  height: 36px;
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.24);
+}
+
+.tracking-map__marker-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 0.66rem;
+}
+
+.tracking-map__marker--ambulance {
+  background: linear-gradient(135deg, #b91c1c, #ef4444);
+  min-width: 168px;
+  height: 44px;
+  border: 2px solid rgba(255, 255, 255, 0.78);
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4), 0 16px 28px rgba(15, 23, 42, 0.24);
+  animation: ambulance-pulse 1.6s infinite;
+}
+
+.tracking-map__marker--patient {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+}
+
+.tracking-map__marker--hospital {
+  background: linear-gradient(135deg, #15803d, #16a34a);
+}
+
+@media (max-width: 900px) {
+  .tracking-map__overlay-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tracking-map__frame,
+  .tracking-map__canvas {
+    min-height: 500px;
+    height: 500px;
+  }
+}
+
+@keyframes ambulance-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4), 0 16px 28px rgba(15, 23, 42, 0.24); }
+  70% { box-shadow: 0 0 0 18px rgba(239, 68, 68, 0), 0 16px 28px rgba(15, 23, 42, 0.24); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0), 0 16px 28px rgba(15, 23, 42, 0.24); }
+}

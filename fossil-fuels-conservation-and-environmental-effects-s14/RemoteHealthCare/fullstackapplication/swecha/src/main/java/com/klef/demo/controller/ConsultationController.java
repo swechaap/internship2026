@@ -74,4 +74,13 @@ public class ConsultationController {
             return ResponseEntity.ok(saved);
         }).orElse(ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{id}/pay")
+    public ResponseEntity<Consultation> processPayment(@PathVariable Long id) {
+        return consultationRepository.findById(id).map(c -> {
+            c.setPaymentStatus("Paid");
+            Consultation saved = consultationRepository.save(c);
+            return ResponseEntity.ok(saved);
+        }).orElse(ResponseEntity.notFound().build());
+    }
 }
