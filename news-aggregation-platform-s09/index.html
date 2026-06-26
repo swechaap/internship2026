@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NewsSphere AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="noise font-sans">
+  <div class="relative z-10">
+    <header class="sticky top-0 z-40 border-b border-slate-200/50 bg-white/60 backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/50">
+      <div class="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <button id="mobileMenuBtn" class="grid h-10 w-10 place-items-center rounded-lg border border-slate-200/70 bg-white/70 text-slate-700 transition hover:border-sky-300 dark:border-white/10 dark:bg-white/5 dark:text-slate-100 lg:hidden" aria-label="Open navigation">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <a href="#landing" class="flex items-center gap-3">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-white shadow-glow">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+          </span>
+          <div>
+            <p class="text-base font-black tracking-tight">NewsSphere AI</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Intelligent news command center</p>
+          </div>
+        </a>
+        <nav id="mainNav" class="ml-auto hidden items-center gap-1 lg:flex">
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/10" href="#landing">Home</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/10" href="#dashboard">Dashboard</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/10" href="#reader">Reader</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/10" href="#ai">AI Tools</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/10" href="#analytics">Analytics</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-900/5 dark:text-slate-300 dark:hover:bg-white/10" href="#admin">Admin</a>
+        </nav>
+        <button id="themeToggle" class="ml-auto grid h-10 w-10 place-items-center rounded-lg border border-slate-200/70 bg-white/70 text-slate-700 transition hover:border-sky-300 dark:border-white/10 dark:bg-white/5 dark:text-slate-100 lg:ml-2" aria-label="Toggle theme">
+          <svg id="sunIcon" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg id="moonIcon" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.6 14.2A8 8 0 0 1 9.8 3.4 8.4 8.4 0 1 0 20.6 14.2z"/></svg>
+        </button>
+        <button data-open-auth class="hidden rounded-lg bg-slate-950 px-4 py-2 text-sm font-bold text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200 sm:block">Login</button>
+      </div>
+      <div id="mobileNav" class="hidden border-t border-slate-200/60 bg-white/80 px-4 py-3 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/80 lg:hidden">
+        <div class="grid grid-cols-2 gap-2">
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 dark:text-slate-200" href="#landing">Home</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 dark:text-slate-200" href="#dashboard">Dashboard</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 dark:text-slate-200" href="#reader">Reader</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 dark:text-slate-200" href="#ai">AI Tools</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 dark:text-slate-200" href="#analytics">Analytics</a>
+          <a class="nav-link rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 dark:text-slate-200" href="#admin">Admin</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="landing" class="mx-auto grid min-h-[calc(100vh-72px)] max-w-7xl hero-grid items-center gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_.95fr] lg:px-8 lg:py-14">
+        <div class="max-w-3xl">
+          <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1 text-sm font-bold text-sky-700 dark:text-sky-200">
+            <span class="h-2 w-2 rounded-full bg-teal-400 pulse-dot"></span>
+            12,842 live stories clustered by AI
+          </div>
+          <h1 class="text-4xl font-black leading-tight tracking-tight sm:text-5xl lg:text-7xl">NewsSphere AI</h1>
+          <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">A futuristic news aggregation simulation that blends personalized discovery, article intelligence, source review, AI summaries, fake news checks, and real-time trend analytics.</p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href="#dashboard" class="rounded-xl bg-gradient-to-r from-teal-500 to-sky-500 px-5 py-3 text-sm font-black text-white shadow-glow transition hover:scale-[1.02]">Explore Dashboard</a>
+            <button data-open-auth class="rounded-xl border border-slate-300/80 bg-white/60 px-5 py-3 text-sm font-black text-slate-800 transition hover:border-sky-300 dark:border-white/15 dark:bg-white/5 dark:text-white">Login / Signup</button>
+          </div>
+          <div class="mt-8 grid max-w-2xl grid-cols-3 gap-3">
+            <div class="glass rounded-xl p-4">
+              <p class="counter text-2xl font-black" data-target="98">0</p>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">Credibility score</p>
+            </div>
+            <div class="glass rounded-xl p-4">
+              <p class="counter text-2xl font-black" data-target="642">0</p>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">AI summaries</p>
+            </div>
+            <div class="glass rounded-xl p-4">
+              <p class="counter text-2xl font-black" data-target="37">0</p>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">Sources live</p>
+            </div>
+          </div>
+        </div>
+        <div class="glass rounded-2xl p-4 shadow-panel">
+          <div class="mb-3 flex items-center justify-between">
+            <p class="text-sm font-black">Trending News Stream</p>
+            <span class="rounded-full bg-teal-400/15 px-3 py-1 text-xs font-black text-teal-700 dark:text-teal-200">Live</span>
+          </div>
+          <div class="overflow-hidden rounded-xl border border-slate-200/60 bg-white/50 dark:border-white/10 dark:bg-slate-950/35">
+            <div id="trendingTicker" class="ticker-track flex gap-3 p-3"></div>
+          </div>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            <div class="surface rounded-xl p-4">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Signal brief</p>
+              <p id="signalBrief" class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-200"></p>
+            </div>
+            <div class="surface rounded-xl p-4">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">AI confidence</p>
+              <div class="mt-3 h-3 rounded-full bg-slate-200 dark:bg-slate-800"><div id="confidenceBar" class="h-full rounded-full bg-gradient-to-r from-teal-400 to-sky-500" style="width: 86%"></div></div>
+              <p id="confidenceText" class="mt-2 text-sm font-bold">86% source agreement</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p class="text-sm font-black uppercase tracking-wide text-sky-600 dark:text-sky-300">Personalized dashboard</p>
+            <h2 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">Your adaptive news feed</h2>
+          </div>
+          <div class="glass flex flex-col gap-3 rounded-xl p-3 sm:flex-row">
+            <label class="relative flex min-w-[240px] items-center">
+              <svg class="absolute left-3 h-5 w-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="searchInput" class="h-11 w-full rounded-lg border border-slate-200 bg-white/70 pl-10 pr-3 text-sm outline-none transition focus:border-sky-400 dark:border-white/10 dark:bg-slate-950/60" placeholder="Search topics, sources, keywords" />
+            </label>
+            <select id="sortSelect" class="h-11 rounded-lg border border-slate-200 bg-white/70 px-3 text-sm font-bold outline-none dark:border-white/10 dark:bg-slate-950/60">
+              <option value="latest">Latest first</option>
+              <option value="credibility">Credibility</option>
+              <option value="reading">Reading time</option>
+            </select>
+          </div>
+        </div>
+        <div id="categoryTabs" class="mb-5 flex gap-2 overflow-x-auto pb-2 scrollbar-thin"></div>
+        <div class="grid gap-5 lg:grid-cols-[1fr_340px]">
+          <div id="newsGrid" class="grid gap-4 md:grid-cols-2"></div>
+          <aside class="space-y-4">
+            <div class="glass rounded-2xl p-5">
+              <div class="mb-4 flex items-center justify-between">
+                <h3 class="font-black">Reading Pulse</h3>
+                <span id="liveReads" class="rounded-full bg-coral/15 px-3 py-1 text-xs font-black text-rose-600 dark:text-rose-200">0 active</span>
+              </div>
+              <div class="space-y-3">
+                <div class="flex justify-between text-sm"><span class="text-slate-500 dark:text-slate-400">Saved</span><b id="savedCount">0</b></div>
+                <div class="flex justify-between text-sm"><span class="text-slate-500 dark:text-slate-400">Summaries generated</span><b id="summaryCount">0</b></div>
+                <div class="flex justify-between text-sm"><span class="text-slate-500 dark:text-slate-400">Risk flags reviewed</span><b id="riskCount">0</b></div>
+              </div>
+            </div>
+            <div class="glass rounded-2xl p-5">
+              <h3 class="mb-3 font-black">Recommended Query</h3>
+              <button data-chat-prompt="Compare the top technology and business stories today." class="w-full rounded-xl border border-sky-400/30 bg-sky-400/10 px-4 py-3 text-left text-sm font-bold text-sky-700 transition hover:bg-sky-400/20 dark:text-sky-200">Compare top technology and business stories</button>
+              <button data-chat-prompt="Which article has the highest fake-news risk and why?" class="mt-3 w-full rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-left text-sm font-bold text-rose-700 transition hover:bg-rose-400/20 dark:text-rose-200">Find highest credibility risk</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="reader" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div class="glass grid gap-6 rounded-2xl p-5 lg:grid-cols-[1fr_360px]">
+          <article>
+            <div class="mb-4 flex flex-wrap items-center gap-2">
+              <span id="readerCategory" class="rounded-full bg-sky-400/15 px-3 py-1 text-xs font-black text-sky-700 dark:text-sky-200"></span>
+              <span id="readerSentiment" class="rounded-full px-3 py-1 text-xs font-black"></span>
+              <span id="readerTime" class="rounded-full bg-slate-900/5 px-3 py-1 text-xs font-black text-slate-600 dark:bg-white/10 dark:text-slate-200"></span>
+            </div>
+            <h2 id="readerTitle" class="text-3xl font-black leading-tight tracking-tight"></h2>
+            <p id="readerMeta" class="mt-3 text-sm font-semibold text-slate-500 dark:text-slate-400"></p>
+            <p id="readerBody" class="mt-5 max-w-3xl text-base leading-8 text-slate-700 dark:text-slate-200"></p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <button id="summaryBtn" class="rounded-xl bg-gradient-to-r from-teal-500 to-sky-500 px-4 py-3 text-sm font-black text-white">AI Summary</button>
+              <button id="explainBtn" class="rounded-xl border border-slate-300 bg-white/50 px-4 py-3 text-sm font-black dark:border-white/15 dark:bg-white/5">Explain Like I'm 15</button>
+              <button id="fakeBtn" class="rounded-xl border border-rose-300 bg-rose-400/10 px-4 py-3 text-sm font-black text-rose-700 dark:border-rose-400/30 dark:text-rose-200">Fake News Check</button>
+              <button id="saveBtn" class="rounded-xl border border-slate-300 bg-white/50 px-4 py-3 text-sm font-black dark:border-white/15 dark:bg-white/5">Save Article</button>
+            </div>
+            <div id="aiOutput" class="mt-5 hidden rounded-xl border border-sky-400/30 bg-sky-400/10 p-4 text-sm leading-7 text-slate-700 dark:text-slate-100"></div>
+          </article>
+          <aside class="space-y-4">
+            <div class="surface rounded-xl p-4">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Source information</p>
+              <div class="mt-3 flex items-center justify-between">
+                <div>
+                  <p id="readerSource" class="font-black"></p>
+                  <p id="readerReliability" class="text-sm text-slate-500 dark:text-slate-400"></p>
+                </div>
+                <div class="grid h-14 w-14 place-items-center rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-lg font-black text-white" id="sourceInitial"></div>
+              </div>
+            </div>
+            <div class="surface rounded-xl p-4">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Sentiment score</p>
+              <div class="mt-3 h-3 rounded-full bg-slate-200 dark:bg-slate-800"><div id="sentimentBar" class="h-full rounded-full bg-gradient-to-r from-rose-400 via-amber-400 to-teal-400"></div></div>
+              <p id="sentimentScore" class="mt-2 text-sm font-black"></p>
+            </div>
+            <div class="surface rounded-xl p-4">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Keywords</p>
+              <div id="keywordList" class="mt-3 flex flex-wrap gap-2"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="ai" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div class="mb-6">
+          <p class="text-sm font-black uppercase tracking-wide text-sky-600 dark:text-sky-300">AI features</p>
+          <h2 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">Article intelligence lab</h2>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <button data-tool="summary" class="metric-card glass rounded-2xl p-5 text-left">
+            <p class="text-sm font-black text-sky-600 dark:text-sky-300">AI Summary Generator</p>
+            <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">Condenses the selected article into key points and action context.</p>
+          </button>
+          <button data-tool="fake" class="metric-card glass rounded-2xl p-5 text-left">
+            <p class="text-sm font-black text-rose-600 dark:text-rose-300">Fake News Detector</p>
+            <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">Scores source reliability, evidence quality, and sensational wording.</p>
+          </button>
+          <button data-tool="sentiment" class="metric-card glass rounded-2xl p-5 text-left">
+            <p class="text-sm font-black text-teal-700 dark:text-teal-200">Sentiment Analysis</p>
+            <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">Maps article tone from cautionary to optimistic.</p>
+          </button>
+          <button data-tool="keywords" class="metric-card glass rounded-2xl p-5 text-left">
+            <p class="text-sm font-black text-amber-700 dark:text-amber-200">Keyword Extraction</p>
+            <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">Extracts entities, sectors, locations, and emerging terms.</p>
+          </button>
+        </div>
+        <div class="mt-5 glass rounded-2xl p-5">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <h3 class="font-black">AI Console</h3>
+            <button id="eli15Btn" class="rounded-xl border border-teal-400/30 bg-teal-400/10 px-4 py-2 text-sm font-black text-teal-700 dark:text-teal-200">Explain Like I'm 15</button>
+          </div>
+          <div id="toolOutput" class="mt-4 rounded-xl bg-slate-950 p-4 text-sm leading-7 text-slate-100 dark:bg-black/45">Select an AI tool or article action to generate insights.</div>
+        </div>
+      </section>
+
+      <section id="analytics" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-sm font-black uppercase tracking-wide text-sky-600 dark:text-sky-300">Analytics dashboard</p>
+            <h2 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">Live trend intelligence</h2>
+          </div>
+          <button id="refreshCharts" class="rounded-xl border border-slate-300 bg-white/50 px-4 py-3 text-sm font-black dark:border-white/15 dark:bg-white/5">Refresh trends</button>
+        </div>
+        <div class="grid gap-4 lg:grid-cols-2">
+          <div class="glass rounded-2xl p-5"><h3 class="mb-4 font-black">Trending Topics Graph</h3><canvas id="topicsChart" height="170"></canvas></div>
+          <div class="glass rounded-2xl p-5"><h3 class="mb-4 font-black">Category Popularity Chart</h3><canvas id="categoryChart" height="170"></canvas></div>
+          <div class="glass rounded-2xl p-5"><h3 class="mb-4 font-black">User Reading Statistics</h3><canvas id="readingChart" height="170"></canvas></div>
+          <div class="glass rounded-2xl p-5"><h3 class="mb-4 font-black">News Source Distribution</h3><canvas id="sourceChart" height="170"></canvas></div>
+        </div>
+      </section>
+
+      <section id="admin" class="mx-auto max-w-7xl px-4 py-10 pb-28 sm:px-6 lg:px-8">
+        <div class="mb-6">
+          <p class="text-sm font-black uppercase tracking-wide text-sky-600 dark:text-sky-300">Admin panel</p>
+          <h2 class="mt-2 text-3xl font-black tracking-tight sm:text-4xl">Source, category, and report controls</h2>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-[390px_1fr]">
+          <form id="sourceForm" class="glass rounded-2xl p-5">
+            <h3 class="font-black">Add News Source</h3>
+            <label class="mt-4 block text-sm font-bold">Source name<input id="sourceName" required class="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white/70 px-3 outline-none focus:border-sky-400 dark:border-white/10 dark:bg-slate-950/60" placeholder="Civic Wire" /></label>
+            <label class="mt-4 block text-sm font-bold">Category<select id="sourceCategory" class="mt-2 h-11 w-full rounded-lg border border-slate-200 bg-white/70 px-3 outline-none dark:border-white/10 dark:bg-slate-950/60"></select></label>
+            <label class="mt-4 block text-sm font-bold">Reliability score<input id="sourceScore" type="range" min="50" max="100" value="86" class="mt-3 w-full" /></label>
+            <button class="mt-5 w-full rounded-xl bg-slate-950 px-4 py-3 text-sm font-black text-white dark:bg-white dark:text-slate-950">Add Source</button>
+          </form>
+          <div class="glass rounded-2xl p-5">
+            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <h3 class="font-black">Review Reports and User Analytics</h3>
+              <button id="clearReports" class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-black dark:border-white/15">Mark reviewed</button>
+            </div>
+            <div id="adminRows" class="space-y-3"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <button id="chatToggle" class="fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-teal-400 to-sky-500 text-white shadow-glow transition hover:scale-105" aria-label="Open AI chatbot">
+    <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 9h8M8 13h5"/></svg>
+  </button>
+
+  <section id="chatbot" class="fixed bottom-24 right-5 z-50 hidden w-[calc(100vw-2.5rem)] max-w-md overflow-hidden rounded-2xl border border-slate-200/70 bg-white/90 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/92">
+    <div class="flex items-center justify-between border-b border-slate-200/70 p-4 dark:border-white/10">
+      <div>
+        <p class="font-black">NewsSphere Copilot</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Ask about articles, topics, or trends</p>
+      </div>
+      <button id="chatClose" class="grid h-9 w-9 place-items-center rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10" aria-label="Close chatbot">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div id="chatMessages" class="max-h-80 space-y-3 overflow-y-auto p-4 scrollbar-thin"></div>
+    <div class="border-t border-slate-200/70 p-3 dark:border-white/10">
+      <div class="mb-2 flex flex-wrap gap-2">
+        <button data-chat-prompt="Summarize the selected article." class="rounded-full bg-slate-900/5 px-3 py-1 text-xs font-bold dark:bg-white/10">Summarize</button>
+        <button data-chat-prompt="Recommend related articles." class="rounded-full bg-slate-900/5 px-3 py-1 text-xs font-bold dark:bg-white/10">Related</button>
+        <button data-chat-prompt="Explain the topic simply." class="rounded-full bg-slate-900/5 px-3 py-1 text-xs font-bold dark:bg-white/10">Explain</button>
+      </div>
+      <form id="chatForm" class="flex gap-2">
+        <input id="chatInput" class="h-11 flex-1 rounded-lg border border-slate-200 bg-white/80 px-3 text-sm outline-none focus:border-sky-400 dark:border-white/10 dark:bg-slate-900" placeholder="Ask about current affairs..." />
+        <button class="h-11 rounded-lg bg-sky-500 px-4 text-sm font-black text-white">Send</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="authModal" class="modal fixed inset-0 z-[60] grid place-items-center bg-slate-950/55 p-4 backdrop-blur-sm">
+    <div class="glass-strong w-full max-w-md rounded-2xl p-5 shadow-2xl">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-xl font-black">Join NewsSphere AI</h3>
+        <button id="authClose" class="grid h-9 w-9 place-items-center rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10" aria-label="Close login">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="grid grid-cols-2 gap-2 rounded-xl bg-slate-900/5 p-1 dark:bg-white/10">
+        <button id="loginTab" class="rounded-lg bg-white py-2 text-sm font-black shadow-sm dark:bg-slate-900">Login</button>
+        <button id="signupTab" class="rounded-lg py-2 text-sm font-black">Signup</button>
+      </div>
+      <form id="authForm" class="mt-4 space-y-3">
+        <input class="h-11 w-full rounded-lg border border-slate-200 bg-white/80 px-3 outline-none dark:border-white/10 dark:bg-slate-950/60" placeholder="Email address" type="email" />
+        <input class="h-11 w-full rounded-lg border border-slate-200 bg-white/80 px-3 outline-none dark:border-white/10 dark:bg-slate-950/60" placeholder="Password" type="password" />
+        <button class="h-11 w-full rounded-xl bg-gradient-to-r from-teal-500 to-sky-500 text-sm font-black text-white">Continue</button>
+      </form>
+      <p id="authStatus" class="mt-3 hidden rounded-lg bg-teal-400/10 p-3 text-sm font-bold text-teal-700 dark:text-teal-200">Demo profile activated. Your feed is now personalized.</p>
+    </div>
+  </section>
+</body>
+</html>

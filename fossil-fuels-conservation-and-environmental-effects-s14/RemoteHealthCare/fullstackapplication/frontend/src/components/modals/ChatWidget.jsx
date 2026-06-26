@@ -3,6 +3,12 @@ import { MessageSquare, X, Send, Bot, User, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+const DEFAULT_SUGGESTIONS = [
+  "Book an appointment",
+  "Book an ambulance",
+  "Book for testing, body checkup"
+];
+
 export default function ChatWidget({ role }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -26,21 +32,22 @@ export default function ChatWidget({ role }) {
     }
   }, [messages, isOpen]);
 
-  const handleSend = async (e) => {
-    e.preventDefault();
-    if (!inputText.trim()) return;
+  const sendMessage = async (textToSend) => {
+    if (!textToSend.trim()) return;
     
-    const userMessage = { id: Date.now(), sender: 'user', text: inputText };
+    const userMessage = { id: Date.now(), sender: 'user', text: textToSend };
     setMessages(prev => [...prev, userMessage]);
-    setInputText('');
     setIsLoading(true);
     
     try {
-      const response = await fetch(`${API_URL}/chatbot/ask`, {
+      // Use standard API_BASE_URL resolution similar to backendApi.ts
+      const API_BASE_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:1999';
+      
+      const response = await fetch(`${API_BASE_URL}/api/chatbot/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-            query: userMessage.text, 
+            query: textToSend, 
             role: role || 'Guest'
         })
       });
@@ -58,6 +65,12 @@ export default function ChatWidget({ role }) {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    sendMessage(inputText);
+    setInputText('');
   };
 
   return (
@@ -134,6 +147,24 @@ export default function ChatWidget({ role }) {
                 </div>
               </div>
             )}
+            
+            {messages.length === 1 && !isLoading && (
+              <div className="flex flex-col gap-2 mt-2 ml-8 max-w-[85%] animate-in fade-in slide-in-from-bottom-2 duration-500">
+                <p className="text-xs text-slate-500 font-medium ml-1">Suggested actions:</p>
+                <div className="flex flex-wrap gap-2">
+                  {DEFAULT_SUGGESTIONS.map((suggestion, index) => (
+                    <button
+                      key={index}
+                      onClick={() => sendMessage(suggestion)}
+                      className="px-3.5 py-1.5 text-[13px] font-medium bg-white text-blue-600 border border-blue-200 rounded-full hover:bg-blue-50 hover:border-blue-400 hover:shadow-sm transition-all duration-200 cursor-pointer text-left leading-tight"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div ref={messagesEndRef} />
           </div>
 

@@ -12,7 +12,10 @@ import Billing from './doctor/Billing';
 import Analytics from './pages/Analytics';
 import ConsultationRoom from './pages/ConsultationRoom';
 import BookConsultation from './pages/BookConsultation';
+import ConsultationsList from './pages/ConsultationsList';
 import AmbulanceTracker from './patient/AmbulanceTracker';
+import MedicineReminders from './pages/MedicineReminders';
+import PrescriptionsList from './pages/PrescriptionsList';
 
 export default function App() {
   // Session Authentication state loaded from sessionStorage
@@ -126,6 +129,17 @@ export default function App() {
           />
 
           <Route 
+            path="/appointments" 
+            element={
+              role === 'Patient' || role === 'Doctor' ? (
+                <ConsultationsList />
+              ) : (
+                <Navigate to={getLandingPage()} replace />
+              )
+            } 
+          />
+
+          <Route 
             path="/consultation/:id" 
             element={
               role === 'Patient' || role === 'Doctor' ? (
@@ -188,6 +202,26 @@ export default function App() {
             element={
               role === 'Patient' ? (
                 <AmbulanceTracker />
+              ) : (
+                <Navigate to={getLandingPage()} replace />
+              )
+            } 
+          />
+          <Route 
+            path="/patient/reminders" 
+            element={
+              role === 'Patient' ? (
+                <MedicineReminders />
+              ) : (
+                <Navigate to={getLandingPage()} replace />
+              )
+            } 
+          />
+          <Route 
+            path="/patient/prescriptions" 
+            element={
+              role === 'Patient' ? (
+                <PrescriptionsList />
               ) : (
                 <Navigate to={getLandingPage()} replace />
               )

@@ -61,10 +61,12 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isMobileOpen, set
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard, roles: ['Admin'] },
     { name: 'Analytics', path: '/analytics', icon: Activity, roles: ['Admin', 'Doctor', 'Manager'] },
     { name: 'Book Appointment', path: '/book-consultation', icon: CalendarPlus, roles: ['Patient'] },
-    { name: 'Consultation', path: '/consultation/active', icon: Video, roles: ['Patient', 'Doctor'] },
+    { name: 'Appointments', path: '/appointments', icon: Video, roles: ['Patient', 'Doctor'] },
     { name: 'Users', path: '/users', icon: Users, badge: 'New', roles: ['Admin', 'Doctor'] },
     { name: 'Medical Records', path: '/records', icon: FileText, roles: ['Admin', 'Doctor'] },
     { name: 'Medical Records', path: '/medical-records', icon: FileText, roles: ['Patient', 'Manager'] },
+    { name: 'Prescriptions', path: '/patient/prescriptions', icon: FileText, roles: ['Patient'] },
+    { name: 'Medicine Reminders', path: '/patient/reminders', icon: Activity, roles: ['Patient'] },
     { name: 'Accounts', path: '/accounts', icon: CreditCard, roles: ['Accountant'] },
     { name: 'Billing', path: '/billing', icon: CreditCard, roles: ['Admin', 'Doctor'] },
     { 

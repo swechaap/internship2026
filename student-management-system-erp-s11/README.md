@@ -1,6 +1,6 @@
 # UniERP - College Management System
 
-Live demo: https://student-management-system-erp.netlify.app/
+Live demo: https://college-student-management-system-erp.onrender.com/
 
 UniERP is a browser-based college management system for admins, faculty, and students. It ships as a static front-end app with no build step required.
 

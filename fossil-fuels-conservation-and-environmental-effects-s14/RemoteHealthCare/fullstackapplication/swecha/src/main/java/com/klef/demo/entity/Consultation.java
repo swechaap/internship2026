@@ -30,6 +30,7 @@ public class Consultation {
     // Status: Pending, Accepted, Rejected, Rescheduled, Ongoing, Completed
     private String status;
     private String priorityLevel;
+    private String paymentStatus = "Pending"; // Pending, Paid
 
     public Consultation() {}
 
@@ -127,5 +128,13 @@ public class Consultation {
 
     public void setPriorityLevel(String priorityLevel) {
         this.priorityLevel = priorityLevel;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }
