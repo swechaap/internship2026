@@ -1,0 +1,67 @@
+Libraflow-main/
+│
+├── 📁 assets/
+│
+├── 📁 src/                           ← Frontend
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+│
+├── 📁 server/                        ← Backend
+│   ├── db.ts
+│   └── gemini.ts
+│
+├── .env.example
+├── .gitignore
+├── index.html
+├── metadata.json
+├── package.json
+├── README.md
+├── server.ts
+├── tsconfig.json
+└── vite.config.ts
+
+FRONTEND STRUCTURE
+Frontend
+│
+├── src/
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+│
+├── assets/
+│
+├── index.html
+│
+├── vite.config.ts
+│
+├── package.json
+│
+└── tsconfig.json
+
+Responsibilities
+User Interface (UI)
+Login Page
+Dashboard
+Book Search
+Styling (CSS)
+React Application
+--
+BACKEND STRUCTURE
+Backend
+│
+├── server/
+│   ├── db.ts
+│   └── gemini.ts
+│
+├── server.ts
+│
+└── .env.example
+
+Responsibilities
+Express Server
+Database Logic (db.ts)
+Gemini AI Integration (gemini.ts)
+API Endpoints (server.ts)
+Environment Variables (.env.example)
+
