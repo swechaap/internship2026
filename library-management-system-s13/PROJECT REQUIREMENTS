@@ -1,0 +1,233 @@
+ Project Requirements
+
+1. Hardware Requirements
+
+Component	Minimum Requirement
+
+Processor	Intel Core i3 or AMD Ryzen 3
+RAM	4 GB (8 GB Recommended)
+Storage	500 MB Free Disk Space
+Internet	Required for AI features and deployment
+Operating System	Windows 10/11, macOS, or Linux
+
+
+
+---
+
+2. Software Requirements
+
+Frontend
+
+React
+
+TypeScript
+
+Vite
+
+HTML5
+
+CSS3
+
+
+Backend
+
+Node.js
+
+Express.js
+
+TypeScript
+
+
+AI Integration
+
+Google Gemini API
+
+
+Database
+
+Database configured through db.ts
+
+
+Deployment
+
+Render
+
+
+
+---
+
+3. Development Tools
+
+Visual Studio Code
+
+Git
+
+GitHub
+
+npm (Node Package Manager)
+
+
+
+---
+
+4. Browser Requirements
+
+The application works on modern web browsers:
+
+Google Chrome
+
+Microsoft Edge
+
+Mozilla Firefox
+
+Safari
+
+
+
+---
+
+5. Functional Requirements
+
+Authentication
+
+User Login
+
+Secure Authentication
+
+Session Management
+
+
+Student Module
+
+Search Books
+
+View Books
+
+Borrow Books
+
+Return Books
+
+View Notifications
+
+
+Librarian Module
+
+Add Books
+
+Update Books
+
+Delete Books
+
+Manage Book Inventory
+
+Manage Users
+
+
+AI Features
+
+AI Personal Assistant
+
+Smart Authentication
+
+Semantic Book Search
+
+AI Chatbot
+
+Dashboard Insights
+
+Content Summarization
+
+Quiz & Flashcard Generation
+
+Predictive Analytics
+
+Automated Notifications
+
+
+
+---
+
+6. Non-Functional Requirements
+
+Fast Response Time
+
+User-Friendly Interface
+
+Secure Authentication
+
+High Availability
+
+Scalable Architecture
+
+Reliable Performance
+
+Responsive Design
+
+Easy Maintenance
+
+
+
+---
+
+7. Internet Requirements
+
+An active internet connection is required for:
+
+Google Gemini AI features
+
+Live deployment access
+
+Database connectivity (if hosted remotely)
+
+
+
+---
+
+8. Required APIs
+
+Google Gemini API
+
+
+
+---
+
+9. Required Packages
+
+react
+typescript
+vite
+express
+node
+npm
+dotenv
+
+
+---
+
+10. User Roles
+
+ Student
+
+Librarian
+
+
+
+
+
+---
+
+11. Project Outputs
+
+AI-powered Library Management System
+
+Smart Book Search
+
+AI Chatbot
+
+Personalized Recommendations
+
+Intelligent Dashboard
+
+Secure User Authentication
+
+Automated Notifications
