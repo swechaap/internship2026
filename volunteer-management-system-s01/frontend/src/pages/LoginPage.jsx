@@ -6,52 +6,6 @@ import { motion } from 'framer-motion';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../context/AuthContext.jsx';
 import { getApiErrorMessage } from '../services/api.js';
-import Modal from '../components/ui/Modal.jsx';
-
-const MOCK_OPPORTUNITIES = [
-  {
-    title: 'Community Food Drive Coordinator',
-    org: 'HopeWorks',
-    desc: 'Help organize food donations and distribute packages to families in need.',
-    hours: '4 hrs/week',
-    location: 'Community Center',
-  },
-  {
-    title: 'Urban Forestry Tree Planting',
-    org: 'GreenFuture',
-    desc: 'Join us for our weekend greening project planting native trees across the park systems.',
-    hours: '6 hrs (Sat)',
-    location: 'Central Park',
-  },
-  {
-    title: 'Digital Literacy Tutor',
-    org: 'SkillShare',
-    desc: 'Teach senior citizens basic computer skills, emails, and how to stay safe online.',
-    hours: '2 hrs/week',
-    location: 'Local Library',
-  },
-];
-
-const MOCK_EVENTS = [
-  {
-    title: 'Summer Park Clean-up Day',
-    time: 'Saturday, July 11 at 9:00 AM',
-    location: 'Oakwood Nature Reserve',
-    squads: '3 squads attending',
-  },
-  {
-    title: 'Homeless Shelter Soup Kitchen Prep',
-    time: 'Wednesday, July 15 at 4:30 PM',
-    location: 'Downtown Shelter',
-    squads: '2 squads attending',
-  },
-  {
-    title: 'Youth Mentorship Kick-off Meetup',
-    time: 'Friday, July 17 at 6:00 PM',
-    location: 'Youth Community Center',
-    squads: '1 squad attending',
-  },
-];
 
 const STATS = [
   { value: '2.4k+', label: 'Volunteer hours' },
@@ -66,7 +20,6 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
-  const [demoType, setDemoType] = useState(null);
   const [linkData, setLinkData] = useState(null);
   const [linkPassword, setLinkPassword] = useState('');
   const [linkLoading, setLinkLoading] = useState(false);
@@ -165,16 +118,6 @@ export default function LoginPage() {
             <a
               key={item}
               href="#signin"
-              onClick={e => {
-                if (item === 'Opportunities') {
-                  e.preventDefault();
-                  setDemoType('opportunities');
-                }
-                if (item === 'Events') {
-                  e.preventDefault();
-                  setDemoType('events');
-                }
-              }}
               className="text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors"
             >
               {item}
@@ -295,7 +238,7 @@ export default function LoginPage() {
                 Sign in
               </h2>
               <p className="mt-2 text-sm text-on-surface-variant leading-relaxed">
-                Use your account or select a demo profile to enter the volunteer portal.
+                Enter your credentials to access your account.
               </p>
 
               <form className="mt-8 space-y-5" onSubmit={submit}>
@@ -465,16 +408,6 @@ export default function LoginPage() {
                     <li key={link}>
                       <a
                         href="#signin"
-                        onClick={e => {
-                          if (link === 'Opportunities') {
-                            e.preventDefault();
-                            setDemoType('opportunities');
-                          }
-                          if (link === 'Events') {
-                            e.preventDefault();
-                            setDemoType('events');
-                          }
-                        }}
                         className="text-sm text-white/60 hover:text-white transition-colors"
                       >
                         {link}
@@ -498,80 +431,6 @@ export default function LoginPage() {
           </div>
         </div>
       </footer>
-
-      <Modal
-        open={!!demoType}
-        onClose={() => setDemoType(null)}
-        title={
-          demoType === 'opportunities' ? 'Demo Volunteer Opportunities' : 'Demo Upcoming Events'
-        }
-        subtitle={`Preview of active ${demoType} in the portal. Sign in to view details and apply.`}
-      >
-        <div className="space-y-4">
-          {demoType === 'opportunities' ? (
-            <div className="space-y-3.5">
-              {MOCK_OPPORTUNITIES.map(opp => (
-                <div
-                  key={opp.title}
-                  className="p-4 rounded-2xl border border-outline-variant bg-surface-container-low"
-                >
-                  <div className="flex justify-between items-start gap-2">
-                    <h4 className="font-bold text-on-surface text-sm">{opp.title}</h4>
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-container-high rounded text-on-surface-variant shrink-0">
-                      {opp.hours}
-                    </span>
-                  </div>
-                  <p className="text-xs font-bold text-primary mt-1">{opp.org}</p>
-                  <p className="text-xs text-on-surface-variant mt-2 leading-relaxed">{opp.desc}</p>
-                  <div className="mt-3 flex items-center justify-between">
-                    <span className="text-[10px] font-semibold text-on-surface-variant/80">
-                      📍 {opp.location}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="space-y-3.5">
-              {MOCK_EVENTS.map(event => (
-                <div
-                  key={event.title}
-                  className="p-4 rounded-2xl border border-outline-variant bg-surface-container-low"
-                >
-                  <h4 className="font-bold text-on-surface text-sm">{event.title}</h4>
-                  <p className="text-xs font-bold text-primary mt-1">🗓️ {event.time}</p>
-                  <div className="mt-2.5 flex items-center justify-between text-xs text-on-surface-variant">
-                    <span>📍 {event.location}</span>
-                    <span className="text-[10px] font-semibold px-2 py-0.5 bg-surface-container-high rounded text-on-surface-variant">
-                      👥 {event.squads}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="flex justify-end gap-3 mt-6 border-t border-outline-variant pt-4">
-            <button
-              onClick={() => setDemoType(null)}
-              className="px-5 py-2.5 rounded-xl border border-outline-variant hover:bg-surface-container-low text-xs font-semibold text-on-surface transition-all"
-            >
-              Close
-            </button>
-            <a
-              href="#signin"
-              onClick={() => {
-                setDemoType(null);
-                const el = document.getElementById('signin');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="px-5 py-2.5 rounded-xl bg-[#1b1c1a] text-white hover:opacity-90 text-xs font-semibold uppercase tracking-wider transition-all text-center"
-            >
-              Sign In to Access
-            </a>
-          </div>
-        </div>
-      </Modal>
     </div>
   );
 }
