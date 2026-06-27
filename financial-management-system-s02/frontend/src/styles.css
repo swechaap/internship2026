@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --surface: #f8fafc;
+  --panel: #ffffff;
+  --line: #e2e8f0;
+  --text: #0f172a;
+  --muted: #475569;
+  --primary: #2563eb;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+}
+
+html.dark {
+  --surface: #020617;
+  --panel: #0f172a;
+  --line: #1e293b;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --primary: #60a5fa;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 30%),
+    radial-gradient(circle at top right, rgba(245, 158, 11, 0.12), transparent 28%),
+    var(--surface);
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.18);
+}
+
+@layer components {
+  .glass-card {
+    @apply border border-line bg-panel shadow-glow backdrop-blur;
+  }
+  .soft-button {
+    @apply inline-flex items-center justify-center rounded-xl border border-line bg-panel px-4 py-2 text-sm font-medium text-text transition hover:border-primary hover:bg-slate-500/5;
+  }
+  .primary-button {
+    @apply inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:opacity-95;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-line bg-panel px-4 py-3 text-sm outline-none transition placeholder:text-muted focus:border-primary;
+  }
+  .label-text {
+    @apply mb-2 block text-sm font-medium text-text;
+  }
+}
