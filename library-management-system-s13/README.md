@@ -1,4 +1,4 @@
-Library Management System  http://localhost:5174/
+Library Management System 
 
 Project Description
 
@@ -109,7 +109,5 @@ Team Members:
 Conclusion
 
 The Library Management System successfully demonstrates the use of MySQL for managing library operations. The project provides a structured database design for storing and managing books, students, faculty members, issued books, and reservations efficiently.
-
-GitHub Repository
-
-Library Management System Project Repository
+DEPLOYMENT LINK
+https://libraflow-x528.onrender.com
