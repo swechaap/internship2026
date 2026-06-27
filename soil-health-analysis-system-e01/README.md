@@ -298,19 +298,6 @@ Stores:
 
 ---
 
-# 📸 Screenshots
-
-Add screenshots of:
-
-* Home Page
-* Soil Analysis
-* Dashboard
-* Krishi AI
-* Soil Report
-* History Page
-
----
-
 # 🌐 Live Demo
 
 https://soilhealth-analysis.vercel.app/
