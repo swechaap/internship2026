@@ -1,0 +1,50 @@
+Inventory & Logistics Management System
+Project Requirements
+
+Development Environment
+-----------------------
+Operating System : Windows 10/11
+Node.js          : v18+ (Recommended v20+)
+npm              : Latest Version
+MySQL            : 8.0+
+VS Code          : Latest Version
+Postman          : API Testing
+Git              : Version Control
+
+Backend
+-------
+Express.js
+MySQL2
+Cors
+Dotenv
+bcrypt
+jsonwebtoken
+@google/genai
+Nodemon
+
+Frontend
+--------
+HTML5
+CSS3
+JavaScript (ES6)
+
+Database
+--------
+MySQL
+
+AI Integration
+--------------
+Google Gemini API
+
+Tools Used
+----------
+Visual Studio Code
+Postman
+Git & GitHub
+Google AI Studio
+
+Browser Support
+---------------
+Google Chrome (Recommended)
+Microsoft Edge
+Mozilla Firefox

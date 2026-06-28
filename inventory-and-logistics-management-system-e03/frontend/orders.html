@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Inventory & Logistics – Create and manage orders, view order history, and filter by status." />
+  <title>Orders – Inventory & Logistics</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ══════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">📦</div>
+    <h1>Inventory & Logistics</h1>
+    <p>Management System</p>
+  </div>
+
+  <span class="sidebar-section-label">System</span>
+  <a href="home.html" class="nav-item" style="color: var(--text-muted); font-size: 18px; font-weight: bold;">
+    <span class="nav-icon">←</span> Back to Main
+  </a>
+
+  <span class="sidebar-section-label">Orders & Logistics</span>
+  <a href="index.html" class="nav-item">
+    <span class="nav-icon">🏠</span> Dashboard
+  </a>
+  <a href="orders.html" class="nav-item active">
+    <span class="nav-icon">📋</span> Orders
+  </a>
+  <a href="shipments.html" class="nav-item">
+    <span class="nav-icon">🚚</span> Shipments
+  </a>
+
+  <span class="sidebar-section-label">Integrations</span>
+  <a href="#" class="nav-item" title="Managed by Member 2">
+    <span class="nav-icon">📦</span> Inventory
+  </a>
+  <a href="#" class="nav-item" title="Managed by Member 4">
+    <span class="nav-icon">🏭</span> Suppliers
+  </a>
+  <a href="#" class="nav-item">
+    <span class="nav-icon">🔔</span> Notifications
+    <span class="nav-badge" id="sidebar-notif-count">0</span>
+  </a>
+
+  <div class="sidebar-footer">
+    <span>Member 3</span>
+    Orders & Logistics Module
+  </div>
+</aside>
+
+<!-- ═══ MAIN WRAPPER ═════════════════════════════════════════ -->
+<div class="main-wrapper">
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h2>Orders Management</h2>
+      <p>Create orders and manage order history</p>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" onclick="loadOrders()">↻ Refresh</button>
+      <div class="topbar-notif" title="Notifications">
+        🔔<span class="dot" id="notif-dot" style="display:none;"></span>
+      </div>
+      <button class="topbar-btn" onclick="toggleTheme()">
+    🌙
+      </button>
+      <div class="avatar" onclick="window.location.href='profile.html'" style="cursor: pointer;">AD</div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Orders</h1>
+      <p>Create new orders and view order history. Stock is automatically updated from Inventory module.</p>
+    </div>
+
+    <div class="content-grid">
+
+      <!-- ── Create Order Form ─────────────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">➕</span> Create New Order</h3>
+        </div>
+        <div class="card-body">
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label for="product_select">Product (from Inventory)</label>
+              <select id="product_select" onchange="onProductSelect()">
+                <option value="">— Select a Product —</option>
+              </select>
+
+              <!-- Product preview card shows after selection -->
+              <div class="product-preview" id="product-preview">
+                <div class="product-preview-row">
+                  <span class="pv-label">Category</span>
+                  <span class="pv-val" id="pv-category">—</span>
+                </div>
+                <div class="product-preview-row">
+                  <span class="pv-label">Price per unit</span>
+                  <span class="pv-val" id="pv-price">—</span>
+                </div>
+                <div class="product-preview-row">
+                  <span class="pv-label">Available Stock</span>
+                  <span class="pv-val" id="pv-stock">—</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <input type="number" id="quantity" placeholder="Enter quantity" min="1" oninput="updateOrderSummary()" />
+            </div>
+
+          </div>
+
+          <!-- Order Summary -->
+          <div class="order-summary" id="order-summary" style="display:none;">
+            <div class="order-summary-row">
+              <span>Product</span>
+              <span class="val" id="summary-product">—</span>
+            </div>
+            <div class="order-summary-row">
+              <span>Unit Price</span>
+              <span class="val" id="summary-price">—</span>
+            </div>
+            <div class="order-summary-row">
+              <span>Quantity</span>
+              <span class="val" id="summary-qty">—</span>
+            </div>
+            <div class="order-summary-row total">
+              <span>Estimated Total</span>
+              <span id="summary-total">—</span>
+            </div>
+          </div>
+
+          <div style="margin-top:18px; display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-primary" id="create-order-btn" onclick="createOrder()">
+              ✔ Place Order
+            </button>
+            <button class="btn btn-secondary" onclick="resetOrderForm()">Reset</button>
+            <span id="order-msg" style="font-size:13px; color:var(--text-muted);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Order Stats Summary ───────────────────────────── -->
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div class="stat-card indigo">
+          <div class="stat-info">
+            <div class="stat-label">Total Orders</div>
+            <div class="stat-value" id="order-stat-total">—</div>
+            <div class="stat-sub">All orders</div>
+          </div>
+          <div class="stat-icon indigo">📋</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-info">
+            <div class="stat-label">Pending</div>
+            <div class="stat-value" id="order-stat-pending">—</div>
+            <div class="stat-sub">Awaiting shipment</div>
+          </div>
+          <div class="stat-icon orange">⏳</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-info">
+            <div class="stat-label">Delivered</div>
+            <div class="stat-value" id="order-stat-delivered">—</div>
+            <div class="stat-sub">Completed orders</div>
+          </div>
+          <div class="stat-icon green">✅</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Orders List ─────────────────────────────────────── -->
+    <div class="card" style="margin-top:0;">
+      <div class="card-header">
+        <h3><span class="card-icon">📋</span> Orders List</h3>
+        <span id="orders-count" class="badge badge-processing">Loading…</span>
+      </div>
+      <div class="card-body" style="padding: 16px 20px 0;">
+
+        <!-- Filter & Search -->
+        <div class="filter-bar">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="orders-search" placeholder="Search by product name or order ID…" oninput="renderOrders()" />
+          </div>
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="All"       onclick="setOrderFilter('All',this)">All</button>
+            <button class="filter-tab"         data-filter="Pending"  onclick="setOrderFilter('Pending',this)">Pending</button>
+            <button class="filter-tab"         data-filter="Shipped"  onclick="setOrderFilter('Shipped',this)">Shipped</button>
+            <button class="filter-tab"         data-filter="Delivered" onclick="setOrderFilter('Delivered',this)">Delivered</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrapper" style="padding: 0 0 4px 0;">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Qty</th>
+              <th>Unit Price</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTable">
+            <tr class="loading-row"><td colspan="7"><div class="spinner"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script src="js/orders.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/ai-chat.js"></script>`n</body>
+</html>

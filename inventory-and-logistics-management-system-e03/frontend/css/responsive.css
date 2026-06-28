@@ -1,0 +1,47 @@
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 992px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-group.full-width {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 1rem 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .brand-section {
+    margin-bottom: 1rem;
+  }
+  .nav-menu {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    gap: 0.5rem;
+  }
+  .nav-item a {
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+  }
+  .sidebar-footer {
+    display: none; /* Hide profile in mobile sidebar to conserve space */
+  }
+  header {
+    padding: 0 1.5rem;
+    height: 70px;
+  }
+  .view-container {
+    padding: 1.5rem;
+    height: calc(100vh - 70px - 140px); /* Adjust for header and navbar */
+  }
+}

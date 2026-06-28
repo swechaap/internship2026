@@ -1,0 +1,187 @@
+/* --- MODULE: NOTIFICATIONS --- */
+.notification-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.notifications-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  padding: 0.35rem;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.tab-btn.active {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.notification-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  transition: var(--transition-smooth);
+}
+
+.notification-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 15px;
+  bottom: 15px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+}
+
+.notification-card.unread {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Notification Types & Accents */
+.notification-card.type-critical::before {
+  background-color: var(--color-inactive);
+}
+
+.notification-card.type-warning::before {
+  background-color: var(--color-pending);
+}
+
+.notification-card.type-info::before {
+  background-color: var(--color-info);
+}
+
+.notification-card.type-success::before {
+  background-color: var(--color-active);
+}
+
+.noti-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.type-critical .noti-icon-wrapper {
+  background-color: var(--color-inactive-glow);
+  color: var(--color-inactive);
+}
+
+.type-warning .noti-icon-wrapper {
+  background-color: var(--color-pending-glow);
+  color: var(--color-pending);
+}
+
+.type-info .noti-icon-wrapper {
+  background-color: var(--color-info-glow);
+  color: var(--color-info);
+}
+
+.type-success .noti-icon-wrapper {
+  background-color: var(--color-active-glow);
+  color: var(--color-active);
+}
+
+.noti-icon-wrapper svg {
+  width: 20px;
+  height: 20px;
+}
+
+.noti-content {
+  flex-grow: 1;
+}
+
+.noti-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.25rem;
+  gap: 1rem;
+}
+
+.noti-title {
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: var(--font-display);
+}
+
+.unread .noti-title {
+  color: white;
+}
+
+.noti-time {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.noti-message {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.noti-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-text {
+  background: transparent;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  transition: var(--transition-fast);
+}
+
+.btn-text.mark-read {
+  color: var(--primary);
+}
+
+.btn-text.mark-read:hover {
+  color: var(--text-main);
+  text-decoration: underline;
+}
+
+.btn-text.delete-noti {
+  color: var(--text-dim);
+}
+
+.btn-text.delete-noti:hover {
+  color: var(--color-inactive);
+}

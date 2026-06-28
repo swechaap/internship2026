@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Inventory Dashboard. Manage products, stock levels, and operations." />
+  <title>Dashboard – Inventory Management</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">📦</div>
+    <h1>Inventory</h1>
+    <p>Management System</p>
+  </div>
+
+  <span class="sidebar-section-label">System</span>
+  <a href="home.html" class="nav-item" style="color: var(--text-muted); font-size: 18px; font-weight: bold;">
+    <span class="nav-icon">←</span> Back to Main
+  </a>
+
+  <span class="sidebar-section-label">Inventory Management</span>
+  <a id="nav-inventory" href="inventory.html" class="nav-item active">
+    <span class="nav-icon">📦</span> Dashboard
+  </a>
+  <a id="nav-add-product" href="add-product.html" class="nav-item">
+    <span class="nav-icon">➕</span> Add Product
+  </a>
+</aside>
+
+<div class="main-wrapper">
+  <header class="topbar">
+    <div class="topbar-left">
+      <h2>Inventory Dashboard</h2>
+      <p id="current-date">Loading date...</p>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" onclick="toggleTheme()">🌙</button>
+      <div class="avatar" title="Admin" onclick="window.location.href='profile.html'" style="cursor: pointer;">AD</div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Inventory Overview</h1>
+      <p>Manage your products, stock levels, and low stock alerts.</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card indigo">
+        <div class="stat-info">
+          <div class="stat-label">Total Products</div>
+          <div class="stat-value" id="stat-products">0</div>
+        </div>
+        <div class="stat-icon indigo">📦</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-info">
+          <div class="stat-label">Low Stock Alerts</div>
+          <div class="stat-value" id="stat-low-stock">0</div>
+        </div>
+        <div class="stat-icon red">⚠️</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Analytics (Charts) -->
+    <div class="content-grid">
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">📊</span> Category Distribution</h3>
+        </div>
+        <div class="card-body" style="position: relative; height: 300px; padding: 10px;">
+          <canvas id="inventoryCategoryChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">📈</span> Stock Levels</h3>
+        </div>
+        <div class="card-body" style="position: relative; height: 300px; padding: 10px;">
+          <canvas id="inventoryStockChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Smart Restock Recommendations -->
+    <div class="card" style="margin-bottom: 24px;">
+      <div class="card-header" style="background: linear-gradient(135deg, rgba(234,179,8,0.1), rgba(249,115,22,0.1));">
+        <h3><span class="card-icon">🤖</span> Smart Restock Recommendations</h3>
+        <div class="card-actions">
+          <button id="btn-generate-restock" class="btn btn-primary btn-sm" onclick="loadRestockRecommendations()">Generate Recommendations</button>
+        </div>
+      </div>
+      <div class="card-body" id="ai-restock-container">
+        <div style="text-align: center; color: var(--text-muted); padding: 20px;">
+          <i>Click the button above to generate AI-powered restock recommendations.</i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Management -->
+    <div class="card">
+      <div class="card-header">
+        <h3><span class="card-icon">📦</span> Product List</h3>
+        <div class="card-actions">
+          <button class="btn btn-secondary btn-sm" onclick="generateReport()">📄 Generate AI Report</button>
+          <input type="text" id="search-product" placeholder="Search products..." style="padding: 5px 10px; width: 200px; font-size: 14px;" />
+          <a href="add-product.html" class="btn btn-primary btn-sm">+ Add Product</a>
+        </div>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="product-table-body">
+              <tr class="loading-row"><td colspan="6"><div class="spinner">Loading...</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- AI Report Modal -->
+<div id="report-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
+  <div class="card" style="width:800px; max-height: 90vh; display: flex; flex-direction: column; background:var(--bg-surface); border-radius:var(--radius-lg);">
+    <div class="card-header" style="display: flex; justify-content: space-between;">
+      <h3 style="font-size:20px; font-weight:bold;">📄 AI Inventory Health Report</h3>
+      <button onclick="document.getElementById('report-modal').style.display='none'" style="background: transparent; border: none; color: var(--text-primary); font-size: 24px; cursor: pointer;">&times;</button>
+    </div>
+    <div class="card-body" style="overflow-y: auto; flex: 1; padding: 30px; font-size: 16px; line-height: 1.6;" id="report-content">
+       <div style="text-align: center; color: var(--text-muted); padding: 20px;">Generating comprehensive report...</div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/inventory.js"></script>
+<script src="js/charts.js"></script>
+<script>
+    document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+</script>
+<script src="js/ai-chat.js"></script>
+</body>
+</html>
