@@ -18,11 +18,11 @@ Team Members and Responsibilities
    - Develop server-side logic and APIs.
    - Manage database integration and functionality.
 
-5. Trisha – Backend Development
+5. Trisha – Backend Development, Wireframing
    - Assist in database design and backend implementation.
    - Work on APIs and system functionality.
 
-6. Muhsina – Wireframing ,Testing and Debugging
+6. Muhsina –Testing and Debugging
    - Test the application for errors and bugs.
    - Perform debugging and ensure smooth functionality.
 Project Workflow:
