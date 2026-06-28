@@ -8,7 +8,6 @@ Team Members and Responsibilities
 
 2. Muzaina Aafrin Khanum – Documentation and Written Work
    - Prepare project documentation and reports.
-   - Design wireframes and user flow of the web application.
    - Handle all written work and project records.
 
 3. Ajay – Frontend Development
