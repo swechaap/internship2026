@@ -222,3 +222,5 @@ Start your journey to better health today! 🥗🍎🥕💪
 Version: 1.0.0
 Last Updated: 2024
 Status: Active Development
+
+Depolyment Link: https://food-project-3-qe8t.onrender.com/ai-chat
