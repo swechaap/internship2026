@@ -88,7 +88,7 @@ TECHNOLOGIES USED :
 --> Backend
 --> Node.js
 --> AI Integration
---> Google Gemini 3.5 Flash API
+--> groq API
 --> Database
 --> JSON-based Storage
 --> React+ vite, nodejs , html. Css.
