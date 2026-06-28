@@ -1,0 +1,34 @@
+👩‍💼 1. Bharathi –
+ SPOC, Project Coordinator & Frontend Development
+Acted as the Single Point of Contact (SPOC) between the team and faculty.
+Coordinated team activities, meetings, and task allocation.
+Monitored project progress and ensured timely completion.
+Participated in frontend development using HTML, CSS, and JavaScript.
+Assisted in integrating modules, testing, and deployment.
+🤖 2. Likhitha – 
+Prompt Engineering
+Designed and refined AI prompts for project development.
+Generated prompts for UI design, content, and functionality.
+Modified prompts according to project requirements.
+Assisted in improving AI-generated outputs.
+Documented the prompt engineering process.
+📄 3. Bhavya Sree – 
+AI Use Case Research & Documentation
+Researched AI use cases related to project governance and compliance.
+Prepared project documentation and content.
+Identified governance and compliance scenarios.
+Assisted in organizing project requirements.
+Supported testing and documentation.
+📚 4.Chaitanya Sri – 
+AI Use Case Analysis & Content Validation
+Analyzed AI-generated governance and compliance use cases.
+Validated project content for accuracy and consistency.
+Organized governance rules and compliance information.
+Assisted in reviewing project modules and final verification.
+👨‍💻 5. Varshith – 
+Full Stack Development & Deployment
+Developed the core web application.
+Implemented frontend functionality using HTML, CSS, and JavaScript.
+Integrated all project modules and features.
+Performed testing, debugging, and optimization.
+Managed the GitHub repository and deployed the application on Vercel.
