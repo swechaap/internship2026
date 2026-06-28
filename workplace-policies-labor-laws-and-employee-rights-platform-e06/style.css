@@ -1,0 +1,137 @@
+:root{
+    --ink:#1B2B4B;
+    --ink-soft:#334268;
+    --coral:#FF6B4A;
+    --coral-soft:#FFE3D9;
+    --paper:#F7F5F0;
+    --paper-deep:#EFEAE0;
+    --teal:#2D8B72;
+    --teal-soft:#DCEFE8;
+    --stone:#9B8B7A;
+    --card:#FFFFFF;
+    --line:#E4DFD3;
+    --blue:#3568D4;
+    --blue-soft:#DDE6FB;
+    --purple:#7A52C9;
+    --purple-soft:#E9E0F9;
+  }
+  .dark{
+    --ink:#F2EFE7;
+    --ink-soft:#C9C4B6;
+    --coral:#FF8467;
+    --coral-soft:#3A2A22;
+    --paper:#14181F;
+    --paper-deep:#1B2029;
+    --teal:#5BBFA0;
+    --teal-soft:#1B3530;
+    --stone:#8B8378;
+    --card:#1D222C;
+    --line:#2B3140;
+    --blue:#7C9CF0;
+    --blue-soft:#202A45;
+    --purple:#B79CF0;
+    --purple-soft:#2B2240;
+  }
+  body{ background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; transition:background .4s, color .4s; }
+  .font-display{ font-family:'Fraunces', serif; }
+  .font-mono{ font-family:'IBM Plex Mono', monospace; }
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+  ::-webkit-scrollbar-thumb{ background:var(--line); border-radius:8px; }
+  .tab-card{ position:relative; }
+  .tab-card::before{
+    content:''; position:absolute; top:-10px; left:18px; width:46px; height:14px;
+    background:var(--card); border-radius:8px 8px 0 0; border:1px solid var(--line); border-bottom:none;
+  }
+  .glass{
+    background: var(--card);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    backdrop-filter: blur(14px);
+    border:1px solid var(--line);
+  }
+  .grain{
+    background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.035) 1px, transparent 0);
+    background-size: 14px 14px;
+  }
+  .focus-ring:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; border-radius:6px; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  }
+  @keyframes pulse-slow {
+    0%, 100% { transform: scale(1) translate(0px, 0px); opacity: 0.12; }
+    50% { transform: scale(1.15) translate(20px, -20px); opacity: 0.22; }
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 10s infinite ease-in-out;
+  }
+  @keyframes pulse-slow-reverse {
+    0%, 100% { transform: scale(1.1) translate(0px, 0px); opacity: 0.1; }
+    50% { transform: scale(0.95) translate(-20px, 20px); opacity: 0.18; }
+  }
+  .animate-pulse-slow-reverse {
+    animation: pulse-slow-reverse 12s infinite ease-in-out;
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fade-in 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+  .auth-input {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #fff;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .auth-input:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .auth-input:focus {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--coral) !important;
+    box-shadow: 0 0 12px rgba(255, 107, 74, 0.45);
+    outline: none;
+  }
+  .primary-btn {
+    background: var(--coral);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(255, 107, 74, 0.2);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(255, 107, 74, 0.45);
+    filter: brightness(1.05);
+  }
+  .primary-btn:active {
+    transform: translateY(0) scale(0.985);
+    box-shadow: 0 2px 10px rgba(255, 107, 74, 0.65);
+  }
+  .register-link {
+    color: var(--coral);
+    position: relative;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.25s ease;
+  }
+  .register-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1.5px;
+    bottom: -1px;
+    left: 0;
+    background-color: var(--coral);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  .register-link:hover {
+    text-shadow: 0 0 8px rgba(255, 107, 74, 0.6);
+  }
+  .register-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
