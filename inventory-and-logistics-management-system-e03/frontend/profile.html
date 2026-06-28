@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+
+<body>
+
+    <div class="container profile">
+
+        <h2>User Profile</h2>
+
+        <p><b>User ID:</b> <span id="userId"></span></p>
+
+        <p><b>Name:</b> <span id="name"></span></p>
+
+        <p><b>Email:</b> <span id="email"></span></p>
+
+        <p><b>Role:</b> <span id="role"></span></p>
+
+        <hr>
+
+        <h3>Update Profile</h3>
+
+        <input type="text" id="newName" placeholder="New Name">
+
+        <input type="email" id="newEmail" placeholder="New Email">
+
+        <button onclick="updateProfile()">Update Profile</button>
+
+        <br><br>
+        <button onclick="logout()" style="background: #ef4444; margin-top: 10px;">Logout</button>
+        <br><br>
+        <a href="home.html" style="display:block; text-align:center; margin-top: 15px; color: #38bdf8; text-decoration: none;">← Back to Main Dashboard</a>
+
+    </div>
+
+    <script src="js/script2.js"></script>
+
+    <script>
+        loadProfile();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+# Tasks
+
+- [x] Restructure Admin Portal Privileges
+  - [x] Remove Patient role selector from login: `admin-portal/src/pages/Login.jsx`
+  - [x] Grant Doctor/Admin access to `/users` and `/billing` routes: `admin-portal/src/App.jsx`
+  - [x] Add sidebar visibility for Users and Billing to Doctor role: `admin-portal/src/components/sidebar/Sidebar.jsx`
+- [x] Restructure Records Portal Scope
+  - [x] Remove Settings and Dashboard links from patient view: `records-portal/src/components/sidebar/Sidebar.jsx`
+  - [x] Restrict routing to `/medical-records` only: `records-portal/src/App.jsx`
+  - [x] Resolve missing `ChevronDown` import in `records-portal/src/components/sidebar/Header.jsx`
+- [x] Medical Records Restoration in Admin Portal
+  - [x] Mount fully functional `MedicalRecords` page component to `/records` route in `App.jsx`
+  - [x] Support full searching, filtering, and CRUD privileges for all patients
+  - [x] Show doctor names and departments on medical record card and details modal
+- [x] Bold Aesthetic and Feature Upgrade in Records Portal
+  - [x] Redesign record cards with bolder colors, thick left borders, and black titles
+  - [x] Add a high-contrast glowing "My Health Vitals" stats container in the sidebar
+- [x] Verification and Testing
+  - [x] Verify Admin Portal builds correctly
+  - [x] Verify Records Portal builds correctly
+  - [x] Update walkthrough documentation

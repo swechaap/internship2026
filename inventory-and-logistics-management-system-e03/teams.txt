@@ -1,0 +1,108 @@
+Project: INVENTORY AND LOGISTICS MANAGEMENT SYSTEM
+
+Team members Roles & Responsibilities
+
+1. K.Sreyash Chowdary – Authentication & User Management
+    
+    Frontend
+    -Login Page
+    -Registration Page
+    -Profile Page
+    -User Authentication Interface
+
+    Backend
+    -Authentication APIs
+    -Password Encryption
+    -JWT-based Authentication
+    -User Validation
+
+    Database
+    -Users Table
+    -User Role Management
+
+2. K.Gowtham Chowdary – Main Dashboard & Inventory Management
+    
+    Frontend
+    -Main Dashboard
+    -Inventory Dashboard
+    -Product Management Interface
+    
+    Features
+    -Add Product
+    -View Products
+    -Update Product
+    -Delete Product
+    -Inventory Statistics
+    -Product Search & Filtering
+
+    Backend APIs
+    -GET /products
+    -POST /products
+    -PUT /products/:id
+    -DELETE /products/:id
+
+    Database
+    -Products Table
+
+3. N.Jahnavi – Orders, Logistics & AI Integration
+
+    Frontend
+    -Orders Dashboard
+    -Shipment Tracking Dashboard
+    -AI Assistant & Business Insights Dashboard
+    -Order Creation & Shipment Status Update Interfaces
+    -Dark/Light Theme Toggle
+    -Search, Filter, Statistics Cards, and Responsive UI
+
+    Backend APIs
+    Orders
+    -GET /orders
+    -POST /orders
+
+    Shipments
+    -GET /shipments
+    -PUT /shipments/:id
+
+    AI
+    -POST /ai/chat
+    -GET /ai/insights
+    -GET /ai/restock
+    -GET /ai/report
+
+    Database
+    -Orders Table
+    -Shipments Table
+    -Inventory (Products) Synchronization
+    -Supplier Data Integration for AI Analysis
+    
+    AI Features
+    -Context-Aware AI Assistant
+    -Business Insights
+    -Smart Restock Recommendations
+    -AI Report Generation
+    -Intelligent Caching & Model Fallback
+    -Rule-Based Fallback Mechanism
+
+4. Gopi Chandu – Supplier & Notification Management
+
+    Frontend
+    -Supplier Dashboard
+    -Supplier Management Interface
+    -Notification Panel
+
+    Features
+    -Add Supplier
+    -Update Supplier
+    -Delete Supplier
+    -View Supplier Details
+    -Low Stock Notifications
+    -Notification Management
+    
+    Backend APIs
+    -GET /suppliers
+    -POST /suppliers
+    -PUT /suppliers/:id
+    -DELETE /suppliers/:id
+
+    Database
+    -Suppliers Table

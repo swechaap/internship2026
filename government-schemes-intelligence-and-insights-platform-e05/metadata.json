@@ -1,0 +1,6 @@
+{
+  "name": "Yojana Saathi",
+  "description": "An intelligent platform with a general-purpose multilingual AI chatbot that can answer any questions, alongside government scheme categorization, eligibility analysis, document verification, and roadmap tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

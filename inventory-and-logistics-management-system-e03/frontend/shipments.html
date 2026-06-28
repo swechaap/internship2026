@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Inventory & Logistics – Track shipments with a visual status stepper and update delivery status." />
+  <title>Shipments – Inventory & Logistics</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ══════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">📦</div>
+    <h1>Inventory & Logistics</h1>
+    <p>Management System</p>
+  </div>
+
+  <span class="sidebar-section-label">Orders & Logistics</span>
+  <a href="index.html" class="nav-item">
+    <span class="nav-icon">🏠</span> Dashboard
+  </a>
+  <a href="orders.html" class="nav-item">
+    <span class="nav-icon">📋</span> Orders
+  </a>
+  <a href="shipments.html" class="nav-item active">
+    <span class="nav-icon">🚚</span> Shipments
+  </a>
+
+  <span class="sidebar-section-label">Integrations</span>
+  <a href="#" class="nav-item" title="Managed by Member 2">
+    <span class="nav-icon">📦</span> Inventory
+  </a>
+  <a href="#" class="nav-item" title="Managed by Member 4">
+    <span class="nav-icon">🏭</span> Suppliers
+  </a>
+  <a href="#" class="nav-item">
+    <span class="nav-icon">🔔</span> Notifications
+    <span class="nav-badge" id="sidebar-notif-count">0</span>
+  </a>
+
+  <div class="sidebar-footer">
+    <span>Member 3</span>
+    Orders & Logistics Module
+  </div>
+</aside>
+
+<!-- ═══ MAIN WRAPPER ═════════════════════════════════════════ -->
+<div class="main-wrapper">
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h2>Shipment Tracking</h2>
+      <p>Track and update delivery status for all shipments</p>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" onclick="loadShipments()">↻ Refresh</button>
+      <div class="topbar-notif" title="Notifications">
+        🔔<span class="dot" id="notif-dot" style="display:none;"></span>
+      </div>
+      <div class="avatar">AD</div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Shipments</h1>
+      <p>Monitor shipment progress with a visual tracker and update delivery statuses in real-time.</p>
+    </div>
+
+    <div class="content-grid">
+
+      <!-- ── Update Shipment Form ───────────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">✏️</span> Update Shipment Status</h3>
+        </div>
+        <div class="card-body">
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label for="shipment_select">Select Shipment</label>
+              <select id="shipment_select" onchange="onShipmentSelect()">
+                <option value="">— Select Shipment ID —</option>
+              </select>
+            </div>
+
+            <!-- Selected Shipment Info Panel -->
+            <div class="product-preview" id="shipment-preview">
+              <div class="product-preview-row">
+                <span class="pv-label">Linked Order ID</span>
+                <span class="pv-val" id="sp-order">—</span>
+              </div>
+              <div class="product-preview-row">
+                <span class="pv-label">Product</span>
+                <span class="pv-val" id="sp-product">—</span>
+              </div>
+              <div class="product-preview-row">
+                <span class="pv-label">Current Status</span>
+                <span class="pv-val" id="sp-status">—</span>
+              </div>
+              <div class="product-preview-row">
+                <span class="pv-label">Delivery Date</span>
+                <span class="pv-val" id="sp-delivery">—</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="status">New Status</label>
+              <select id="status">
+                <option value="Processing">Processing</option>
+                <option value="In Transit">In Transit</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div style="margin-top:18px; display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-primary" onclick="updateShipment()">✔ Update Status</button>
+            <button class="btn btn-secondary" onclick="resetShipmentForm()">Reset</button>
+            <span id="shipment-msg" style="font-size:13px; color:var(--text-muted);"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Visual Tracking Stepper ────────────────────────── -->
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">📍</span> Shipment Progress Tracker</h3>
+          <span id="tracker-shipment-id" class="badge badge-processing">No selection</span>
+        </div>
+        <div class="card-body">
+          <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">
+            Select a shipment on the left to visualize its tracking progress.
+          </p>
+          <div class="stepper" id="shipment-stepper">
+            <!-- Steps injected via JS -->
+            <div class="step done">
+              <div class="step-dot">📝</div>
+              <div class="step-label">Order Placed</div>
+              <div class="step-date">—</div>
+            </div>
+            <div class="step" id="step-processing">
+              <div class="step-dot">⚙️</div>
+              <div class="step-label">Processing</div>
+              <div class="step-date">—</div>
+            </div>
+            <div class="step" id="step-transit">
+              <div class="step-dot">🚚</div>
+              <div class="step-label">In Transit</div>
+              <div class="step-date">—</div>
+            </div>
+            <div class="step" id="step-delivered">
+              <div class="step-dot">✅</div>
+              <div class="step-label">Delivered</div>
+              <div class="step-date" id="step-delivery-date">—</div>
+            </div>
+          </div>
+
+          <!-- Shipment Details Summary -->
+          <div class="order-summary" id="tracker-details" style="margin-top:24px; display:none;">
+            <div class="order-summary-row">
+              <span>Shipment ID</span>
+              <span class="val" id="tracker-id">—</span>
+            </div>
+            <div class="order-summary-row">
+              <span>Order ID</span>
+              <span class="val" id="tracker-order">—</span>
+            </div>
+            <div class="order-summary-row">
+              <span>Product</span>
+              <span class="val" id="tracker-product">—</span>
+            </div>
+            <div class="order-summary-row total">
+              <span>Expected Delivery</span>
+              <span id="tracker-delivery">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Shipment Stats ────────────────────────────────────── -->
+    <div class="stats-grid" style="margin-bottom:24px;">
+      <div class="stat-card indigo">
+        <div class="stat-info">
+          <div class="stat-label">Total Shipments</div>
+          <div class="stat-value" id="ship-stat-total">—</div>
+        </div>
+        <div class="stat-icon indigo">📦</div>
+      </div>
+      <div class="stat-card indigo">
+        <div class="stat-info">
+          <div class="stat-label">Processing</div>
+          <div class="stat-value" id="ship-stat-processing">—</div>
+        </div>
+        <div class="stat-icon indigo">⚙️</div>
+      </div>
+      <div class="stat-card cyan">
+        <div class="stat-info">
+          <div class="stat-label">In Transit</div>
+          <div class="stat-value" id="ship-stat-transit">—</div>
+        </div>
+        <div class="stat-icon cyan">🚚</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-info">
+          <div class="stat-label">Delivered</div>
+          <div class="stat-value" id="ship-stat-delivered">—</div>
+        </div>
+        <div class="stat-icon green">✅</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Analytics (Charts) -->
+    <div class="content-grid">
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">📊</span> Shipment Status Distribution</h3>
+        </div>
+        <div class="card-body" style="position: relative; height: 300px; padding: 10px;">
+          <canvas id="shipmentsStatusChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">📈</span> Delivered vs In Transit</h3>
+        </div>
+        <div class="card-body" style="position: relative; height: 300px; padding: 10px;">
+          <canvas id="shipmentsComparisonChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── All Shipments Table ─────────────────────────────── -->
+    <div class="card">
+      <div class="card-header">
+        <h3><span class="card-icon">🚚</span> All Shipments</h3>
+        <span id="shipments-count" class="badge badge-processing">Loading…</span>
+      </div>
+      <div class="card-body" style="padding:16px 20px 0;">
+        <div class="filter-bar">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="shipments-search" placeholder="Search by shipment ID, order ID or product…" oninput="renderShipments()" />
+          </div>
+          <div class="filter-tabs">
+            <button class="filter-tab active" onclick="setShipFilter('All',this)">All</button>
+            <button class="filter-tab" onclick="setShipFilter('Processing',this)">Processing</button>
+            <button class="filter-tab" onclick="setShipFilter('In Transit',this)">In Transit</button>
+            <button class="filter-tab" onclick="setShipFilter('Delivered',this)">Delivered</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-wrapper" style="padding:0 0 4px 0;">
+        <table>
+          <thead>
+            <tr>
+              <th>Shipment ID</th>
+              <th>Order ID</th>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Delivery Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="shipmentsTable">
+            <tr class="loading-row"><td colspan="7"><div class="spinner"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/shipments.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/ai-chat.js"></script>
+</body>
+</html>

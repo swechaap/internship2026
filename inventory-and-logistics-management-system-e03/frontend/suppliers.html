@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether Logistics | Inventory & Logistic Management</title>
+  <meta name="description" content="A premium real-time control system for tracking inventory suppliers, registering vendor contracts, and monitoring logistics alerts.">
+  <link rel="stylesheet" href="css/suppliers-app.css">
+</head>
+<body>
+  
+  <div class="app-container">
+    
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-logo">
+          <!-- Custom SVG Logo reflecting inventory/logistics -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <span class="brand-name">AETHER LOGISTICS</span>
+      </div>
+      <nav class="nav-menu">
+        <ul>
+          <li class="nav-item" id="nav-back-main">
+            <a href="home.html" style="font-size: 18px; font-weight: bold;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Back to Main</span>
+            </a>
+          </li>
+          <li class="nav-item active" id="nav-suppliers">
+            <a href="#suppliers">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <span>Suppliers Directory</span>
+            </a>
+          </li>
+          <li class="nav-item" id="nav-add-supplier">
+            <a href="#add-supplier">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="8.5" cy="7" r="4"></circle>
+                <line x1="20" y1="8" x2="20" y2="14"></line>
+                <line x1="23" y1="11" x2="17" y2="11"></line>
+              </svg>
+              <span>Add Supplier</span>
+            </a>
+          </li>
+          <li class="nav-item" id="nav-notifications">
+            <a href="#notifications">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span>Alert Notifications</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="avatar" onclick="window.location.href='profile.html'" style="cursor: pointer;">JJ</div>
+        <div class="user-info">
+          <p class="user-name">Jyotirmay</p>
+          <p class="user-role">Operations Lead</p>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Dark / Light mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <span id="theme-btn-label">Light Mode</span>
+      </button>
+    </aside>
+    <!-- MAIN CONTROL WINDOW -->
+    <main class="main-window">
+      
+      <!-- TOP BAR HEADER -->
+      <header>
+        <div class="page-title-container">
+          <h1 id="view-title">Suppliers Directory</h1>
+        </div>
+        <div class="header-actions">
+          <div class="notification-bell" id="header-bell-btn" title="View alerts">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <div class="badge-dot" id="bell-badge"></div>
+          </div>
+        </div>
+      </header>
+      <!-- VIEWS VIEWS CONTAINER -->
+      <div class="view-container">
+        
+        <!-- 1. SUPPLIER LIST VIEW -->
+        <section id="view-suppliers" class="view-panel active">
+          <div class="list-controls">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="search-input" placeholder="Search suppliers by name, contact or ID...">
+            </div>
+            
+            <select id="filter-category" class="filter-select">
+              <option value="">All Categories</option>
+              <option value="Logistics">Logistics</option>
+              <option value="Packaging">Packaging</option>
+              <option value="Raw Materials">Raw Materials</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Chemicals">Chemicals</option>
+            </select>
+            <select id="filter-status" class="filter-select">
+              <option value="">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="Pending Approval">Pending Approval</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+            <button class="btn-primary" id="btn-goto-add-supplier">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              New Supplier
+            </button>
+          </div>
+          <!-- Suppliers Table Grid -->
+          <div class="glass-card">
+            <div class="table-responsive">
+              <table class="supplier-table" id="supplier-table-el">
+                <thead>
+                  <tr>
+                    <th>Supplier / ID</th>
+                    <th>Category</th>
+                    <th>Contact Person</th>
+                    <th>Lead Time</th>
+                    <th>Rating</th>
+                    <th>Status</th>
+                    <th style="width: 100px; text-align: center;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="supplier-list-tbody">
+                  <!-- Generated dynamically in app.js -->
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Empty Search Results State -->
+            <div class="empty-state" id="table-empty-state" style="display: none;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+              <h3>No suppliers matched your search</h3>
+              <p>Try clearing your filters or testing another query.</p>
+            </div>
+          </div>
+        </section>
+        <!-- 2. ADD SUPPLIER FORM VIEW -->
+        <section id="view-add-supplier" class="view-panel">
+          <div class="form-container glass-card">
+            <form id="add-supplier-form" novalidate>
+              <div class="form-grid">
+                
+                <div class="form-group">
+                  <label for="sup-name">Supplier / Company Name *</label>
+                  <input type="text" id="sup-name" name="name" placeholder="e.g. Atlas Freight Corp" required>
+                  <span class="error-message" id="err-sup-name">Please enter a valid supplier name.</span>
+                </div>
+                <div class="form-group">
+                  <label for="sup-category">Industry Category *</label>
+                  <select id="sup-category" name="category" required>
+                    <option value="" disabled selected>Select category...</option>
+                    <option value="Logistics">Logistics</option>
+                    <option value="Packaging">Packaging</option>
+                    <option value="Raw Materials">Raw Materials</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Chemicals">Chemicals</option>
+                  </select>
+                  <span class="error-message" id="err-sup-category">Please choose a category.</span>
+                </div>
+                <div class="form-group">
+                  <label for="sup-contact">Contact Person Name *</label>
+                  <input type="text" id="sup-contact" name="contactPerson" placeholder="e.g. John Doe" required>
+                  <span class="error-message" id="err-sup-contact">Contact person name is required.</span>
+                </div>
+                <div class="form-group">
+                  <label for="sup-email">Business Email Address *</label>
+                  <input type="email" id="sup-email" name="email" placeholder="e.g. partners@atlasfreight.com" required>
+                  <span class="error-message" id="err-sup-email">Enter a valid email (e.g. name@company.com).</span>
+                </div>
+                <div class="form-group">
+                  <label for="sup-phone">Contact Phone Number *</label>
+                  <input type="tel" id="sup-phone" name="phone" placeholder="e.g. +1 (555) 019-2834" required>
+                  <span class="error-message" id="err-sup-phone">Enter a valid contact number.</span>
+                </div>
+                <div class="form-group">
+                  <label for="sup-lead-time">Estimated Lead Time *</label>
+                  <input type="text" id="sup-lead-time" name="leadTime" placeholder="e.g. 5 days, 2 weeks" required>
+                  <span class="error-message" id="err-sup-lead-time">Provide average shipping lead times.</span>
+                </div>
+                <div class="form-group">
+                  <label for="sup-status">Onboarding Status *</label>
+                  <select id="sup-status" name="status" required>
+                    <option value="Active">Active / Verified</option>
+                    <option value="Pending Approval" selected>Pending Compliance Review</option>
+                    <option value="Inactive">Inactive / Suspended</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Initial Performance Rating</label>
+                  <div class="rating-select" id="rating-stars-container">
+                    <span class="star-option" data-value="1">
+                      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </span>
+                    <span class="star-option" data-value="2">
+                      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </span>
+                    <span class="star-option" data-value="3">
+                      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </span>
+                    <span class="star-option" data-value="4">
+                      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </span>
+                    <span class="star-option" data-value="5">
+                      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </span>
+                    <span class="rating-value" id="form-rating-val">5.0</span>
+                  </div>
+                </div>
+                <div class="form-group full-width">
+                  <label for="sup-address">Headquarters/Warehouse Address *</label>
+                  <textarea id="sup-address" name="address" placeholder="Street Address, City, State/Region, Country Code" required></textarea>
+                  <span class="error-message" id="err-sup-address">Please supply the full warehouse location details.</span>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn-secondary" id="btn-cancel-add-supplier">Cancel</button>
+                <button type="submit" class="btn-primary">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                  </svg>
+                  Save Supplier
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+        <!-- 3. NOTIFICATIONS VIEW -->
+        <section id="view-notifications" class="view-panel">
+          <div class="notification-controls">
+            <div class="notifications-tabs">
+              <button class="tab-btn active" id="noti-tab-all">All Alerts</button>
+              <button class="tab-btn" id="noti-tab-unread">Unread</button>
+              <button class="tab-btn" id="noti-tab-critical">Critical</button>
+            </div>
+            <button class="btn-secondary" id="btn-mark-all-read" style="display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Mark all as read
+            </button>
+          </div>
+          <div class="notification-list" id="notifications-list-container">
+            <!-- Dynamic alerts generated in app.js -->
+          </div>
+          
+          <!-- Empty Notifications State -->
+          <div class="empty-state" id="notifications-empty-state" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <h3>All systems operational</h3>
+            <p>No new logistics warnings or supplier alerts are pending.</p>
+          </div>
+        </section>
+      </div>
+      
+    </main>
+  </div>
+  <!-- TOAST CONTAINER FOR GLOBAL IN-APP NOTIFICATIONS -->
+  <div class="toast-container" id="toast-outlet"></div>
+  <!-- Application scripts -->
+  
+  <script src="js/state.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/suppliers.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // --- THEME TOGGLE ---
+    (function() {
+      const saved = localStorage.getItem('suppliersTheme') || 'dark';
+      if (saved === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const btn = document.getElementById('theme-toggle-btn');
+      const label = document.getElementById('theme-btn-label');
+      
+      function applyTheme(theme) {
+        if (theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          label.textContent = 'Dark Mode';
+          btn.querySelector('svg path').setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          label.textContent = 'Light Mode';
+          btn.querySelector('svg path').setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z');
+        }
+        localStorage.setItem('suppliersTheme', theme);
+      }
+
+      // Apply saved theme on load
+      applyTheme(localStorage.getItem('suppliersTheme') || 'dark');
+
+      btn.addEventListener('click', function() {
+        const current = localStorage.getItem('suppliersTheme') || 'dark';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
+    });
+  </script>
+<script src="js/ai-chat.js"></script>`n</body>
+</html>
+
+

@@ -10,20 +10,21 @@ Team Members and Responsibilities
    - Prepare project documentation and reports.
    - Handle all written work and project records.
 
-3. Ajay – Frontend Development
+3. Muhsina - Wireframing
+   - Design the wireframes and layout for the web application.
+   - Create the basic structure and user flow before development
+
+4. Ajay – Frontend Development
    - Design and develop the user interface (UI).
    - Implement web pages based on the wireframes.
 
-4. Sanjana – Backend Development
+5. Sanjana – Backend Development
    - Develop server-side logic and APIs.
    - Manage database integration and functionality.
 
-5. Trisha – Backend Development, Wireframing
-   - Assist in database design and backend implementation.
-   - Work on APIs and system functionality.
-
-6. Muhsina –Testing and Debugging
+6. Thrisha –Testing and Debugging
    - Test the application for errors and bugs.
    - Perform debugging and ensure smooth functionality.
+
 Project Workflow:
 Researching → Documentation & Wireframing → Frontend Development → Backend Development → Testing & Debugging-> deployment.

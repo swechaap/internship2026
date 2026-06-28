@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Notification Center. View alerts, low stock warnings, and system notifications." />
+  <title>Dashboard – Notification Center</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🔔</div>
+    <h1>Notifications</h1>
+    <p>Management System</p>
+  </div>
+
+  <span class="sidebar-section-label">System</span>
+  <a href="home.html" class="nav-item" style="color: var(--text-muted); font-size: 18px; font-weight: bold;">
+    <span class="nav-icon">←</span> Back to Main
+  </a>
+
+  <span class="sidebar-section-label">Notification Center</span>
+  <a id="nav-notifications" href="notifications.html" class="nav-item active">
+    <span class="nav-icon">🔔</span> Dashboard
+  </a>
+</aside>
+
+<div class="main-wrapper">
+  <header class="topbar">
+    <div class="topbar-left">
+      <h2>Notification Center</h2>
+      <p id="current-date">Loading date...</p>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" onclick="toggleTheme()">🌙</button>
+      <div class="avatar" title="Admin" onclick="window.location.href='profile.html'" style="cursor: pointer;">AD</div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Alerts & Notifications</h1>
+      <p>View system alerts, low stock warnings, and important updates.</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card red">
+        <div class="stat-info">
+          <div class="stat-label">Unread Alerts</div>
+          <div class="stat-value" id="stat-unread">0</div>
+        </div>
+        <div class="stat-icon red">🔔</div>
+      </div>
+      <div class="stat-card indigo">
+        <div class="stat-info">
+          <div class="stat-label">Total Notifications</div>
+          <div class="stat-value" id="stat-total">0</div>
+        </div>
+        <div class="stat-icon indigo">📋</div>
+      </div>
+    </div>
+
+    <!-- Notifications List -->
+    <div class="card">
+      <div class="card-header">
+        <h3><span class="card-icon">🔔</span> Recent Notifications</h3>
+        <div class="card-actions">
+          <button class="btn btn-secondary btn-sm" onclick="markAllRead()">Mark All as Read</button>
+        </div>
+      </div>
+      <div class="card-body" id="notifications-list" style="padding: 20px;">
+        <div style="text-align:center;padding:20px;color:var(--text-muted);">
+          <div class="spinner">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) document.body.setAttribute('data-theme', savedTheme);
+
+  // Mock API for notifications
+  let notifications = [
+    { id: 1, title: 'Low Stock Alert', message: 'Product A is running low on stock (Quantity: 2)', type: 'warning', read: false },
+    { id: 2, title: 'New Order Received', message: 'Order #1024 has been placed successfully.', type: 'info', read: true }
+  ];
+
+  function renderNotifications() {
+    const list = document.getElementById('notifications-list');
+    list.innerHTML = '';
+    
+    if (notifications.length === 0) {
+      list.innerHTML = '<p style="text-align:center;color:var(--text-muted);">No notifications to display.</p>';
+    } else {
+      notifications.forEach(n => {
+        const strip = document.createElement('div');
+        strip.className = 'alert-strip';
+        if (n.read) {
+          strip.style.opacity = '0.7';
+          strip.style.background = 'var(--bg-card)';
+          strip.style.borderColor = 'var(--border)';
+        }
+        
+        let icon = 'ℹ️';
+        if (n.type === 'warning') icon = '⚠️';
+        
+        strip.innerHTML = `
+          <div class="alert-strip-icon">${icon}</div>
+          <div class="alert-strip-body" style="flex:1;">
+            <div class="alert-strip-title" style="color: ${n.type === 'warning' ? 'var(--accent-red)' : 'var(--text-primary)'}">${n.title}</div>
+            <p>${n.message}</p>
+          </div>
+          ${!n.read ? `<button class="btn btn-secondary btn-sm" onclick="markRead(${n.id})">Mark Read</button>` : ''}
+        `;
+        list.appendChild(strip);
+      });
+    }
+
+    const unreadCount = notifications.filter(n => !n.read).length;
+    document.getElementById('stat-unread').innerText = unreadCount;
+    document.getElementById('stat-total').innerText = notifications.length;
+  }
+  
+  function markRead(id) {
+    const notif = notifications.find(n => n.id === id);
+    if (notif) {
+      notif.read = true;
+      renderNotifications();
+    }
+  }
+
+  function markAllRead() {
+    notifications.forEach(n => n.read = true);
+    renderNotifications();
+  }
+
+  setTimeout(renderNotifications, 500);
+</script>
+<script src="js/ai-chat.js"></script>`n</body>
+</html>
+
