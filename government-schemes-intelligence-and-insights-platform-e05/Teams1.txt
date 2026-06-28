@@ -6,7 +6,7 @@ Team Members and Responsibilities
    - Research government schemes and user requirements.
    - Collect and analyze information related to the project.
 
-2. Muzaina Aafrin Khanum – Documentation, Wireframing, and Written Work
+2. Muzaina Aafrin Khanum – Documentation and Written Work
    - Prepare project documentation and reports.
    - Design wireframes and user flow of the web application.
    - Handle all written work and project records.
@@ -23,9 +23,8 @@ Team Members and Responsibilities
    - Assist in database design and backend implementation.
    - Work on APIs and system functionality.
 
-6. Muhsina – Testing and Debugging
+6. Muhsina – Wireframing ,Testing and Debugging
    - Test the application for errors and bugs.
    - Perform debugging and ensure smooth functionality.
-
 Project Workflow:
 Researching → Documentation & Wireframing → Frontend Development → Backend Development → Testing & Debugging-> deployment.
