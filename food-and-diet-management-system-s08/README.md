@@ -1,264 +1,224 @@
-# 🥗 NutriTracker — Smart Nutrition & Diet Tracking System
+🥗 NutriTracker - Nutrition & Diet Tracking Application
+A comprehensive, colorful web application for tracking nutrition, managing diet plans, and achieving fitness goals using Python, Flask, and SQLite.
 
-A full-stack nutrition and diet tracking web application that helps users monitor daily meals, calculate BMI, receive personalized diet recommendations, and track their fitness progress through an interactive dashboard.
-**Live Demo:** *Add your deployed application link here*
-Example: https://nutritracker.onrender.com
----
-# Project Overview
-NutriTracker is a nutrition management web application built using **Python (Flask)**, **HTML**, **CSS**, **JavaScript**, and **SQLite**. It enables users to maintain healthy eating habits by tracking meals, monitoring nutritional intake, calculating BMI, and setting personalized fitness goals.
+###🌟 Features
 
-The application provides an intuitive interface for managing daily nutrition while offering AI-inspired diet recommendations based on user health information.
+###Module 1: Login System
+User Sign Up - Create new account with email validation
+User Login - Secure authentication
+Profile Management - Update personal information
 
----
-# Purpose
-* Help users maintain healthy eating habits.
-* Track daily calorie and nutrition intake.
-* Calculate BMI and daily calorie requirements.
-* Recommend personalized diet plans.
-* Monitor progress toward fitness goals.
-* Provide a simple and user-friendly nutrition management platform.
+###Module 2: Health Assessment
+Enter Health Details - Age, weight, height, gender, activity level
+BMI Calculation - Automatic BMI computation
+Calorie Requirement Analysis - Harris-Benedict equation for personalized calorie goals
 
----
-# Features
-* Secure User Registration & Login
-* User Profile Management
-* Automatic BMI Calculator
-* Daily Calorie Requirement Calculator
-* Personalized Diet Recommendations
-* Breakfast, Lunch, Dinner & Snack Tracking
-* Nutrition Monitoring (Calories, Protein, Carbs, Fat, Fiber)
-* Water Intake Tracking
-* Weekly Nutrition Reports
-* Goal Setting & Progress Tracking
-* Responsive Dashboard
-* Secure Password Hashing & Authentication
----
-# Technologies Used
-| Technology       | Purpose                    |
-| ---------------- | -------------------------- |
-| Python           | Backend Development        |
-| Flask            | Web Framework              |
-| Flask-SQLAlchemy | Database ORM               |
-| Flask-Login      | User Authentication        |
-| SQLite           | Database                   |
-| HTML5            | Page Structure             |
-| CSS3             | Styling & Responsive UI    |
-| JavaScript       | Client-side Interactivity  |
-| Werkzeug         | Password Hashing           |
-| Flask-WTF        | Form Handling & Validation |
+###Module 3: AI Diet Recommendation
+AI Analyzes User Data - Based on health profile and goals
+Personalized Diet Plans - Customized recommendations
+Meal Recommendations - Healthy food suggestions
 
----
-# Folder Structure
+###Module 4: Meal Tracking
+Breakfast Tracking - Log morning meals
+Lunch Tracking - Log midday meals
+Dinner Tracking - Log evening meals
+Snack Tracking - Log snacks and extras
 
-```text
-NutriTracker/
-│
-├── run.py                     ← Application Entry Point
-├── requirements.txt           ← Python Dependencies
-├── README.md                  ← Project Documentation
-│
-├── app/
-│   ├── __init__.py            ← Flask App Initialization
-│   ├── models.py              ← Database Models
-│   ├── routes.py              ← Application Routes
-│   ├── nutrition.db           ← SQLite Database
-│   │
-│   ├── templates/
-│   │   ├── base.html
-│   │   ├── index.html
-│   │   ├── login.html
-│   │   ├── signup.html
-│   │   ├── dashboard.html
-│   │   ├── meals.html
-│   │   ├── profile.html
-│   │   ├── edit_profile.html
-│   │   └── progress.html
-│   │
-│   └── static/
-│       ├── css/
-│       │   └── style.css
-│       │
-│       └── js/
-│           └── main.js
-│
-└── requirements.txt
-```
----
-# How to Run
+###Module 5: Nutrition Monitoring
+Calorie Tracking - Daily calorie consumption
+Protein Tracking - Protein intake monitoring
+Carbohydrate Tracking - Carbs monitoring
+Water Intake Tracking - Daily water consumption
 
-### Clone the Repository
+###Module 6: Progress Dashboard
+Reports & Analytics - Detailed nutrition analysis
+Goal Tracking - Weight loss/gain goals
+Weekly Progress Monitoring - 7-day nutrition history
 
-```bash
-git clone <repository-url>
-cd NutriTracker
-```
+###🎨 Design
+Colorful Food Theme with vibrant colors for different food categories
+Responsive design for mobile, tablet, and desktop
+Smooth animations and transitions
+Intuitive user interface
+Color Palette
+🍎 Apple Red (#E63946)
+🥕 Carrot Orange (#F77F00)
+🍌 Banana Yellow (#FCBF49)
+🥦 Broccoli Green (#06A77D)
+🫐 Blueberry Blue (#4361EE)
+🍆 Eggplant Purple (#7209B7)
 
-### Install Dependencies
+###🚀 Installation
+Prerequisites
+Python 3.8+
+pip (Python package installer)
+Setup Steps
+Clone or download the project
 
-```bash
+cd food
+Create a virtual environment (optional but recommended)
+
+python -m venv venv
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+Install dependencies
+
 pip install -r requirements.txt
-```
+Run the application
 
-### Run the Application
-
-```bash
 python run.py
+Access the application
+
+Open your browser and go to: http://localhost:5000
+Default credentials can be created by signing up
+```text
+📁 Project Structure
+food/
+├── app/
+│   ├── __init__.py              # Flask app initialization
+│   ├── models.py                # Database models
+│   ├── routes.py                # API routes and views
+│   ├── static/
+│   │   ├── css/
+│   │   │   └── style.css        # Colorful styling
+│   │   └── js/
+│   │       └── main.js          # Frontend JavaScript
+│   └── templates/
+│       ├── base.html            # Base template with navigation
+│       ├── index.html           # Home page
+│       ├── login.html           # Login page
+│       ├── signup.html          # Sign up page
+│       ├── dashboard.html       # Main dashboard
+│       ├── meals.html           # Meal tracking
+│       ├── profile.html         # User profile
+│       ├── edit_profile.html    # Profile editing
+│       └── progress.html        # Progress tracking
+├── run.py                        # Application entry point
+├── requirements.txt              # Python dependencies
+└── README.md                     # This file
 ```
+💾 Database Schema
+Tables
+users - User accounts and health information
+food_items - Database of foods with nutritional info
+meals - Logged meals (breakfast, lunch, dinner, snacks)
+meal_items - Individual items in meals
+user_goals - User fitness goals
+goal_progress - Progress tracking for goals
+daily_nutrition - Daily nutrition summaries
+🔧 Configuration
+The application uses SQLite database (automatically created on first run). Database file: app/nutrition.db
 
-### Open Browser
+To change database location or use PostgreSQL, edit app/__init__.py:
 
-```
-http://localhost:5000
-```
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///nutrition.db'
+👥 End Users
+👨‍🎓 Students - Maintain healthy habits while studying
+💼 Working Professionals - Balance work and health
+🏋️ Fitness Enthusiasts - Track detailed nutrition
+⬇️ Weight Loss Seekers - Monitor progress toward goals
+⬆️ Muscle Gainers - Track protein and calorie intake
+❤️ Health-Conscious Individuals - Maintain balanced nutrition
+📊 Key Formulas
+BMI Calculation
+BMI = weight (kg) / (height (m))²
+Daily Calorie Requirement (Harris-Benedict)
+Male: BMR = 88.362 + (13.397 × weight) + (4.799 × height) - (5.677 × age)
+Female: BMR = 447.593 + (9.247 × weight) + (3.098 × height) - (4.330 × age)
+TDEE = BMR × Activity Factor
+📋 Food Database
+Pre-loaded with 20+ common foods including:
 
----
+Breakfast items (oatmeal, eggs, toast, milk)
+Fruits (banana, apple, orange)
+Proteins (chicken, salmon, beef)
+Vegetables (broccoli, spinach, sweet potato)
+Grains (brown rice, pasta)
+Snacks (almonds, peanut butter, yogurt)
+Beverages (water, coffee, tea, juice)
+🔐 Security Features
+Password hashing with Werkzeug
+SQL injection prevention with SQLAlchemy ORM
+User authentication with Flask-Login
+CSRF protection with Flask-WTF
+🎯 Usage Examples
+Example 1: Creating an Account
+Go to "Sign Up" page
+Enter username, email, and password
+Click "Create Account"
+You're ready to start tracking!
+Example 2: Logging Your First Meal
+Go to Dashboard
+Click "Log Meals"
+Select meal type (breakfast, lunch, dinner, snack)
+Search for food items
+Add quantity and save
+Example 3: Tracking Progress
+Go to Progress page
+Set a fitness goal (weight loss, gain, muscle)
+View your nutrition history
+Monitor daily intake vs. goals
+📈 Advanced Features
+Personalized calorie targets based on your profile
+Macro nutrient tracking (protein, carbs, fat ratios)
+Weekly nutrition reports with charts
+Goal progress visualization
+Food search and suggestions
+Meal history with detailed breakdowns
+🌐 Browser Support
+Chrome (latest)
+Firefox (latest)
+Safari (latest)
+Edge (latest)
+Mobile browsers (iOS Safari, Chrome Mobile)
+🐛 Troubleshooting
+Port Already in Use
+python run.py  # Use different port
+# Or modify in run.py
+app.run(debug=True, port=5001)
+Database Errors
+# Delete the database and restart
+# The app will create a new one automatically
+rm app/nutrition.db
+python run.py
+Import Errors
+# Make sure you're in the project directory
+# and virtual environment is activated
+pip install -r requirements.txt
+🚀 Future Enhancements
+Machine learning-based meal recommendations
+Integration with wearable devices
+Social features and community challenges
+Restaurant menu nutritional data
+Barcode scanning for quick food logging
+Dark mode theme
+Multiple language support
+Export reports (PDF, Excel)
+Integration with fitness trackers
+📝 Sample Credentials
+After first run, you can create your own account via sign up. Initially, there are no pre-configured users.
 
-# Application Workflow
+🏆 Best Practices
+Update Profile - Complete your health information for accurate recommendations
+Log Meals Regularly - Better data = better insights
+Set Realistic Goals - Healthy weight loss is 0.5-1kg per week
+Track Water Intake - Stay hydrated (8-10 glasses per day)
+Review Progress - Check your dashboard weekly
+📞 Support
+For issues or questions:
 
-### Home
+Check the README
+Review the code comments
+Test with sample data
+Verify all dependencies are installed
+📄 License
+This project is created for educational purposes.
 
-Landing page introducing NutriTracker and its features.
+🎉 Enjoy NutriTracker!
+Start your journey to better health today! 🥗🍎🥕💪
 
-### Authentication
-
-Create a new account or securely log in.
-
-### Profile
-
-Enter personal information including:
-
-* Age
-* Height
-* Weight
-* Gender
-* Activity Level
-
-The system automatically calculates:
-
-* BMI
-* Daily Calorie Requirement
-
-### Meal Tracking
-
-Track:
-
-* 🍳 Breakfast
-* 🍛 Lunch
-* 🍽 Dinner
-* 🍎 Snacks
-
-Each meal records:
-
-* Calories
-* Protein
-* Carbohydrates
-* Fat
-* Fiber
-
-### Dashboard
-
-Monitor:
-
-* Daily Nutrition Summary
-* Weekly Progress
-* Goal Achievement
-* Calorie Consumption
-* Nutrition Breakdown
-
----
-
-# Technical Highlights
-
-* Secure Authentication System
-* Password Hashing using Werkzeug
-* SQLite Database Integration
-* SQLAlchemy ORM
-* Responsive User Interface
-* Automatic BMI Calculation
-* Harris-Benedict Calorie Formula
-* Session Management
-* RESTful Flask Routing
-* Mobile-Friendly Design
-
----
-
-# Database Tables
-
-* User
-* FoodItem
-* Meal
-* MealItem
-* UserGoal
-* GoalProgress
-* DailyNutrition
-
----
-
-# Target Users
-
-* Students
-* Working Professionals
-* Fitness Enthusiasts
-* Weight Loss Seekers
-* Muscle Gain Users
-* Health-Conscious Individuals
----
-# Browser Support
-* Google Chrome
-* Microsoft Edge
-* Mozilla Firefox
-* Safari
----
-# Testing Checklist
-* User Registration
-* Login & Logout
-* Profile Update
-* BMI Calculation
-* Calorie Calculation
-* Meal Tracking
-* Nutrition Dashboard
-* Goal Tracking
-* Weekly Progress Reports
-* Responsive Design
-* Database Connectivity
----
-# Future Improvements
-* AI-powered Diet Recommendation using LLMs
-* Barcode Scanner for Food Items
-* Mobile Application
-* Food Image Recognition
-* Email Notifications
-* Health Report PDF Export
-* Doctor Consultation Module
-* Workout Recommendation System
-* Cloud Database Integration
-* Multi-language Support
----
-# Deployment
-Deploy using:
-* Render
-* Railway
-* PythonAnywhere
-* Heroku
-* Azure App Service
-**Live Demo:** *(Add your deployment link here)*
-
----
-# Learning Outcomes
-
-This project demonstrates practical knowledge of:
-
-* Full Stack Web Development
-* Flask Framework
-* Database Design
-* Authentication & Authorization
-* CRUD Operations
-* Responsive Web Design
-* Nutrition Tracking Systems
-* Software Architecture
-* RESTful Development
-* Python Backend Programming
----
-# Conclusion
-
-NutriTracker is a complete nutrition and diet tracking platform designed to help users develop healthier lifestyles through smart meal logging, personalized calorie analysis, and nutrition monitoring. The project combines modern web technologies with health-focused features to deliver an efficient, secure, and user-friendly solution suitable for students, fitness enthusiasts, and health-conscious individuals.
+Version: 1.0.0
+Last Updated: 2024
+Status: Active Development
