@@ -1,0 +1,9 @@
+/* Core specific non-Tailwind styles */
+
+.hidden {
+  display: none !important;
+}
+
+body {
+  transition: background-color 0.3s ease;
+}
