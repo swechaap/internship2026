@@ -1,0 +1,206 @@
+# 🚀 NutriTracker - QUICK START GUIDE
+
+## ⚡ Get Started in 60 Seconds
+
+### Step 1: Access the App
+Open your browser and go to:
+```
+http://localhost:5000
+```
+
+### Step 2: Create Account
+- Click "Sign Up"
+- Enter username, email, password
+- Click "Create Account"
+
+### Step 3: Login
+- Enter your credentials
+- Click "Login"
+
+### Step 4: Update Profile
+- Click "👤 Profile" → "✏️ Edit Profile"
+- Enter: Age, Weight (kg), Height (cm), Gender, Activity Level, Goal
+- Click "Save Changes"
+- System shows your BMI and daily calorie target
+
+### Step 5: Log Your First Meal
+- Click "🍽️ Meals"
+- Click "Add a New Meal"
+- Select meal type and date
+- Search for food items
+- Add to meal
+- View nutrition totals
+
+### Step 6: Check Progress
+- Click "📈 Progress"
+- View daily nutrition summary
+- Set fitness goals
+- Monitor weekly progress
+
+---
+
+## 🎯 Key URLs
+
+| Feature | URL |
+|---------|-----|
+| Home | http://localhost:5000/ |
+| Dashboard | http://localhost:5000/dashboard |
+| Meals | http://localhost:5000/meals |
+| Profile | http://localhost:5000/profile |
+| Progress | http://localhost:5000/progress |
+| Login | http://localhost:5000/auth/login |
+| Sign Up | http://localhost:5000/auth/signup |
+
+---
+
+## 📊 What's Tracked
+
+✅ Calories  
+✅ Protein (g)  
+✅ Carbohydrates (g)  
+✅ Fat (g)  
+✅ Fiber (g)  
+✅ Water Intake (L)  
+✅ Weight Goals  
+✅ Weekly Progress  
+
+---
+
+## 📁 All Files Created
+
+```
+✅ run.py                 - Application entry point
+✅ requirements.txt       - Dependencies
+✅ README.md             - Full documentation
+✅ SETUP_GUIDE.md        - Installation guide
+✅ PROJECT_COMPLETE.md   - Project summary
+✅ USER_GUIDE.md         - User scenarios
+✅ QUICK_START.txt       - This file
+
+✅ app/__init__.py       - Flask app factory
+✅ app/models.py         - Database models
+✅ app/routes.py         - API routes
+✅ app/nutrition.db      - Database (auto-created)
+
+✅ app/templates/base.html
+✅ app/templates/index.html
+✅ app/templates/login.html
+✅ app/templates/signup.html
+✅ app/templates/dashboard.html
+✅ app/templates/meals.html
+✅ app/templates/profile.html
+✅ app/templates/edit_profile.html
+✅ app/templates/progress.html
+
+✅ app/static/css/style.css
+✅ app/static/js/main.js
+```
+
+---
+
+## 🎨 Color Theme
+
+🍎 Red (#E63946) - Proteins  
+🥕 Orange (#F77F00) - Carbs  
+🍌 Yellow (#FCBF49) - Fruits  
+🥦 Green (#06A77D) - Vegetables  
+🫐 Blue (#4361EE) - Beverages  
+🍆 Purple (#7209B7) - Premium foods  
+
+---
+
+## ⚙️ System Requirements Met
+
+✅ Python 3.8+  
+✅ Flask 2.3.2  
+✅ SQLite Database  
+✅ 50MB disk space  
+✅ Modern web browser  
+
+---
+
+## 🔄 Server Commands
+
+**Start Server:**
+```bash
+cd c:\Users\HP\OneDrive\Desktop\food
+python run.py
+```
+
+**Stop Server:**
+Press `CTRL+C` in terminal
+
+**Restart Server:**
+Stop server, then start again
+
+---
+
+## 📱 Features at a Glance
+
+### Module 1: Login System ✅
+- Sign up, Login, Profile management
+
+### Module 2: Health Assessment ✅
+- BMI calculation, Calorie requirements
+
+### Module 3: AI Diet Recommendation ✅
+- Personalized meal suggestions
+
+### Module 4: Meal Tracking ✅
+- Track breakfast, lunch, dinner, snacks
+
+### Module 5: Nutrition Monitoring ✅
+- Track calories, protein, carbs, fat, water
+
+### Module 6: Progress Dashboard ✅
+- Goal tracking, 7-day reports
+
+---
+
+## 🏆 Included Food Database
+
+20+ pre-loaded foods with full nutrition info:
+
+**Proteins:** Chicken, Salmon, Beef  
+**Grains:** Rice, Pasta, Toast  
+**Vegetables:** Broccoli, Spinach, Potato  
+**Fruits:** Banana, Apple, Orange  
+**Snacks:** Almonds, Yogurt, Peanut Butter  
+**Beverages:** Water, Coffee, Tea, Juice  
+
+---
+
+## 💡 Tips
+
+1. **Complete your profile** for accurate calorie goals
+2. **Log meals immediately** after eating for accuracy
+3. **Check progress weekly** to stay motivated
+4. **Set realistic goals** (0.5-1kg per week)
+5. **Drink 2-3L water** daily for best results
+
+---
+
+## ❓ Need Help?
+
+See these files:
+- **README.md** - Complete documentation
+- **SETUP_GUIDE.md** - Troubleshooting & setup
+- **USER_GUIDE.md** - Detailed usage examples
+- **PROJECT_COMPLETE.md** - Technical overview
+
+---
+
+## 🎉 You're Ready!
+
+**Current Status: ✅ RUNNING**
+
+Visit: **http://localhost:5000**
+
+Enjoy tracking your nutrition! 🥗🍎💪
+
+---
+
+**Version**: 1.0.0  
+**Status**: Complete & Running  
+**Server**: http://localhost:5000  
+**Database**: Initialized with sample data
