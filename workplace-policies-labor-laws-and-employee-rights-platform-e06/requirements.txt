@@ -1,0 +1,29 @@
+========================================================================
+PROJECT REQUIREMENTS & TECHNICAL SPECIFICATIONS: WorkRights Hub
+========================================================================
+
+1. SYSTEM & RUNTIME REQUIREMENTS
+--------------------------------
+* Web Browser: Any modern standard-compliant browser (Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edge, Opera).
+* JavaScript: Enabled in browser settings.
+* CSS Features: Flexbox, CSS Grid, CSS Variables (:root), and backdrop-filter glassmorphism support.
+* Local Web Server: An HTTP web server (e.g. Python's built-in http.server or Node's http-server) is required for local execution to load separated script assets cleanly under local CORS restrictions.
+* Database & Auth Connectivity: An active internet connection is required to communicate with the hosted Supabase database instance.
+
+2. TECHNICAL STACK & LIBRARIES
+------------------------------
+* Frontend Structure: Clean HTML5 semantic layout.
+* Styling & Presentation: Native CSS3 variables, animations, custom glassmorphism layers, and responsive layouts combined with Tailwind CSS v3 utility classes loaded via CDN.
+* Core Logic Framework: React 18.2.0 (React, ReactDOM) with hooks (useState, useEffect, useRef, useMemo, useCallback) compiled dynamically using Babel Standalone 7.22.20 in-browser.
+* Database Backend API: Supabase JavaScript Client SDK v2 (handles user account sessions, real-time table queries, and insertions).
+* Graphics & Icons: Lucide Icons vector rendering library and Google Fonts integrations (Fraunces, Inter, IBM Plex Mono).
+
+3. FUNCTIONAL CAPABILITIES (MODULES)
+------------------------------------
+* Module 1: Premium Glassmorphic Authentication Gate (secure, switcher-free login and registration with validation checks, password visibility toggle, and interactive orange/coral focus outline glows).
+* Module 2: Employee Self-Service Dashboard (summary metrics cards tracking submitted, under-review, and resolved complaints, along with user profile metadata displays).
+* Module 3: Grievance & Complaint Tracker (form to file detailed complaints with subject, description, priority levels, and anonymous toggles, accompanied by an 8-stage resolution tracking timeline).
+* Module 4: Real-time Grievance Chat (polling-based messaging module for direct, real-time communication between the employee and resolving coordinators on individual complaints).
+* Module 5: Labor Rights Explorer (organized documentation database categorizing statutory rights, rules, and provisions).
+* Module 6: Company Policies Center (dynamic list view showcasing policy rules published by company administrators).
+* Module 7: Profile Customizer (interface to manage personal information details, update contact parameters, and upload base64 avatar images).
