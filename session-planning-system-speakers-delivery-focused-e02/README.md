@@ -1,4 +1,4 @@
-🎤 Session Planning System (Speaker Delivery Focused) – AI-Powered Speaker Delivery Assistant
+# 🎤 Session Planning System(Speakers delivery focused) – AI-Powered Speaker Delivery Assistant
 
 Session Planning System is a free, AI-powered web application designed to help speakers, presenters, trainers, educators, and students plan, organize, practice, and deliver impactful presentations with confidence. The application assists users in creating structured sessions, managing presentation flow, improving speaker delivery, tracking progress, and receiving AI-powered recommendations for better presentation skills.
 
