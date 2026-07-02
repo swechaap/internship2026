@@ -421,7 +421,22 @@ input:checked + .slider-switch:before {
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.15);
 }
- 
+
+.btn-speed {
+    background: var(--primary);
+}
+.btn-speed:hover{
+    background:var(--info);
+}
+.btn-pause {
+
+    background: var(--info);
+}
+.btn-pause:hover {
+    background: var(--warning-hover);
+    box-shadow: 0 0 12px rgba(241, 196, 15, 0.4);
+}
+
 .btn-danger {
     background: var(--danger);
 }
