@@ -214,39 +214,6 @@ class ChallengeManager {
         // Start/Restart and Hint triggers
         document.getElementById('btn-start-mission').addEventListener('click', () => this.togglePlayState());
         document.getElementById('btn-hint').addEventListener('click', () => this.showHint());
-        const quizBtn = document.getElementById('btn-quiz');
- 
-       if (quizBtn) {
-    quizBtn.addEventListener('click', () => {
- 
-        let score = 0;
- 
-        if (confirm("Q1: Does wind help spread pollution?\n\nPress OK for Yes")) {
-            score++;
-        }
- 
-        if (confirm("Q2: Does rain help remove pollution from the air?\n\nPress OK for Yes")) {
-            score++;
-        }
- 
-        if (confirm("Q3: Can cyclones move pollution?\n\nPress OK for Yes")) {
-            score++;
-        }
- 
-        if (confirm("Q4: AQI stands for Air Quality Index?\n\nPress OK for Yes")) {
-            score++;
-        }
- 
-        if (confirm("Q5: Strong wind can reduce pollution concentration in one area?\n\nPress OK for Yes")) {
-            score++;
-        }
- 
-        alert(`🎓 Quiz Complete!
- 
-Your Score: ${score}/5`);
- 
-    });
-}    
         // Modal Action bindings
         document.getElementById('btn-modal-next-mission').addEventListener('click', () => {
             this.closeCelebration();

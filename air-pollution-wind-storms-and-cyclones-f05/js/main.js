@@ -27,9 +27,8 @@ class SimulationController {
         this.challenge = new window.ChallengeManager(this);
  
         this.cloudDrifts = [0, 0, 0];
-        
-        // Safety measures last shown state (to avoid re-rendering same tips every frame)
-        this._lastSafetyState = '';
+        this.currentQuizPage = 1;
+        this.page1Submitted = false;
  
         this.initUI();
         this.bindEvents();
@@ -52,12 +51,75 @@ class SimulationController {
  
         this.updateParamDisplays();
         this.setupTutorialCarousel();
+        this.initQuizUI();
+    }
+ 
+    initQuizUI() {
+        this.currentQuizPage = 1;
+        this.page1Submitted = false;
+        this.showQuizPage(1);
+        const submitBtn = document.getElementById('btn-submit-page');
+        const nextBtn = document.getElementById('btn-next-page');
+        if (submitBtn) { submitBtn.classList.remove('hidden'); submitBtn.innerText = 'Submit Answers'; }
+        if (nextBtn) nextBtn.classList.add('hidden');
+        const progress = document.getElementById('quiz-progress');
+        if (progress) progress.innerText = 'Questions 1–5 of 10';
+        const resultEl = document.getElementById('quiz-result');
+        if (resultEl) resultEl.innerText = '';
+    }
+ 
+    showQuizPage(page) {
+        const page1 = document.getElementById('quiz-page-1');
+        const page2 = document.getElementById('quiz-page-2');
+        const progress = document.getElementById('quiz-progress');
+        const submitBtn = document.getElementById('btn-submit-page');
+        const nextBtn = document.getElementById('btn-next-page');
+ 
+        this.currentQuizPage = page;
+        if (page1 && page2) {
+            page1.classList.toggle('hidden', page !== 1);
+            page2.classList.toggle('hidden', page !== 2);
+        }
+        if (progress) {
+            progress.innerText = page === 1 ? 'Questions 1–5 of 10' : 'Questions 6–10 of 10';
+        }
+        if (submitBtn && nextBtn) {
+            if (page === 1) {
+                submitBtn.classList.remove('hidden');
+                nextBtn.classList.add('hidden');
+                submitBtn.innerText = 'Submit Answers';
+            } else {
+                submitBtn.classList.remove('hidden');
+                nextBtn.classList.add('hidden');
+                submitBtn.innerText = 'Submit Answers';
+            }
+        }
     }
  
     bindEvents() {
-        const quizBtn = document.getElementById('btn-submit-quiz');
-        if (quizBtn) {
-            quizBtn.addEventListener('click', () => this.checkQuiz());
+        const submitBtn = document.getElementById('btn-submit-page');
+        const nextBtn = document.getElementById('btn-next-page');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', () => this.checkQuiz());
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (!this.page1Submitted) {
+                    const resultEl = document.getElementById('quiz-result');
+                    if (resultEl) {
+                        resultEl.innerText = 'Please submit page 1 answers before proceeding.';
+                        resultEl.style.color = '#f1c40f';
+                    }
+                    return;
+                }
+                this.showQuizPage(2);
+                this.currentQuizPage = 2;
+                // ensure buttons are in correct state
+                const sBtn = document.getElementById('btn-submit-page');
+                if (sBtn) { sBtn.classList.remove('hidden'); sBtn.innerText = 'Submit Answers'; }
+                nextBtn.classList.add('hidden');
+                const resultEl = document.getElementById('quiz-result'); if (resultEl) resultEl.innerText = '';
+            });
         }
  
         document.getElementById('slider-wind-speed').addEventListener('input', (e) => {
@@ -190,6 +252,7 @@ class SimulationController {
         });
     }
  
+ 
     switchMode(mode) {
         document.getElementById('tab-explore').classList.remove('tab-active');
         document.getElementById('tab-challenge').classList.remove('tab-active');
@@ -311,20 +374,68 @@ class SimulationController {
     }
  
     checkQuiz() {
-        const answers = { q1: '1', q2: '1', q3: '1', q4: '1', q5: '1' };
-        let score = 0;
-        let total = 0;
- 
-        for (const [name, correct] of Object.entries(answers)) {
-            total++;
-            const selected = document.querySelector(`input[name="${name}"]:checked`);
-            if (selected && selected.value === correct) score++;
-        }
- 
+        const answers = { q1: '1', q2: '1', q3: '1', q4: '1', q5: '1', q6: '1', q7: '1', q8: '1', q9: '0', q10: '1' };
         const resultEl = document.getElementById('quiz-result');
-        let emoji = score === 5 ? '🏆' : score >= 3 ? '🎓' : '📚';
-        resultEl.innerText = `${emoji} Quiz Complete! Your Score: ${score}/${total}`;
-        resultEl.style.color = score === 5 ? '#2ecc71' : score >= 3 ? '#f1c40f' : '#e74c3c';
+        const submitBtn = document.getElementById('btn-submit-page');
+        const nextBtn = document.getElementById('btn-next-page');
+
+        const scoreAnswers = (names) => {
+            let s = 0;
+            for (const name of names) {
+                const selected = document.querySelector(`input[name="${name}"]:checked`);
+                if (selected && selected.value === answers[name]) s++;
+            }
+            return s;
+        };
+
+        if (this.currentQuizPage === 1) {
+            const page1 = ['q1', 'q2', 'q3', 'q4', 'q5'];
+            const unanswered = page1.some((name) => !document.querySelector(`input[name="${name}"]:checked`));
+            if (unanswered) {
+                resultEl.innerText = 'Please answer all first 5 questions before continuing.';
+                resultEl.style.color = '#f1c40f';
+                return;
+            }
+
+            const s = scoreAnswers(page1);
+            resultEl.innerText = `🏁 Page 1 Score: ${s}/5`;
+            resultEl.style.color = s >= 4 ? '#2ecc71' : s >= 3 ? '#f1c40f' : '#e74c3c';
+
+            if (submitBtn) submitBtn.classList.add('hidden');
+            if (nextBtn) { nextBtn.classList.remove('hidden'); nextBtn.focus(); }
+
+            this.page1Submitted = true;
+
+            // disable page1 inputs to lock answers
+            page1.forEach((name) => {
+                const nodes = document.querySelectorAll(`input[name="${name}"]`);
+                nodes.forEach(n => n.disabled = true);
+            });
+            return;
+        }
+
+        if (this.currentQuizPage === 2) {
+            const page2 = ['q6', 'q7', 'q8', 'q9', 'q10'];
+            const unanswered = page2.some((name) => !document.querySelector(`input[name="${name}"]:checked`));
+            if (unanswered) {
+                resultEl.innerText = 'Please answer all last 5 questions before submitting.';
+                resultEl.style.color = '#f1c40f';
+                return;
+            }
+
+            const s = scoreAnswers(page2);
+            resultEl.innerText = `🏁 Page 2 Score: ${s}/5`;
+            resultEl.style.color = s >= 4 ? '#2ecc71' : s >= 3 ? '#f1c40f' : '#e74c3c';
+
+            if (submitBtn) submitBtn.classList.add('hidden');
+
+            // disable page2 inputs to lock answers
+            page2.forEach((name) => {
+                const nodes = document.querySelectorAll(`input[name="${name}"]`);
+                nodes.forEach(n => n.disabled = true);
+            });
+            return;
+        }
     }
  
     unlockAllUIControls() {

@@ -1241,16 +1241,39 @@ input:checked + .slider-switch:before {
 .quiz-question {
     margin-bottom: 20px;
 }
- 
+
 .quiz-question p {
     font-weight: bold;
     margin-bottom: 8px;
 }
- 
+
 .quiz-question label {
     display: block;
     margin-left: 10px;
     margin-bottom: 5px;
+}
+
+.quiz-page.hidden,
+.quiz-question.hidden {
+    display: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.quiz-action-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+#quiz-progress {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 14px;
+    font-weight: 600;
 }
  
 #quiz-result {

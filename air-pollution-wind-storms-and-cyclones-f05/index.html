@@ -398,38 +398,76 @@
                 <div id="section-quiz" class="right-sub-panel">
                     <div class="panel-section card">
                         <h2 class="section-title">📝 Atmosphere Explorer Quiz</h2>
+                        <div id="quiz-progress" class="quiz-progress">Questions 1–5 of 10</div>
+                        <div id="quiz-page-1" class="quiz-page">
+                            <div class="quiz-question">
+                                <p>1. Does wind help spread pollution?</p>
+                                <label><input type="radio" name="q1" value="1"> Yes</label>
+                                <label><input type="radio" name="q1" value="0"> No</label>
+                            </div>
  
-                        <div class="quiz-question">
-                            <p>1. Does wind help spread pollution?</p>
-                            <label><input type="radio" name="q1" value="1"> Yes</label>
-                            <label><input type="radio" name="q1" value="0"> No</label>
+                            
+                            <div class="quiz-question">
+                                <p>2. Does rain help remove pollution?</p>
+                                <label><input type="radio" name="q2" value="1"> Yes</label>
+                                <label><input type="radio" name="q2" value="0"> No</label>
+                            </div>
+ 
+                            <div class="quiz-question">
+                                <p>3. Can cyclones move pollution?</p>
+                                <label><input type="radio" name="q3" value="1"> Yes</label>
+                                <label><input type="radio" name="q3" value="0"> No</label>
+                            </div>
+ 
+                            <div class="quiz-question">
+                                <p>4. AQI stands for Air Quality Index?</p>
+                                <label><input type="radio" name="q4" value="1"> Yes</label>
+                                <label><input type="radio" name="q4" value="0"> No</label>
+                            </div>
+ 
+                            <div class="quiz-question">
+                                <p>5. Strong winds can reduce pollution concentration in one place?</p>
+                                <label><input type="radio" name="q5" value="1"> Yes</label>
+                                <label><input type="radio" name="q5" value="0"> No</label>
+                            </div>
+                        </div>
+
+                        <div id="quiz-page-2" class="quiz-page hidden">
+                            <div class="quiz-question">
+                                <p>6. Cyclones usually form around a low-pressure center?</p>
+                                <label><input type="radio" name="q6" value="1"> Yes</label>
+                                <label><input type="radio" name="q6" value="0"> No</label>
+                            </div>
+
+                            <div class="quiz-question">
+                                <p>7. AQI measures levels of air pollution?</p>
+                                <label><input type="radio" name="q7" value="1"> Yes</label>
+                                <label><input type="radio" name="q7" value="0"> No</label>
+                            </div>
+
+                            <div class="quiz-question">
+                                <p>8. PM2.5 refers to tiny smoke particles in the air?</p>
+                                <label><input type="radio" name="q8" value="1"> Yes</label>
+                                <label><input type="radio" name="q8" value="0"> No</label>
+                            </div>
+
+                            <div class="quiz-question">
+                                <p>9. Wind always makes air quality better everywhere?</p>
+                                <label><input type="radio" name="q9" value="0"> No</label>
+                                <label><input type="radio" name="q9" value="1"> Yes</label>
+                            </div>
+
+                            <div class="quiz-question">
+                                <p>10. Rain can help wash pollution out of the air?</p>
+                                <label><input type="radio" name="q10" value="1"> Yes</label>
+                                <label><input type="radio" name="q10" value="0"> No</label>
+                            </div>
                         </div>
  
-                        <div class="quiz-question">
-                            <p>2. Does rain help remove pollution?</p>
-                            <label><input type="radio" name="q2" value="1"> Yes</label>
-                            <label><input type="radio" name="q2" value="0"> No</label>
+                        <div class="quiz-action-row">
+                            <button id="btn-submit-page" class="btn btn-success">Submit Answers</button>
+                            <button id="btn-next-page" class="btn btn-primary hidden">Next Questions</button>
                         </div>
- 
-                        <div class="quiz-question">
-                            <p>3. Can cyclones move pollution?</p>
-                            <label><input type="radio" name="q3" value="1"> Yes</label>
-                            <label><input type="radio" name="q3" value="0"> No</label>
-                        </div>
- 
-                        <div class="quiz-question">
-                            <p>4. AQI stands for Air Quality Index?</p>
-                            <label><input type="radio" name="q4" value="1"> Yes</label>
-                            <label><input type="radio" name="q4" value="0"> No</label>
-                        </div>
- 
-                        <div class="quiz-question">
-                            <p>5. Strong winds can reduce pollution concentration in one place?</p>
-                            <label><input type="radio" name="q5" value="1"> Yes</label>
-                            <label><input type="radio" name="q5" value="0"> No</label>
-                        </div>
- 
-                        <button id="btn-submit-quiz" class="btn btn-success">Submit Quiz</button>
                         <div id="quiz-result"></div>
                     </div>
                 </div>
