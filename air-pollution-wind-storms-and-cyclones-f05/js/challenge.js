@@ -44,6 +44,8 @@ const MISSION_DATA = {
  
         insight:
             "Wind spreads pollutants over a larger area, reducing pollution concentration in one place."
+        ,
+        moves: 4
     },
  
     2: {
@@ -90,6 +92,8 @@ const MISSION_DATA = {
  
         insight:
             "Rain cleans the atmosphere through a process called wet deposition."
+        ,
+        moves: 3
     },
  
     3: {
@@ -134,6 +138,8 @@ const MISSION_DATA = {
  
         insight:
             "Cyclones create rotating winds that can transport pollution."
+        ,
+        moves: 4
     },
  
     4: {
@@ -180,6 +186,8 @@ const MISSION_DATA = {
  
         insight:
             "Changing wind direction can protect people from polluted air."
+        ,
+        moves: 5
     }
 };
  
@@ -194,6 +202,10 @@ class ChallengeManager {
         // Track visual rewards
         this.stars = 0;
         this.hintIndex = 0;
+        // Moves tracking
+        this.movesInitial = 0;
+        this.movesRemaining = 0;
+        this.unlockedMissions = {1: true};
  
         this.bindEvents();
     }
@@ -202,11 +214,20 @@ class ChallengeManager {
         // Mission Selection click events
         const buttons = document.querySelectorAll('.btn-challenge');
         buttons.forEach(btn => {
+            const missionId = parseInt(btn.getAttribute('data-mission'));
+            // initialize locked state
+            if (!this.unlockedMissions[missionId]) {
+                btn.disabled = true;
+                btn.classList.add('btn-locked');
+            }
             btn.addEventListener('click', (e) => {
+                if (!this.unlockedMissions[missionId]) {
+                    alert('This mission is locked. Complete previous missions to unlock.');
+                    return;
+                }
                 if (this.isPlaying) {
                     if (!confirm("Are you sure you want to quit the current mission?")) return;
                 }
-                const missionId = parseInt(e.target.getAttribute('data-mission'));
                 this.selectMission(missionId);
             });
         });
@@ -238,6 +259,12 @@ class ChallengeManager {
         this.timer = MISSION_DATA[id].duration;
         this.holdTimer = 0;
         this.hintIndex = 0;
+
+        // Setup moves for mission
+        this.movesInitial = MISSION_DATA[id].moves || 3;
+        this.movesRemaining = this.movesInitial;
+        const movesEl = document.getElementById('lbl-mission-moves');
+        if (movesEl) movesEl.innerText = this.movesRemaining;
  
         // Toggle button states in panel list
         document.querySelectorAll('.btn-challenge').forEach(btn => {
@@ -300,6 +327,16 @@ class ChallengeManager {
             this.sim.showBanner(`Starting ${MISSION_DATA[this.currentMissionId].title}!`);
         }
     }
+
+    registerMove(count = 1) {
+        if (!this.isPlaying) return;
+        this.movesRemaining = Math.max(0, this.movesRemaining - count);
+        const movesEl = document.getElementById('lbl-mission-moves');
+        if (movesEl) movesEl.innerText = this.movesRemaining;
+        if (this.movesRemaining <= 0) {
+            this.failMission();
+        }
+    }
  
     update(dt) {
         if (!this.isPlaying) return;
@@ -360,18 +397,23 @@ class ChallengeManager {
     winMission() {
         this.isPlaying = false;
         
-        // Calculate Star rewards based on speed
+        // Calculate Star rewards based on moves efficiency (primary) and time (secondary)
         const currentMission = MISSION_DATA[this.currentMissionId];
+        const movesUsed = this.movesInitial - this.movesRemaining;
+        const moveRatio = this.movesRemaining / Math.max(1, this.movesInitial);
+        let movesStars = 1;
+        if (moveRatio >= 0.66) movesStars = 3;
+        else if (moveRatio >= 0.33) movesStars = 2;
+
+        // Time stars (fallback)
         const maxTime = currentMission.duration;
         const timeSpent = maxTime - this.timer;
-        
-        if (timeSpent < maxTime * 0.45) {
-            this.stars = 3;
-        } else if (timeSpent < maxTime * 0.75) {
-            this.stars = 2;
-        } else {
-            this.stars = 1;
-        }
+        let timeStars = 1;
+        if (timeSpent < maxTime * 0.45) timeStars = 3;
+        else if (timeSpent < maxTime * 0.75) timeStars = 2;
+
+        // Combine and average the metrics to determine final stars
+        this.stars = Math.max(1, Math.round((movesStars + timeStars) / 2));
  
         // Update celebration UI
         const starContainer = document.getElementById('celebration-stars');
@@ -387,6 +429,9 @@ class ChallengeManager {
         document.getElementById('lbl-celebration-explain').innerText =
         `Mission Completed Successfully! You learned an important environmental science concept through experimentation.`;
         document.getElementById('lbl-celebration-insight').innerHTML = `<strong>Science Insight:</strong> ${currentMission.insight}`;
+        // Add explanation about moves and why solution worked
+        document.getElementById('lbl-celebration-explain').innerText =
+            `You used ${movesUsed} move(s). Efficient solutions use fewer moves; that earned you ${this.stars} star(s).`;
  
         // Toggle Next Mission button state
         const nextBtn = document.getElementById('btn-modal-next-mission');
@@ -395,6 +440,21 @@ class ChallengeManager {
         } else {
             nextBtn.innerText = "Play Next Mission";
         }
+
+        // Unlock next mission
+        const nextId = this.currentMissionId < 4 ? this.currentMissionId + 1 : 1;
+        this.unlockedMissions[nextId] = true;
+        // Update mission buttons UI
+        document.querySelectorAll('.btn-challenge').forEach(btn => {
+            const id = parseInt(btn.getAttribute('data-mission'));
+            if (!this.unlockedMissions[id]) {
+                btn.disabled = true;
+                btn.classList.add('btn-locked');
+            } else {
+                btn.disabled = false;
+                btn.classList.remove('btn-locked');
+            }
+        });
  
         // Trigger visual modal
         const modal = document.getElementById('modal-celebration');

@@ -126,32 +126,55 @@ class SimulationController {
             this.windSpeed = parseFloat(e.target.value);
             this.updateParamDisplays();
         });
+        // register move on change (when user releases slider)
+        document.getElementById('slider-wind-speed').addEventListener('change', () => {
+            if (this.challenge) this.challenge.registerMove();
+        });
  
         document.getElementById('slider-wind-dir').addEventListener('input', (e) => {
             this.windAngleDeg = parseFloat(e.target.value);
             this.updateParamDisplays();
+        });
+        document.getElementById('slider-wind-dir').addEventListener('change', () => {
+            if (this.challenge) this.challenge.registerMove();
         });
  
         document.getElementById('slider-temp').addEventListener('input', (e) => {
             this.temperature = parseFloat(e.target.value);
             this.updateParamDisplays();
         });
+        document.getElementById('slider-temp').addEventListener('change', () => {
+            if (this.challenge) this.challenge.registerMove();
+        });
  
         document.getElementById('slider-humidity').addEventListener('input', (e) => {
             this.humidity = parseFloat(e.target.value);
             this.updateParamDisplays();
         });
+        document.getElementById('slider-humidity').addEventListener('change', () => {
+            if (this.challenge) this.challenge.registerMove();
+        });
  
         document.getElementById('toggle-factory').addEventListener('change', (e) => {
             this.factoryEmission = e.target.checked;
+            if (this.challenge) this.challenge.registerMove();
         });
  
         document.getElementById('toggle-vehicles').addEventListener('change', (e) => {
             this.vehicleEmission = e.target.checked;
+            if (this.challenge) this.challenge.registerMove();
         });
  
         document.getElementById('btn-storm').addEventListener('click', () => this.toggleStorm());
         document.getElementById('btn-cyclone').addEventListener('click', () => this.toggleCyclone());
+
+        // Count toggling storm/cyclone as moves when in challenge
+        document.getElementById('btn-storm').addEventListener('click', () => {
+            if (this.challenge) this.challenge.registerMove();
+        });
+        document.getElementById('btn-cyclone').addEventListener('click', () => {
+            if (this.challenge) this.challenge.registerMove();
+        });
  
         document.getElementById('btn-pause').addEventListener('click', () => this.togglePause());
         document.getElementById('btn-speed').addEventListener('click', () => this.toggleSpeed());
