@@ -4,36 +4,62 @@ WorkRights Hub is a premium, interactive Employee Self-Service portal designed t
 
 ---
 
+## 📂 File Architecture
+
+This repository has been restructured into a modular, production-ready React + Vite application:
+
+```text
+├── supabase/
+│   └── schema.sql          # Database setup, seed parameters, & RLS policies
+├── src/
+│   ├── main.jsx            # Vite React entry point
+│   ├── App.jsx             # Root layout, routing, and global state
+│   ├── index.css           # Injects Tailwind CSS & styles import
+│   ├── components/         # Reusable UI components
+│   │   ├── Icon.jsx
+│   │   ├── Sidebar.jsx
+│   │   ├── Topbar.jsx
+│   │   ├── ComplaintChat.jsx  # [NEW] Real-time grievance live chat panel
+│   │   ├── AutoHeight.jsx
+│   │   └── ...
+│   ├── pages/              # Page view modules
+│   │   ├── Dashboard.jsx
+│   │   ├── RightsFinder.jsx
+│   │   ├── LawExplorer.jsx
+│   │   ├── PoliciesCenter.jsx
+│   │   ├── ComplaintTracker.jsx
+│   │   └── Profile.jsx
+│   ├── lib/
+│   │   └── supabaseClient.js  # Initializes Supabase client
+│   ├── data/               # Static dataset declarations
+│   │   └── ...
+│   └── styles/
+│       └── style.css       # Native variables & glassmorphism CSS
+├── package.json            # Node dependencies and build scripts
+├── tailwind.config.js      # Tailwind configurations
+├── vite.config.js          # Vite configuration
+└── vercel.json             # Single Page Application rewrite rules
+```
+
+---
+
 ## 🌟 Key Features
 
 * **Grievance Tracking**: Raise grievances categorized by department, priority, and subject, with options for anonymous submissions.
+* **Grievance Live Chat [NEW]**: Real-time communication on individual complaints directly linking employees and coordinators via Supabase Realtime socket events.
 * **8-Stage Resolution Timeline**: View real-time status updates on a visually structured pipeline from "Submitted" to "Resolved".
-* **Interactive Chat**: Live chat capability on individual complaints directly linking employees and coordinators.
 * **Labor Rights Library**: A structured directory classifying labor rights and statutory provisions.
 * **Company Policies**: Dynamically retrieved documentation published by administrators.
 * **Premium Glassmorphic UI**: High-end styling utilizing radial gradients, slow-pulsing background blobs, and frosted glass components.
-* **Micro-Animations & Interactive Glows**: Input fields animate with soft orange outer glows on focus. Buttons lift on hover and scale down on press. Links feature custom sliding underlines.
+* **Micro-Animations**: Framer Motion powered transitions for hover triggers and page swaps.
 
 ---
 
 ## 🛠️ Technology Stack
 
-* **Frontend**: HTML5, CSS3, JavaScript (ES6+), React 18 (loaded via CDN).
+* **Frontend**: React 18, Vite 5, Framer Motion, Lucide React.
 * **Styling**: Tailwind CSS (Utility classes) & Vanilla CSS (Custom variables, glassmorphism, animations).
-* **Database & Auth**: Supabase (PostgreSQL database & client SDK).
-* **Typography & Icons**: Google Fonts (Inter, Fraunces, IBM Plex Mono) and Lucide Icons.
-* **JSX Compiling**: Babel Standalone (runs client-side to compile React code on-the-fly).
-
----
-
-## 📂 File Architecture
-
-* **`index.html`**: Clean entry point loading Google fonts, CDN dependencies, external style assets, and initiating the React wrapper.
-* **`style.css`**: Central design system definitions, theme variables, glassmorphic layout properties, transition times, and keyframe animations.
-* **`app.js`**: React component hierarchy, routing, state managers, custom SVG icon components, and backend database queries (~2,600 lines).
-* **`schema.sql`**: Full database setup containing SQL tables, indices, check constraints, default companies, and Postgres Row-Level Security (RLS) policies.
-* **`config.js`**: Stores local Supabase URL and anonymous keys used to establish database clients.
-* **`vercel.json`**: Deployment configurations handling static assets routing.
+* **Database & Auth**: Supabase (PostgreSQL database, client SDK, Realtime channels).
 
 ---
 
@@ -41,40 +67,32 @@ WorkRights Hub is a premium, interactive Employee Self-Service portal designed t
 
 ### 1. Database Setup
 1. Create a project in your [Supabase Console](https://supabase.com/).
-2. Navigate to the SQL Editor and run the queries defined inside [schema.sql](schema.sql) to set up your tables, seeding parameters, and security layers.
+2. Navigate to the SQL Editor and execute the script inside [supabase/schema.sql](supabase/schema.sql) to set up tables, triggers, seed parameters, and Row-Level Security (RLS) policies.
 
 ### 2. Configure Credentials
-Open [config.js](config.js) and populate it with your Supabase credentials:
-```javascript
-window.ENV = {
-  SUPABASE_URL: "https://your-project-id.supabase.co",
-  SUPABASE_ANON_KEY: "your-anon-key-string"
-};
+Create a `.env.local` file in your root project directory:
+```env
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key-string
 ```
+*Note: If the environment variables are not set, the application will display a setup screen letting you link database credentials dynamically.*
 
-### 3. Start a Local Dev Server
-Babel Standalone requires files to be served over an HTTP server to load external JSX modules. Running the application using a `file://` link will trigger CORS blockages.
-
-Run one of the following commands in your project directory:
-
-**Using Python (Recommended):**
+### 3. Local Development Server
+To run the project locally, install Node.js and run:
 ```bash
-python -m http.server 8090
-```
+# Install dependencies
+npm install
 
-**Using Node.js:**
-```bash
-# Install server globally
-npm install -g http-server
-
-# Run server
-http-server -p 8090
+# Start Vite dev server
+npm run dev
 ```
-Open **https://workplace-policies-labor-laws-and-e.vercel.app** in your browser.
+Open **http://localhost:3000** in your browser.
 
 ---
 
 ## 🌐 Deployment
+
 To deploy this project to hosting services like **Vercel** or **Netlify**:
 1. Connect your GitHub repository containing this directory.
-2. The project will build automatically as a static site. The configurations inside `vercel.json` ensure Vercel routes all subpaths correctly to `index.html` to prevent 404 errors during client-side navigation.
+2. The project will build automatically as a static site using the `npm run build` command, outputting to the `dist/` directory.
+3. The configurations inside `vercel.json` ensure Vercel routes all subpaths correctly to `index.html` to prevent 404 errors during client-side navigation.
