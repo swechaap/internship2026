@@ -10,7 +10,7 @@ async function generateInsights() {
     container.innerHTML = `<div style="text-align:center;color:var(--text-muted);padding:20px;">⏳ Generating insights... Please wait.</div>`;
 
     try {
-        const res = await fetch("http://localhost:5000/ai/insights");
+        const res = await fetch("https://inventory-and-logistics-management-system.onrender.com/ai/insights");
         const data = await res.json();
 
         if (!res.ok) {
@@ -34,9 +34,9 @@ async function generateInsights() {
         // Always try rule-based fallback from live data
         try {
             const [prodRes, orderRes, shipRes] = await Promise.all([
-                fetch("http://localhost:5000/products"),
-                fetch("http://localhost:5000/orders").catch(() => ({ json: () => ([]) })),
-                fetch("http://localhost:5000/shipments").catch(() => ({ json: () => ([]) }))
+                fetch("https://inventory-and-logistics-management-system.onrender.com/products"),
+                fetch("https://inventory-and-logistics-management-system.onrender.com/orders").catch(() => ({ json: () => ([]) })),
+                fetch("https://inventory-and-logistics-management-system.onrender.com/shipments").catch(() => ({ json: () => ([]) }))
             ]);
 
             const products = await prodRes.json();

@@ -28,11 +28,28 @@ app.use("/shipments", shipmentRoutes);
 app.use("/products", productRoutes);
 app.use("/suppliers", supplierRoutes);
 app.use("/notifications", notificationRoutes);
+
+// Simple debug endpoint for the user to verify environment variables on Render
+app.get("/api/check-env", (req, res) => {
+    const key = process.env.GROQ_API_KEY;
+    res.json({
+        message: "Environment Variable Diagnostics",
+        groqKeyPresent: !!key,
+        groqKeyLength: key ? key.length : 0,
+        groqKeyPreview: key ? `${key.substring(0, 5)}...` : "NONE",
+        nodeEnv: process.env.NODE_ENV
+    });
+});
 app.use("/ai", aiRoutes);
 app.use("/search", searchRoutes);
 app.use("/analytics", analyticsRoutes);
 app.use("/auth", authRoutes);
 
-app.listen(process.env.PORT, () => {
-    console.log("Server Running on port " + process.env.PORT);
+app.get("/", (req, res) => {
+    res.send("Inventory & Logistics Management System Backend is Running 🚀");
+});
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server Running on port ${PORT}`);
 });

@@ -38,7 +38,7 @@ const pieOptions = {
 
 async function loadInventoryCharts() {
     try {
-        const res = await fetch("http://localhost:5000/analytics/inventory");
+        const res = await fetch("https://inventory-and-logistics-management-system.onrender.com/analytics/inventory");
         const data = await res.json();
 
         if (data.categories) {
@@ -80,7 +80,7 @@ async function loadInventoryCharts() {
 
 async function loadOrdersCharts() {
     try {
-        const res = await fetch("http://localhost:5000/analytics/orders");
+        const res = await fetch("https://inventory-and-logistics-management-system.onrender.com/analytics/orders");
         const data = await res.json();
 
         if (data.status) {
@@ -142,7 +142,7 @@ async function loadOrdersCharts() {
 
 async function loadShipmentsCharts() {
     try {
-        const res = await fetch("http://localhost:5000/analytics/shipments");
+        const res = await fetch("https://inventory-and-logistics-management-system.onrender.com/analytics/shipments");
         const data = await res.json();
 
         if (data.status) {

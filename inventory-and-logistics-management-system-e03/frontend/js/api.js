@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://inventory-and-logistics-management-system.onrender.com";
 
 export async function getOrders() {
     const res = await fetch(`${BASE_URL}/orders`);

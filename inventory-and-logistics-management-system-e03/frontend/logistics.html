@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Inventory & Logistics – Orders Dashboard. Real-time overview of orders, shipments, inventory levels, and low stock alerts." />
+  <title>Dashboard – Orders & Logistics</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ══════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">📦</div>
+    <h1>Orders & Logistics</h1>
+    <p>Management System</p>
+  </div>
+
+  <span class="sidebar-section-label">System</span>
+  <a href="home.html" class="nav-item" style="color: var(--text-muted); font-size: 18px; font-weight: bold;">
+    <span class="nav-icon">←</span> Back to Main
+  </a>
+
+  <span class="sidebar-section-label">Orders & Logistics</span>
+  <a id="nav-dashboard" href="logistics.html" class="nav-item active">
+    <span class="nav-icon">🏠</span> Dashboard
+  </a>
+  <a id="nav-orders" href="orders.html" class="nav-item">
+    <span class="nav-icon">📋</span> Orders
+  </a>
+  <a id="nav-shipments" href="shipments.html" class="nav-item">
+    <span class="nav-icon">🚚</span> Shipments
+  </a>
+
+  <span class="sidebar-section-label">Integrations</span>
+  <a id="nav-inventory" href="#" class="nav-item" title="Managed by Member 2">
+    <span class="nav-icon">📦</span> Inventory
+  </a>
+  <a id="nav-suppliers" href="#" class="nav-item" title="Managed by Member 4">
+    <span class="nav-icon">🏭</span> Suppliers
+  </a>
+  <a id="nav-notifications" href="#" class="nav-item" id="notif-link">
+    <span class="nav-icon">🔔</span> Notifications
+    <span class="nav-badge" id="sidebar-notif-count">0</span>
+  </a>
+
+  <div class="sidebar-footer">
+    <span>Member 3</span>
+    Orders & Logistics Module
+  </div>
+</aside>
+
+<!-- ═══ MAIN WRAPPER ═════════════════════════════════════════ -->
+<div class="main-wrapper">
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h2>Dashboard</h2>
+      <p id="current-date">Loading date...</p>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" onclick="refreshDashboard()">↻ Refresh</button>
+      <div class="topbar-notif" title="Notifications">
+        🔔<span class="dot" id="notif-dot" style="display:none;"></span>
+      </div>
+    <button class="topbar-btn" onclick="toggleTheme()">
+    🌙
+</button>
+
+<div class="avatar" title="Member 3" onclick="window.location.href='profile.html'" style="cursor: pointer;">AD</div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Orders & Logistics Overview</h1>
+      <p>Real-time view of your orders, shipments, inventory, and notifications.</p>
+    </div>
+
+    <!-- ── Stat Cards ──────────────────────────────────────── -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card indigo">
+        <div class="stat-info">
+          <div class="stat-label">Total Orders</div>
+          <div class="stat-value" id="stat-orders">—</div>
+          <div class="stat-sub">All time</div>
+        </div>
+        <div class="stat-icon indigo">📋</div>
+      </div>
+      <div class="stat-card cyan">
+        <div class="stat-info">
+          <div class="stat-label">Active Shipments</div>
+          <div class="stat-value" id="stat-shipments">—</div>
+          <div class="stat-sub">In transit or processing</div>
+        </div>
+        <div class="stat-icon cyan">🚚</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-info">
+          <div class="stat-label">Delivered</div>
+          <div class="stat-value" id="stat-delivered">—</div>
+          <div class="stat-sub">Successfully delivered</div>
+        </div>
+        <div class="stat-icon green">✅</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-info">
+          <div class="stat-label">Low Stock Alerts</div>
+          <div class="stat-value" id="stat-alerts">—</div>
+          <div class="stat-sub">Needs restocking</div>
+        </div>
+        <div class="stat-icon red">⚠️</div>
+      </div>
+    </div>
+
+    <!-- ── Low Stock Alerts Banner ────────────────────────── -->
+    <div id="alerts-section"></div>
+
+    <!-- Dashboard Analytics (Charts) -->
+    <div class="content-grid">
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">📊</span> Pending vs Completed</h3>
+        </div>
+        <div class="card-body" style="position: relative; height: 300px; padding: 10px;">
+          <canvas id="ordersStatusChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">📈</span> Orders Created Over Time</h3>
+        </div>
+        <div class="card-body" style="position: relative; height: 300px; padding: 10px;">
+          <canvas id="ordersTimeChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Content Grid ────────────────────────────────────── -->
+    <div class="content-grid">
+      <!-- Recent Orders -->
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">📋</span> Recent Orders</h3>
+          <a href="orders.html" class="btn btn-secondary btn-sm">View All →</a>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Product</th>
+                  <th>Qty</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="recent-orders-table">
+                <tr class="loading-row"><td colspan="4"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipment Status Overview -->
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="card-icon">🚚</span> Shipment Status</h3>
+          <a href="shipments.html" class="btn btn-secondary btn-sm">View All →</a>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ship ID</th>
+                  <th>Product</th>
+                  <th>Status</th>
+                  <th>Delivery</th>
+                </tr>
+              </thead>
+              <tbody id="recent-shipments-table">
+                <tr class="loading-row"><td colspan="4"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Notifications Feed ──────────────────────────────── -->
+    <div class="card">
+      <div class="card-header">
+        <h3><span class="card-icon">🔔</span> Notifications & Alerts</h3>
+        <span id="notif-count-badge" class="badge badge-cancelled">0 alerts</span>
+      </div>
+      <div class="card-body" id="notifications-list">
+        <div style="text-align:center;padding:20px;color:var(--text-muted);">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AI Business Insights ──────────────────────────── -->
+    <div class="card" style="margin-top: 28px; margin-bottom: 28px;">
+      <div class="card-header" style="background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1));">
+        <h3><span class="card-icon">🤖</span> AI Business Insights</h3>
+        <div class="card-actions">
+          <button id="btn-generate-insights" class="btn btn-primary btn-sm" onclick="generateInsights()">Generate Insights</button>
+        </div>
+      </div>
+      <div class="card-body" id="ai-insights-container">
+        <div style="text-align: center; color: var(--text-muted); padding: 20px;">
+          <i>Click the button above to generate AI-powered business insights for this dashboard.</i>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/insights.js"></script>
+<script src="js/ai-chat.js"></script>
+</body>
+</html>

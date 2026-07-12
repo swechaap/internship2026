@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/auth";
+const BASE_URL = "https://inventory-and-logistics-management-system.onrender.com/auth";
 
 function registerUser(){
     const name = document.getElementById("name") ? document.getElementById("name").value : '';
@@ -26,7 +26,7 @@ function registerUser(){
     })
     .then(data=>{
         alert("Registration Successful");
-        window.location.href="login.html";
+        window.location.href="index.html";
     })
     .catch(error=>{
         console.error(error);
@@ -73,7 +73,7 @@ function loginUser(){
 function loadProfile(){
     const token = localStorage.getItem("token");
     if (!token) {
-        window.location.href = "login.html";
+        window.location.href = "index.html";
         return;
     }
 
@@ -110,5 +110,5 @@ function updateProfile(){
 
 function logout() {
     localStorage.removeItem("token");
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 }

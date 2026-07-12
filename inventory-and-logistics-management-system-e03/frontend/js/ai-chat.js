@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sendBtn.disabled = true;
 
         try {
-            const res = await fetch("http://localhost:5000/ai/chat", {
+            const res = await fetch("https://inventory-and-logistics-management-system.onrender.com/ai/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: text })

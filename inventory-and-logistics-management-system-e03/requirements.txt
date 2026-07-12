@@ -19,7 +19,7 @@ Cors
 Dotenv
 bcrypt
 jsonwebtoken
-@google/genai
+groq-sdk
 Nodemon
 
 Frontend
@@ -34,14 +34,14 @@ MySQL
 
 AI Integration
 --------------
-Google Gemini API
+Groq API (LLaMA 3 Models)
 
 Tools Used
 ----------
 Visual Studio Code
 Postman
 Git & GitHub
-Google AI Studio
+GroqCloud Console
 
 Browser Support
 ---------------

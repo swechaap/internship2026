@@ -1,4 +1,4 @@
-const API = "http://localhost:5000";
+const API = "https://inventory-and-logistics-management-system.onrender.com";
 
 let products = [];
 
