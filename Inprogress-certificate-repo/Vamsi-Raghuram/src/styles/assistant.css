@@ -1,0 +1,33 @@
+.assistant {
+  max-width: 380px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(79, 141, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.assistant-avatar {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.assistant-message h3 {
+  font-size: 0.85rem;
+  color: #60a5fa;
+  margin-bottom: 2px;
+  font-weight: 700;
+}
+
+.assistant-message p {
+  font-size: 0.8rem;
+  color: #dbeafe;
+  line-height: 1.35;
+  margin: 0;
+}

@@ -1,0 +1,139 @@
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #050816;
+  color: white;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 16px 6px 16px;
+  box-sizing: border-box;
+  background: radial-gradient(circle at top, #0b1d46 0%, #050816 70%);
+}
+
+.tab-navigation {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+}
+
+.tab-btn {
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #94a3b8;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tab-btn.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border-color: #60a5fa;
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.4);
+}
+
+.main-frame {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.lab-view-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.beaker-assistant-row {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 4px;
+}
+
+.graph-view-container {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.theory-view-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.all-workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.all-workspace-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.theory-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}

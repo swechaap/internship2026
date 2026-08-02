@@ -1,0 +1,412 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.landing{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#070b1b;
+
+    font-family:"Segoe UI",sans-serif;
+}
+
+/* -------------------- */
+/* Moving Gradient */
+/* -------------------- */
+
+.gradient{
+    position:absolute;
+    inset:-30%;
+
+    background:
+        radial-gradient(circle at 20% 30%,rgba(37,99,235,.35),transparent 40%),
+        radial-gradient(circle at 80% 70%,rgba(124,58,237,.35),transparent 40%),
+        radial-gradient(circle at 60% 20%,rgba(56,189,248,.20),transparent 45%);
+
+    animation:moveGradient 18s linear infinite;
+    filter:blur(70px);
+}
+
+@keyframes moveGradient{
+
+    0%{
+        transform:translate(-5%,-5%) rotate(0deg);
+    }
+
+    50%{
+        transform:translate(5%,5%) rotate(180deg);
+    }
+
+    100%{
+        transform:translate(-5%,-5%) rotate(360deg);
+    }
+
+}
+
+/* -------------------- */
+/* Mouse Glow */
+/* -------------------- */
+
+.mouse-glow{
+
+    position:fixed;
+
+    width:260px;
+    height:260px;
+
+    transform:translate(-50%,-50%);
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(circle,
+        rgba(79,141,255,.35),
+        transparent 70%);
+
+    filter:blur(30px);
+
+    transition:left .08s linear,
+               top .08s linear;
+
+    z-index:0;
+}
+
+/* -------------------- */
+/* Floating Particles */
+/* -------------------- */
+
+.particles{
+
+    position:absolute;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+}
+
+.particles span{
+
+    position:absolute;
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:#7dd3fc;
+
+    box-shadow:
+        0 0 10px #60a5fa,
+        0 0 20px #60a5fa;
+
+    animation:floatParticle linear infinite;
+
+}
+
+/* Individual positions */
+
+.particles span:nth-child(1){
+    left:8%;
+    animation-duration:9s;
+    animation-delay:0s;
+}
+
+.particles span:nth-child(2){
+    left:20%;
+    animation-duration:12s;
+    animation-delay:2s;
+}
+
+.particles span:nth-child(3){
+    left:33%;
+    animation-duration:10s;
+}
+
+.particles span:nth-child(4){
+    left:48%;
+    animation-duration:14s;
+}
+
+.particles span:nth-child(5){
+    left:61%;
+    animation-duration:11s;
+}
+
+.particles span:nth-child(6){
+    left:74%;
+    animation-duration:13s;
+}
+
+.particles span:nth-child(7){
+    left:87%;
+    animation-duration:10s;
+}
+
+.particles span:nth-child(8){
+    left:95%;
+    animation-duration:16s;
+}
+
+@keyframes floatParticle{
+
+    0%{
+
+        transform:
+            translateY(105vh)
+            scale(.5);
+
+        opacity:0;
+
+    }
+
+    20%{
+
+        opacity:1;
+
+    }
+
+    80%{
+
+        opacity:1;
+
+    }
+
+    100%{
+
+        transform:
+            translateY(-20vh)
+            scale(1.4);
+
+        opacity:0;
+
+    }
+
+}
+
+/* -------------------- */
+/* Hero */
+/* -------------------- */
+
+.hero{
+
+    position:relative;
+
+    z-index:5;
+
+    text-align:center;
+
+    width:min(90%,900px);
+
+}
+
+/* -------------------- */
+/* Logo */
+/* -------------------- */
+
+.logo{
+
+    width:120px;
+    height:120px;
+
+    margin:auto;
+
+    border-radius:30px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:58px;
+
+    color:white;
+
+    background:
+        linear-gradient(135deg,
+        #3b82f6,
+        #7c3aed);
+
+    box-shadow:
+        0 0 30px rgba(79,141,255,.55);
+
+    animation:
+        floatLogo 3s ease-in-out infinite,
+        rotateLogo 8s linear infinite;
+
+}
+
+@keyframes floatLogo{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+@keyframes rotateLogo{
+
+    0%{
+        rotate:-6deg;
+    }
+
+    50%{
+        rotate:6deg;
+    }
+
+    100%{
+        rotate:-6deg;
+    }
+
+}
+
+/* -------------------- */
+
+.welcome{
+
+    margin-top:40px;
+
+    letter-spacing:10px;
+
+    font-size:18px;
+
+    color:#b8c6e6;
+
+}
+
+/* -------------------- */
+
+.hero h1{
+
+    margin-top:18px;
+
+    font-size:76px;
+
+    line-height:1.1;
+
+    font-weight:800;
+
+    color:white;
+
+    text-shadow:
+        0 0 25px rgba(79,141,255,.45);
+
+    min-height:170px;
+
+}
+
+/* -------------------- */
+
+.subtitle{
+
+    width:min(90%,760px);
+
+    margin:auto;
+
+    margin-top:10px;
+
+    line-height:1.8;
+
+    font-size:24px;
+
+    color:#c8d5f3;
+
+}
+
+/* -------------------- */
+
+.start-btn{
+
+    margin-top:55px;
+
+    padding:22px 58px;
+
+    border:none;
+
+    border-radius:70px;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:white;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(90deg,
+        #2563eb,
+        #7c3aed);
+
+    box-shadow:
+        0 0 25px rgba(79,141,255,.4);
+
+    transition:.35s;
+
+}
+
+.start-btn:hover{
+
+    transform:
+        translateY(-5px)
+        scale(1.05);
+
+    box-shadow:
+        0 0 40px rgba(79,141,255,.7);
+
+}
+
+/* -------------------- */
+
+@media(max-width:768px){
+
+.hero h1{
+
+    font-size:52px;
+
+    min-height:120px;
+
+}
+
+.subtitle{
+
+    font-size:18px;
+
+}
+
+.logo{
+
+    width:90px;
+    height:90px;
+
+    font-size:42px;
+
+}
+
+.start-btn{
+
+    font-size:18px;
+
+    padding:18px 42px;
+
+}
+
+}
